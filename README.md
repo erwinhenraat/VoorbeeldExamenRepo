@@ -14,15 +14,15 @@ Maak ook een overzicht van alle onderdelen met een link naar de map waarin deze 
 Bijv..
 
 Student X:
-  * Non Euclidean Scaling script
-  * Some other mechanic X
-  * Some other mechanic Y
+  * [Non Euclidean Scaling script](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/nonEuclideanScaling)
+  * [Some other mechanic X](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/mechanic_x)
+  * [Some other mechanic Y](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/mechanic_y)
 Student Y:
   * Water Shader
   * [Some textured and rigged model](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/assets/monsters)
 
 Student Z:
-  * Some beautifull script
+  * [Some beautifull script](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/beautifull)
   * Some other Game object
 
 
