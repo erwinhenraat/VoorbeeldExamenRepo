@@ -19,7 +19,7 @@ Student X:
   * Some other mechanic Y
 Student Y:
   * Water Shader
-  * Some textured and rigged model
+  * [Some textured and rigged model](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/assets/monsters)
 
 Student Z:
   * Some beautifull script
