@@ -14,7 +14,7 @@ Maak ook een overzicht van alle onderdelen met een link naar de map waarin deze 
 Bijv..
 
 Student X:
-  * [Non Euclidean Scaling script](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/nonEuclideanScaling)
+  * [Some script](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/some)
   * [Some other mechanic X](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/mechanic_x)
   * [Some other mechanic Y](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/mechanic_y)
 Student Y:
@@ -26,12 +26,11 @@ Student Z:
   * Some other Game object
 
 
-## Non Euclidean Scaling by Student X
+## Some Script by Student X
 
-non-Euclidean geometry, literally any geometry that is not the same as Euclidean geometry. Although the term is frequently used to refer only to hyperbolic geometry, common usage includes those few geometries (hyperbolic and spherical) that differ from but are very close to Euclidean geometry (see table).
+Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line.
 
-
-![MicrosoftTeams-image](https://user-images.githubusercontent.com/1262745/189134394-a3feb59f-16c9-441e-b0ca-2b118addbd0e.png)
+![example](https://user-images.githubusercontent.com/1262745/189135129-34d15823-0311-46b5-a041-f0bbfede9e78.png)
 
 ## Some other Mechanic X by Student X
 
