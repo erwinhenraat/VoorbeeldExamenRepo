@@ -1,3 +1,28 @@
+### flowchart voor enemy system:
+```mermaid
+flowchart TD
+
+start((Start)) -->|wait 5 seconds| spawn_w(spawn wave)
+spawn_w --> checken(check enemies in list)
+checken --> spawn_e(spawn enemies at once)
+spawn_e --> reached_base{enemy reached base?}
+reached_base -->|y| lose_life(player loses a life)
+reached_base -->|n| money(player makes money)
+lose_life --> wave_done{wave done?}
+money --> wave_done
+
+no_more_waves{no more waves?} -->|no more| more_lev(more levels?)
+wave_done --> no_more_waves
+no_more_waves -->|still waves| next_wave(goto next wave)
+next_wave --> start_wave
+start_wave --> spawn_w
+more_lev -->|yes, there's more| next_lev(start next level)
+
+more_lev -->|no more levels| end_d((end))
+
+next_lev --> start
+```
+
 # VoorbeeldExamenRepo
 Een voorbeeld repository voor het examenwerk
 
@@ -32,28 +57,7 @@ Latin professor at Hampden-Sydney College in Virginia, looked up one of the more
 
 ![example](https://user-images.githubusercontent.com/1262745/189135129-34d15823-0311-46b5-a041-f0bbfede9e78.png)
 
-### flowchart voor enemy system:
-```mermaid
-flowchart TD
 
-s((Start)) -->|wait 5 seconds| sw(spawn wave)
-sw --> ce(check enemies in list)
-ce --> se(spawn enemies at once)
-se --> br{enemy reached base?}
-br -->|y| pl(player loses a life)
-br -->|n| gm(player makes money)
-pl --> wd{wave done?}
-gm --> wd
-wd --> nmw{no more waves?}
-nmw -->|no more| ml(more levels?)
-nmw -->|still waves| nw(goto next wave)
-nw --> sw
-ml -->|n| e((end))
-ml -->|y| nl(start next level)
-nl --> s
-
-
-```
 
 
 ## Some other Mechanic X by Student X
