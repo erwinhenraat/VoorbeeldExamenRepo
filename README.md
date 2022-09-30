@@ -54,7 +54,32 @@ more_lev -->|yes, there's more| next_lev(start next level)
 more_lev -->|no more levels| end_d((end))
 next_lev --> start
 ```
+### class diagram voor game entities:
 
+```mermaid
+classDiagram
+
+Unit <|-- Tower
+Unit <|-- Monster
+Unit <|-- Boss
+Unit : +int life
+Unit : +int speed
+Unit: +isMovable()
+Unit: +Destroy()
+class Tower{
++String turretType
++target()
++shoot()
+}
+class Monster{
+-int reward
+-regenerates()
+}
+class Boss{
++bool is_unique
++specialSkill()
+}
+```
 
 
 ## Some other Mechanic X by Student X
