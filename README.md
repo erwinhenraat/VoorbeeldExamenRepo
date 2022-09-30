@@ -36,7 +36,7 @@ Latin professor at Hampden-Sydney College in Virginia, looked up one of the more
 ```mermaid
 flowchart TD
 
-start level -->|wait 5 seconds| spawn wave
+sl(start level) -->|wait 5 seconds| sw(spawn wave)
 
 
 ```
