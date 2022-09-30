@@ -32,11 +32,12 @@ Latin professor at Hampden-Sydney College in Virginia, looked up one of the more
 
 ![example](https://user-images.githubusercontent.com/1262745/189135129-34d15823-0311-46b5-a041-f0bbfede9e78.png)
 
-###flowchart voor de mechanic:###
+##flowchart voor enemy spawning system:##
 ```mermaid
 flowchart TD
 
-start ---> stop
+start level --->|wait 5 seconds| spawn wave
+
 
 ```
 
