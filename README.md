@@ -53,13 +53,16 @@ start_wave --> spawn_w
 more_lev -->|yes, there's more| next_lev(start next level)
 more_lev -->|no more levels| end_d((end))
 next_lev --> start
+
+
+
 ```
 ### class diagram voor game entities:
 
 ```mermaid
 classDiagram
 
-Unit <|-- Tower
+Unit <|-- Tower:Is A
 Unit <|-- Monster
 Unit <|-- Boss
 Unit : +int life
