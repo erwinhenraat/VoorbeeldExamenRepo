@@ -4,7 +4,7 @@ Een voorbeeld repository voor het examenwerk
 In deze repository vind je de informatie over het examen project.
 
 Omschrijf de examenopdracht evt de klant en wat het doel voor de klant is.
-Omschrijf ook wat het idee van je game is.
+Omschrijf ook beknopt wat het idee van je game is. (uitgebreide beschrijving in het functioneel ontwerp)
 
 # Geproduceerde Game Onderdelen
 
