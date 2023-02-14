@@ -14,7 +14,7 @@ Maak ook een overzicht van alle onderdelen met een link naar de map waarin deze 
 
 Bijv..
 
-Dean hendriks:
+Dean Hendriks:
   * [Wave System](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/some)
   * [Some other mechanic X](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/mechanic_x)
   * [Some other mechanic Y](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/mechanic_y)
