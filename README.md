@@ -37,7 +37,7 @@ Latin professor at Hampden-Sydney College in Virginia, looked up one of the more
 ```mermaid
 flowchart TD
 
-start((Start)) -->|wait 5 seconds| spawn_w(spawn wave)
+start((Start)) -->|wait 10 seconds| spawn_w(spawn wave)
 spawn_w --> checken(check enemies in list)
 checken --> spawn_e(spawn enemies at once)
 spawn_e --> reached_base{enemy reached base?}
