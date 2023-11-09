@@ -68,6 +68,7 @@ Unit <|-- Monster
 Unit <|-- Boss
 Unit : +int life
 Unit : +int speed
+Unit : +bool alive
 Unit: +isMovable()
 Unit: +Destroy()
 class Tower{
