@@ -7,16 +7,17 @@ public class MazeGeneratorDebug : MonoBehaviour
 {
     public bool activate;
     public Vector2 size;
+    public string seed;
     private void Update()
     {
         if(activate)
         {
             activate = false;
-            MazeGenerator.Generate(size);
+            gen();
         }
     }
     public void gen()
     {
-        MazeGenerator.Generate(new(10,10));
+        MazeGenerator.Generate(size,seed);
     }
 }

@@ -3,6 +3,7 @@ using UntitledCube.Maze.Cell;
 using System.Linq;
 using UnityEngine;
 using System;
+using Unity.VisualScripting.FullSerializer;
 
 namespace UntitledCube.Maze.Generation
 {
@@ -11,14 +12,17 @@ namespace UntitledCube.Maze.Generation
         private static MazeCell[,] _cells;
         private static Vector2 _mazeSize;
 
-        private static List<MazeCell> _currentPath = new();
+        private static List<int> _seed = new();
+        private static int nextCellItteration;
+
+        private static readonly List<MazeCell> _currentPath = new();
         private static int _completedCells;
         private static readonly Dictionary<MazeCell, Vector2> _possibleNext = new Dictionary<MazeCell, Vector2>();
         private static readonly Vector2[] _directions = { Vector2.right, Vector2.left, Vector2.down, Vector2.up };
 
         public static Action OnGenerated;
 
-        public static void Generate(Vector2 size)
+        public static void Generate(Vector2 size, string seed = "")
         {
             ResetCells();
 
@@ -27,7 +31,7 @@ namespace UntitledCube.Maze.Generation
             SetStartingCell();
             SetExitCells();
 
-            GenerateMaze();
+            GenerateMaze(seed);
         }
 
         private static void ResetCells()
@@ -35,24 +39,30 @@ namespace UntitledCube.Maze.Generation
             _currentPath.Clear();
             _cells = new MazeCell[0, 0];
             _completedCells = 0;
+            _seed.Clear();
+            nextCellItteration = 0;
         }
 
-        private static void GenerateMaze()
+        private static void GenerateMaze(string seed)
         {
+            List<int> decodedSeed = SeedCodec.Decode(seed);
+
             while (_completedCells < _cells.Length)
             {
                 _possibleNext.Clear();
 
                 MazeCell currentCell = _currentPath[^1];
-                Vector2 currentCellPos = new Vector2(currentCell.transform.position.x, currentCell.transform.position.y);
+                Vector2 currentCellPos = new(currentCell.transform.position.x, currentCell.transform.position.y);
 
                 GetPossibleDirections(currentCellPos);
 
                 if (_possibleNext.Count > 0) 
-                    GoToNextCell();
+                    GoToNextCell(decodedSeed);
                 else 
                     Backtrack();
             }
+
+            Debug.Log(SeedCodec.Encode(_seed));
 
             OnGenerated?.Invoke();
         }
@@ -98,9 +108,16 @@ namespace UntitledCube.Maze.Generation
             }
         }
 
-        private static void GoToNextCell()
+        private static void GoToNextCell(List<int> seed)
         {
-            int randomIndex = UnityEngine.Random.Range(0, _possibleNext.Count);
+            int randomIndex = 0;
+
+            if (seed.Count == 0)
+                randomIndex = UnityEngine.Random.Range(0, _possibleNext.Count);
+            else
+                randomIndex = seed[nextCellItteration];
+
+            _seed.Add(randomIndex);
 
             MazeCell nextCell = _possibleNext.ElementAt(randomIndex).Key;
 
@@ -111,6 +128,8 @@ namespace UntitledCube.Maze.Generation
 
             _currentPath.Add(nextCell);
             nextCell.State = CellState.Current;
+
+            nextCellItteration++;
         }
 
         private static void Backtrack()
