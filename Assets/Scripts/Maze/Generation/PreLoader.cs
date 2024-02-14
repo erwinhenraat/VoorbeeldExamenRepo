@@ -1,15 +1,16 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UntitledCube.Maze.Cell;
+using swzwij.Singletons;
+using UnityEngine;
 
 namespace UntitledCube.Maze.Generation
 {
-    public class PreLoader : MonoBehaviour
+    public class PreLoader : SingletonBehaviour<PreLoader>
     {
-        [SerializeField] private int preloadAmount;
-        [SerializeField] private MazeCell cellPrefab;
-        private List<MazeCell> _preLoadedCells = new List<MazeCell>();
+        [SerializeField] private int _preloadAmount;
+        [SerializeField] private MazeCell _cellPrefab;
+
+        private readonly List<MazeCell> _preLoadedCells = new();
 
         public List<MazeCell> PreLoadedCells => _preLoadedCells;
 
@@ -17,12 +18,11 @@ namespace UntitledCube.Maze.Generation
 
         private void PreLoad()
         {
-            // Preloading the preload amount
-            for (int i = 0; i < preloadAmount; i++)
+            for (int i = 0; i < _preloadAmount; i++)
             {
-                MazeCell newCell = Instantiate(cellPrefab, Vector3.zero, Quaternion.identity, this.transform);
+                MazeCell newCell = Instantiate(_cellPrefab, Vector3.zero, Quaternion.identity, transform);
                 newCell.transform.gameObject.SetActive(false);
-                newCell.SetState(CellState.Available);
+                newCell.State = CellState.Available;
                 _preLoadedCells.Add(newCell);
             }
         }

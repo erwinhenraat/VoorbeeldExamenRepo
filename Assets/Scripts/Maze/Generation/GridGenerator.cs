@@ -1,46 +1,36 @@
 using System.Collections.Generic;
-using UnityEngine.Events;
-using UnityEngine;
 using UntitledCube.Maze.Cell;
+using UnityEngine;
 
 namespace UntitledCube.Maze.Generation
 {
-    public class GridGenerator : MonoBehaviour
+    public static class GridGenerator
     {
-        [SerializeField] private PreLoader preLoader;
+        private static MazeCell[,] _cells;
+        private static bool _isGenerated;
+        private static readonly List<MazeCell> _usedCells = new();
 
-        private MazeCell[,] _cells;
-        private bool _isGenerated;
-        private List<MazeCell> _usedCells = new List<MazeCell>();
+        public static MazeCell[,] Cells => _cells;
 
-        public MazeCell[,] Cells => _cells;
-
-        [Header("Unity Events")]
-        [SerializeField] private UnityEvent<Vector2> OnGenerate = new UnityEvent<Vector2>();
-
-        public void Generate(Vector2 mazeSize)
+        public static void Generate(Vector2 mazeSize)
         {
-            OnGenerate?.Invoke(mazeSize);
+            if (_isGenerated) 
+                ResetCells();
 
-            if (_isGenerated) ResetCells();
-
-            List<MazeCell> preLoadedCells = preLoader.PreLoadedCells;
+            List<MazeCell> preLoadedCells = PreLoader.Instance.PreLoadedCells;
             int cellCount = 0;
 
-            // Setting _cells size
             _cells = new MazeCell[(int)mazeSize.x, (int)mazeSize.y];
 
-            // Generate Grid
             for (int x = 0; x < mazeSize.x; x++)
             {
                 for (int y = 0; y < mazeSize.y; y++)
                 {
-                    Vector2 position = new Vector2(x, y);
+                    Vector2 position = new(x, y);
                     MazeCell avaibleCell = preLoadedCells[cellCount];
 
                     _cells.SetValue(avaibleCell, x, y);
 
-                    // Settings position and settings cell active
                     avaibleCell.transform.position = position;
                     avaibleCell.transform.gameObject.SetActive(true);
 
@@ -52,16 +42,15 @@ namespace UntitledCube.Maze.Generation
             _isGenerated = true;
         }
 
-        private void ResetCells()
+        private static void ResetCells()
         {
-            // Reseting all the cells to there starting state/position
             for (int i = 0; i < _usedCells.Count; i++)
             {
                 MazeCell currentCell = _usedCells[i];
 
                 currentCell.SetWallsActive(true);
                 currentCell.gameObject.SetActive(false);
-                currentCell.SetState(CellState.Available);
+                currentCell.State = CellState.Available;
                 currentCell.transform.position = Vector3.zero;
             }
 
