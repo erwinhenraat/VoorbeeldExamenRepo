@@ -1,1 +1,34 @@
-{}
+{
+    "name": "InputActions",
+    "maps": [
+        {
+            "name": "Mobile Actions",
+            "id": "51d9e8bf-e639-4eec-b471-b4c83f64dbb6",
+            "actions": [
+                {
+                    "name": "Swipe",
+                    "type": "Value",
+                    "id": "cfc50cc0-b082-4653-81cf-7940f7f81e28",
+                    "expectedControlType": "Delta",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "7efe178e-a6fc-4d9e-a4b2-5217ade894a7",
+                    "path": "<Touchscreen>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Swipe",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
