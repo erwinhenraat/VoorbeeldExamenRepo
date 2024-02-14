@@ -1,60 +1,64 @@
+using Input.Settings;
 using System.Collections.Generic;
 using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
 
-public class InputSystem
+namespace Input 
 {
-    private InputActions _inputAction;
-    private Dictionary<System.Action<InputAction.CallbackContext>, InputAction> _subscribedInputs = new();
-
-    public void InitializeInputSystem() => _inputAction = Addressables.LoadAssetAsync<InputActions>("InputActions").Result;
-
-    public InputAction TryGetAction(string actionName)
+    public class InputSystem5
     {
-        InputAction action = _inputAction.FindAction(actionName);
+        private InputActions _inputAction;
+        private Dictionary<System.Action<InputAction.CallbackContext>, InputAction> _subscribedInputs = new();
 
-        return action; 
-    }
+        public void InitializeInputSystem() => _inputAction = Addressables.LoadAssetAsync<InputActions>("InputActions").Result;
 
-    public void SubscribeToAction(InputAction inputAction, System.Action<InputAction.CallbackContext> function)
-    {
-        inputAction.Enable();
-        inputAction.performed += function;
-
-        _subscribedInputs.Add(function, inputAction);
-    }
-
-    public void SubscribeToAction(string inputName, System.Action<InputAction.CallbackContext> function, out InputAction inputAction)
-    {
-        inputAction = TryGetAction(inputName);
-        inputAction.Enable();
-        inputAction.performed += function;
-
-        _subscribedInputs.Add(function, inputAction);
-    }
-
-    public void UnsubscribeToAction(InputAction inputAction, System.Action<InputAction.CallbackContext> function)
-    {
-        inputAction.performed -= function;
-
-        _subscribedInputs.Remove(function, out inputAction);
-    }
-
-    public void UnsubscribeToAction(string inputName, System.Action<InputAction.CallbackContext> function)
-    {
-        InputAction inputAction = TryGetAction(inputName);
-        inputAction.performed -= function;
-
-        _subscribedInputs.Remove(function, out inputAction);
-    }
-
-    public void UnsubscribeToAllActions()
-    {
-        foreach (KeyValuePair<System.Action<InputAction.CallbackContext>, InputAction> input in _subscribedInputs)
+        public InputAction TryGetAction(string actionName)
         {
-            input.Value.performed -= input.Key;
+            InputAction action = _inputAction.FindAction(actionName);
+
+            return action;
         }
 
-        _subscribedInputs.Clear();
+        public void SubscribeToAction(InputAction inputAction, System.Action<InputAction.CallbackContext> function)
+        {
+            inputAction.Enable();
+            inputAction.performed += function;
+
+            _subscribedInputs.Add(function, inputAction);
+        }
+
+        public void SubscribeToAction(string inputName, System.Action<InputAction.CallbackContext> function, out InputAction inputAction)
+        {
+            inputAction = TryGetAction(inputName);
+            inputAction.Enable();
+            inputAction.performed += function;
+
+            _subscribedInputs.Add(function, inputAction);
+        }
+
+        public void UnsubscribeToAction(InputAction inputAction, System.Action<InputAction.CallbackContext> function)
+        {
+            inputAction.performed -= function;
+
+            _subscribedInputs.Remove(function, out inputAction);
+        }
+
+        public void UnsubscribeToAction(string inputName, System.Action<InputAction.CallbackContext> function)
+        {
+            InputAction inputAction = TryGetAction(inputName);
+            inputAction.performed -= function;
+
+            _subscribedInputs.Remove(function, out inputAction);
+        }
+
+        public void UnsubscribeToAllActions()
+        {
+            foreach (KeyValuePair<System.Action<InputAction.CallbackContext>, InputAction> input in _subscribedInputs)
+            {
+                input.Value.performed -= input.Key;
+            }
+
+            _subscribedInputs.Clear();
+        }
     }
 }
