@@ -8,12 +8,13 @@ namespace UntitledCube.Maze.Generation
     {
         private static MazeCell[,] _cells;
         private static bool _isGenerated;
+        private static GameObject _mazeHolder;
         
         private static readonly List<MazeCell> _usedCells = new();
 
         public static MazeCell[,] Cells => _cells;
 
-        public static void Generate(Vector2 mazeSize)
+        public static void Generate(Vector2 mazeSize, Vector3 worldPosition, Vector3 rotation)
         {
             if (_isGenerated) 
                 ResetCells();
@@ -22,6 +23,8 @@ namespace UntitledCube.Maze.Generation
             int cellCount = 0;
 
             _cells = new MazeCell[(int)mazeSize.x, (int)mazeSize.y];
+
+            _mazeHolder = new("Maze Holder");
 
             for (int x = 0; x < mazeSize.x; x++)
             {
@@ -33,12 +36,17 @@ namespace UntitledCube.Maze.Generation
                     _cells.SetValue(avaibleCell, x, y);
 
                     avaibleCell.transform.position = position;
+                    avaibleCell.Position = position;
                     avaibleCell.transform.gameObject.SetActive(true);
+                    avaibleCell.transform.parent = _mazeHolder.transform;
+                    avaibleCell.transform.rotation = Quaternion.Euler(Vector3.zero);
 
                     _usedCells.Add(avaibleCell);
                     cellCount++;
                 }
             }
+
+            _mazeHolder.transform.SetPositionAndRotation(worldPosition, Quaternion.Euler(rotation));
 
             _isGenerated = true;
         }
@@ -53,9 +61,11 @@ namespace UntitledCube.Maze.Generation
                 currentCell.gameObject.SetActive(false);
                 currentCell.State = CellState.Available;
                 currentCell.transform.position = Vector3.zero;
+                currentCell.transform.parent = PreLoader.Instance.transform;
             }
 
             _usedCells.Clear();
+            GameObject.Destroy(_mazeHolder);
         }
     }
 }

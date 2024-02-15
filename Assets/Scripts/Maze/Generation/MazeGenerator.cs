@@ -21,13 +21,13 @@ namespace UntitledCube.Maze.Generation
 
         public static Action<string> OnGenerated;
 
-        public static void Generate(Vector2 size, string seed = "")
+        public static void Generate(Vector2 size, Vector3 worldPosition, Vector3 rotation, string seed = "")
         {
             List<int> decryptedSeed = SeedCodec.Decode(SeedCodec.Decrypt(seed));
             
             ResetCells();
 
-            GenerateGrid(size);
+            GenerateGrid(size, worldPosition, rotation);
 
             SetStartingCell(decryptedSeed);
             SetExitCells(decryptedSeed);
@@ -44,9 +44,9 @@ namespace UntitledCube.Maze.Generation
             _nextCellItteration = 0;
         }
 
-        private static void GenerateGrid(Vector2 size)
+        private static void GenerateGrid(Vector2 size, Vector3 worldPosition, Vector3 rotation)
         {
-            GridGenerator.Generate(size);
+            GridGenerator.Generate(size, worldPosition, rotation);
             _cells = GridGenerator.Cells;
             _mazeSize = new Vector2(_cells.GetLength(0), _cells.GetLength(1));
         }
@@ -82,7 +82,7 @@ namespace UntitledCube.Maze.Generation
                 _possibleNext.Clear();
 
                 MazeCell currentCell = _currentPath[^1];
-                Vector2 currentCellPos = new(currentCell.transform.position.x, currentCell.transform.position.y);
+                Vector2 currentCellPos = new(currentCell.Position.x, currentCell.Position.y);
 
                 GetPossibleDirections(currentCellPos);
 

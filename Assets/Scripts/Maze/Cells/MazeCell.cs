@@ -12,6 +12,8 @@ namespace UntitledCube.Maze.Cell
 
         public CellState State { get; set; }
 
+        public Vector2 Position { get; set; }
+
         private void Awake()
         {
             for (int i = 0; i < _wallObjects.Length; i++)

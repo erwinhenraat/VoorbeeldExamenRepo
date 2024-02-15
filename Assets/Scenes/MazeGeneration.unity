@@ -279,6 +279,8 @@ MonoBehaviour:
   activate: 0
   size: {x: 6, y: 6}
   seed: 
+  position: {x: 0, y: 0, z: 0}
+  rotation: {x: 0, y: 0, z: 0}
   Text: {fileID: 1304340834}
 --- !u!1 &944179780
 GameObject:

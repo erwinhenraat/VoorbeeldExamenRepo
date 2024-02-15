@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UntitledCube.Maze.Generation;
@@ -9,11 +7,13 @@ public class MazeGeneratorDebug : MonoBehaviour
     public bool activate;
     public Vector2 size;
     public string seed;
+    public Vector3 position;
+    public Vector3 rotation;
 
     public Text Text;
     private void Update()
     {
-        if(activate)
+        if(activate)    
         {
             activate = false;
             gen();
@@ -21,7 +21,9 @@ public class MazeGeneratorDebug : MonoBehaviour
     }
     public void gen()
     {
-        MazeGenerator.Generate(size,seed);
+        //Vector3 rot = new(UnityEngine.Random.RandomRange(0, 360), UnityEngine.Random.RandomRange(0, 360), UnityEngine.Random.RandomRange(0, 360));
+
+        MazeGenerator.Generate(size, position, rotation, seed);
     }
 
     private void Awake()
