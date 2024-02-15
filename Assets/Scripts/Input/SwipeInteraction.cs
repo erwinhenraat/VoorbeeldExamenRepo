@@ -8,40 +8,33 @@ namespace Input
 {
     public class SwipeInteraction : MonoBehaviour
     {
-        [SerializeField] private float minimumMagnitude;
+        [SerializeField] private float _moveThreshold;
 
         private InputAction _swipeAction;
-        private InputAction _touchAction;
+
         private Vector2 _swipePosition;
+        private Vector2 _swipeDirection;
 
         private void Start()
         {
             InputSystem.SubscribeToAction("Swipe", Swipe, out _swipeAction);
-            _touchAction = InputSystem.TryGetAction("Touch");
-
-            _touchAction.Enable();
-            _touchAction.canceled += StopSwipe;
         }
 
         private void Swipe(InputAction.CallbackContext callbackContext)
         {
             _swipePosition = callbackContext.ReadValue<Vector2>();
 
-        }
+            Vector2 _newSwipeDirection = CalculateDirection();
 
-        private void StopSwipe(InputAction.CallbackContext callbackContext)
-        {
-            print("here");
-            if (_swipePosition.magnitude < minimumMagnitude) return;
+            if (_newSwipeDirection == Vector2.zero) return;
 
-            Vector2 direction = CalculateDirection();
-
-            if(direction != Vector2.zero)
+            if(_swipeDirection != _newSwipeDirection ) 
             {
-                Debug.Log(direction);
+                Debug.Log(_newSwipeDirection);
                 //GravityShift(direction)
             }
 
+            _swipeDirection = _newSwipeDirection;
         }
 
         private Vector2 CalculateDirection()
@@ -49,11 +42,11 @@ namespace Input
             float x = Mathf.Abs(_swipePosition.x);
             float y = Mathf.Abs(_swipePosition.y);
 
-            if (x > y)
+            if (x > _moveThreshold && x > y)
             {
                 return _swipePosition.x > 0 ? Vector2.right : Vector2.left;
             }
-            else if (x < y)
+            else if (y > _moveThreshold && x < y)
             {
                 return _swipePosition.y > 0 ? Vector2.up : Vector2.down;
             }
@@ -64,7 +57,6 @@ namespace Input
         private void OnDisable()
         {
             InputSystem.UnsubscribeToAction(_swipeAction, Swipe);
-            _touchAction.canceled -= StopSwipe;
         }
     }
 }
