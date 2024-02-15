@@ -31,10 +31,19 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""name"": ""Swipe"",
                     ""type"": ""Value"",
                     ""id"": ""cfc50cc0-b082-4653-81cf-7940f7f81e28"",
-                    ""expectedControlType"": ""Delta"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Touch"",
+                    ""type"": ""Button"",
+                    ""id"": ""aad54959-bb56-4c8a-92a8-69d61baf32b9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -48,6 +57,17 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Swipe"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""edee50b0-89c7-4bb5-bfc3-fd7cf7b8ec1f"",
+                    ""path"": ""<Touchscreen>/Press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Touch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -57,6 +77,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         // Mobile Actions
         m_MobileActions = asset.FindActionMap("Mobile Actions", throwIfNotFound: true);
         m_MobileActions_Swipe = m_MobileActions.FindAction("Swipe", throwIfNotFound: true);
+        m_MobileActions_Touch = m_MobileActions.FindAction("Touch", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -119,11 +140,13 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_MobileActions;
     private List<IMobileActionsActions> m_MobileActionsActionsCallbackInterfaces = new List<IMobileActionsActions>();
     private readonly InputAction m_MobileActions_Swipe;
+    private readonly InputAction m_MobileActions_Touch;
     public struct MobileActionsActions
     {
         private @InputActions m_Wrapper;
         public MobileActionsActions(@InputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Swipe => m_Wrapper.m_MobileActions_Swipe;
+        public InputAction @Touch => m_Wrapper.m_MobileActions_Touch;
         public InputActionMap Get() { return m_Wrapper.m_MobileActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -136,6 +159,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Swipe.started += instance.OnSwipe;
             @Swipe.performed += instance.OnSwipe;
             @Swipe.canceled += instance.OnSwipe;
+            @Touch.started += instance.OnTouch;
+            @Touch.performed += instance.OnTouch;
+            @Touch.canceled += instance.OnTouch;
         }
 
         private void UnregisterCallbacks(IMobileActionsActions instance)
@@ -143,6 +169,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Swipe.started -= instance.OnSwipe;
             @Swipe.performed -= instance.OnSwipe;
             @Swipe.canceled -= instance.OnSwipe;
+            @Touch.started -= instance.OnTouch;
+            @Touch.performed -= instance.OnTouch;
+            @Touch.canceled -= instance.OnTouch;
         }
 
         public void RemoveCallbacks(IMobileActionsActions instance)
@@ -163,5 +192,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     public interface IMobileActionsActions
     {
         void OnSwipe(InputAction.CallbackContext context);
+        void OnTouch(InputAction.CallbackContext context);
     }
 }
