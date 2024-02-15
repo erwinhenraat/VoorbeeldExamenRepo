@@ -32,7 +32,7 @@ namespace UntitledCube.WorldRotation
         {
             OnStartRotate?.Invoke(direction);
 
-            directions.TryGetValue(direction, out Vector3 rotationValue);
+            _directions.TryGetValue(direction, out Vector3 rotationValue);
             Vector3 step = rotationValue / _stepAmount;
 
             StartCoroutine(RotationSteps(step));
@@ -40,10 +40,10 @@ namespace UntitledCube.WorldRotation
 
         private void SetValues()
         {
-            directions.Add(RotationDirection.UP, new Vector3(-90f, 0f, 0f));
-            directions.Add(RotationDirection.DOWN, new Vector3(90f, 0f, 0f));
-            directions.Add(RotationDirection.LEFT, new Vector3(0f, 90f, 0f));
-            directions.Add(RotationDirection.RIGHT, new Vector3(0f, -90f, 0f));
+            _directions.Add(RotationDirection.UP, new Vector3(-90f, 0f, 0f));
+            _directions.Add(RotationDirection.DOWN, new Vector3(90f, 0f, 0f));
+            _directions.Add(RotationDirection.LEFT, new Vector3(0f, 90f, 0f));
+            _directions.Add(RotationDirection.RIGHT, new Vector3(0f, -90f, 0f));
         }
 
         private IEnumerator RotatingSides()
