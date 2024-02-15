@@ -8,6 +8,7 @@ namespace UntitledCube.Maze.Generation
     {
         private static MazeCell[,] _cells;
         private static bool _isGenerated;
+        
         private static readonly List<MazeCell> _usedCells = new();
 
         public static MazeCell[,] Cells => _cells;
