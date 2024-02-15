@@ -8,13 +8,11 @@ namespace Input
 {
     public class SwipeInteraction : MonoBehaviour
     {
-        [SerializeField] private Vector2 maximumDirection;
         [SerializeField] private float minimumMagnitude;
 
-        private int _isGoingSideways = 2;
         private InputAction _swipeAction;
         private InputAction _touchAction;
-        private Vector2 _swipeDirection;
+        private Vector2 _swipePosition;
 
         private void Start()
         {
@@ -27,44 +25,40 @@ namespace Input
 
         private void Swipe(InputAction.CallbackContext callbackContext)
         {
-            _swipeDirection = callbackContext.ReadValue<Vector2>();
-
-       
-     /*       float x = Mathf.Abs(_swipeDirection.x);
-            float y = Mathf.Abs(_swipeDirection.y);
-            float newX = Mathf.Abs(_newSwipeDirection.x);
-            float newY = Mathf.Abs(_newSwipeDirection.y);
-
-            float directionX = newX - x; 
-            float directionY = newY - y; 
-
-            if(directionX > directionY && _isGoingSideways != 1)
-            {
-                  
-            }*/
+            _swipePosition = callbackContext.ReadValue<Vector2>();
 
         }
 
         private void StopSwipe(InputAction.CallbackContext callbackContext)
         {
-            if (_swipeDirection.magnitude < minimumMagnitude) return;
+            print("here");
+            if (_swipePosition.magnitude < minimumMagnitude) return;
 
-            float x = Mathf.Abs(_swipeDirection.x);
-            float y = Mathf.Abs(_swipeDirection.y);
+            Vector2 direction = CalculateDirection();
 
-           if(x > y)
+            if(direction != Vector2.zero)
             {
-                int direction = _swipeDirection.x > 0 ? 1 : -1;
-                //rotate sideways
-                print("sideways");
-            }
-           else if(x < y)
-            {
-                int direction = _swipeDirection.y > 0 ? 1 : -1;
-                //rotate upwards
-                print("upwards");
+                Debug.Log(direction);
+                //GravityShift(direction)
             }
 
+        }
+
+        private Vector2 CalculateDirection()
+        {
+            float x = Mathf.Abs(_swipePosition.x);
+            float y = Mathf.Abs(_swipePosition.y);
+
+            if (x > y)
+            {
+                return _swipePosition.x > 0 ? Vector2.right : Vector2.left;
+            }
+            else if (x < y)
+            {
+                return _swipePosition.y > 0 ? Vector2.up : Vector2.down;
+            }
+
+            return Vector2.zero;
         }
 
         private void OnDisable()
