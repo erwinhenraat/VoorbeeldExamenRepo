@@ -15,7 +15,7 @@ namespace UntitledCube.WorldRotation
         [SerializeField] private float _stepAmount = 20;
         [SerializeField] private float _stepSpeed = 0.05f;
 
-        private Dictionary<RotationDirection, Vector3> directions = new();
+        private Dictionary<RotationDirection, Vector3> _directions = new();
         private Vector3 _currentRotation;
 
         public Action<RotationDirection> OnStartRotate;
