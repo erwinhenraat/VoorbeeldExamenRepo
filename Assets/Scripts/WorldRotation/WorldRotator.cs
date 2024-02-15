@@ -3,34 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UntitledCube
+namespace UntitledCube.WorldRotation
 {
-    public enum RotationDirection
-    {
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT
-    }
-
     public class WorldRotator : MonoBehaviour
     {
         [Header ("Rotation Testing")]
-        [SerializeField]
-        private List<RotationDirection> _rotationDiractions = new();
-
-        [SerializeField]
-        private float _timebetweenRotations = 2f;
+        [SerializeField] private List<RotationDirection> _rotationDiractions = new();
+        [SerializeField] private float _timebetweenRotations = 2f;
 
         [Header("Settings")]
-        [SerializeField]
-        private float _stepAmount = 20;
+        [SerializeField] private float _stepAmount = 20;
+        [SerializeField] private float _stepSpeed = 0.05f;
 
-        [SerializeField]
-        private float _stepSpeed = 0.05f;
-
-        private Dictionary<RotationDirection, Vector3> directions = new Dictionary<RotationDirection, Vector3>();
-        private Vector3 currentRotation;
+        private Dictionary<RotationDirection, Vector3> directions = new();
+        private Vector3 _currentRotation;
 
         public Action<RotationDirection> OnStartRotate;
         public Action OnFinishRotate;
@@ -60,21 +46,21 @@ namespace UntitledCube
             directions.Add(RotationDirection.RIGHT, new Vector3(0f, -90f, 0f));
         }
 
-        IEnumerator RotatingSides()
+        private IEnumerator RotatingSides()
         {
-            foreach (var rotation in _rotationDiractions)
+            foreach (RotationDirection rotation in _rotationDiractions)
             {
                 RotateWorld(rotation);
                 yield return new WaitForSeconds(_timebetweenRotations);
             }
         }
 
-        IEnumerator RotationSteps(Vector3 step)
+        private IEnumerator RotationSteps(Vector3 step)
         {
             for (int i = 0; i < _stepAmount; i++)
             {
-                currentRotation += step;
-                transform.eulerAngles = currentRotation;
+                _currentRotation += step;
+                transform.eulerAngles = _currentRotation;
                 yield return new WaitForSeconds(_stepSpeed);
             }
 
