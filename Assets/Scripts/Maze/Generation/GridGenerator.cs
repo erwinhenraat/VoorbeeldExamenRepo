@@ -8,11 +8,13 @@ namespace UntitledCube.Maze.Generation
     {
         private static MazeCell[,] _cells;
         private static bool _isGenerated;
-        private static List<GameObject> _mazeHolders = new();
+        private static readonly Dictionary<GameObject, List<MazeCell>> _mazeHolders = new();
         
         private static readonly List<MazeCell> _usedCells = new();
 
         public static MazeCell[,] Cells => _cells;
+
+        public static Dictionary<GameObject, List<MazeCell>> Mazes => _mazeHolders;
 
         public static void Generate(int amount, Vector2 size)
         {
@@ -28,7 +30,7 @@ namespace UntitledCube.Maze.Generation
                 _cells = new MazeCell[(int)size.x, (int)size.y];
 
                 GameObject mazeHolder = new($"Maze Holder {i}");
-                _mazeHolders.Add(mazeHolder);
+                _mazeHolders.Add(mazeHolder, new());
 
                 for (int x = 0; x < size.x; x++)
                 {
@@ -46,6 +48,7 @@ namespace UntitledCube.Maze.Generation
                         avaibleCell.transform.parent = mazeHolder.transform;
                         avaibleCell.transform.rotation = Quaternion.Euler(Vector3.zero);
 
+                        _mazeHolders[mazeHolder].Add(avaibleCell);
                         _usedCells.Add(avaibleCell);
                         cellCount++;
                     }
@@ -61,13 +64,16 @@ namespace UntitledCube.Maze.Generation
             _isGenerated = true;
         }
 
-        private static void ShapeMazes(List<GameObject> mazes)
+        private static void ShapeMazes(Dictionary<GameObject, List<MazeCell>> mazes)
         {
             GameObject[] spawnPoints = PreLoader.Instance.SpawnPoints;
-            for (int i = 0; i < mazes.Count; i++)
+
+            int index = 0;
+            foreach(GameObject maze in mazes.Keys)
             {
-                mazes[i].transform.position = spawnPoints[i].transform.position;
-                mazes[i].transform.rotation = spawnPoints[i].transform.rotation;
+                maze.transform.position = spawnPoints[index].transform.position;
+                maze.transform.rotation = spawnPoints[index].transform.rotation;
+                index++;
             }
         }
 
@@ -86,7 +92,7 @@ namespace UntitledCube.Maze.Generation
 
             _usedCells.Clear();
 
-            foreach (GameObject maze in _mazeHolders)
+            foreach (GameObject maze in _mazeHolders.Keys)
                 GameObject.Destroy(maze);
 
             _mazeHolders.Clear();

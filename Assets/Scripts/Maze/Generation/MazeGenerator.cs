@@ -29,10 +29,10 @@ namespace UntitledCube.Maze.Generation
 
             GenerateGrid(size, worldPosition, rotation);
 
-            /*SetStartingCell(decryptedSeed);
+            SetStartingCell(decryptedSeed);
             SetExitCells(decryptedSeed);
 
-            GenerateMaze(decryptedSeed);*/
+            GenerateMaze(decryptedSeed);
         }
 
         private static void ResetCells()
@@ -48,6 +48,7 @@ namespace UntitledCube.Maze.Generation
         {
             GridGenerator.Generate(6, size);
             _cells = GridGenerator.Cells;
+            Debug.Log(_cells.Length);
             _mazeSize = new Vector2(_cells.GetLength(0), _cells.GetLength(1));
         }
 
