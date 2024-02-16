@@ -322,8 +322,16 @@ PrefabInstance:
       value: LevelWorld
       objectReference: {fileID: 0}
     - target: {fileID: 6299083955471557668, guid: f8811ee5069a82c4a9eb4acecd749d69, type: 3}
+      propertyPath: _stepSpeed
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 6299083955471557668, guid: f8811ee5069a82c4a9eb4acecd749d69, type: 3}
+      propertyPath: _stepAmount
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 6299083955471557668, guid: f8811ee5069a82c4a9eb4acecd749d69, type: 3}
       propertyPath: _rotationDiractions.Array.size
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6429119173175712323, guid: f8811ee5069a82c4a9eb4acecd749d69, type: 3}
       propertyPath: m_LocalPosition.x

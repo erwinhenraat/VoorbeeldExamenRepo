@@ -8,12 +8,12 @@ namespace UntitledCube.WorldRotation
     public class WorldRotator : MonoBehaviour
     {
         [Header ("Rotation Testing")]
-        [SerializeField] private List<RotationDirection> _rotationDiractions = new();
+        [SerializeField] private List<RotationDirection> _rotationDirections = new();
         [SerializeField] private float _timebetweenRotations = 2f;
 
         [Header("Settings")]
-        [SerializeField] private float _stepAmount = 20;
-        [SerializeField] private float _stepSpeed = 0.05f;
+        [SerializeField] private float _stepAmount = 200;
+        [SerializeField] private float _stepSpeed = 0.005f;
 
         private Dictionary<RotationDirection, Vector3> _directions = new();
         private Vector3 _currentRotation;
@@ -48,7 +48,7 @@ namespace UntitledCube.WorldRotation
 
         private IEnumerator RotatingSides()
         {
-            foreach (RotationDirection rotation in _rotationDiractions)
+            foreach (RotationDirection rotation in _rotationDirections)
             {
                 RotateWorld(rotation);
                 yield return new WaitForSeconds(_timebetweenRotations);
