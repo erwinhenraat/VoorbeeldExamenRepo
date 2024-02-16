@@ -8,13 +8,14 @@ namespace UntitledCube.Maze.Generation
 {
     public static class MazeGenerator
     {
-        private static MazeCell[,] _cells;
         private static Vector2 _mazeSize;
 
         private static int _nextCellItteration;
         private static int _completedCells;
 
         private static readonly List<int> _seed = new();
+        private static readonly List<string> _fullSeed = new();
+
         private static readonly List<MazeCell> _currentPath = new();
         private static readonly Dictionary<MazeCell, Vector2> _possibleNext = new();
         private static readonly Vector2[] _directions = { Vector2.right, Vector2.left, Vector2.down, Vector2.up };
@@ -27,18 +28,32 @@ namespace UntitledCube.Maze.Generation
             
             ResetCells();
 
+            _fullSeed.Clear();
+
             GenerateGrid(size, worldPosition, rotation);
 
-            SetStartingCell(decryptedSeed);
-            SetExitCells(decryptedSeed);
+            foreach (GameObject grid in GridGenerator.Grids.Keys)
+            {
+                ResetCells();
 
-            GenerateMaze(decryptedSeed);
+                MazeCell[,] cells = GridGenerator.Grids[grid];
+
+                _mazeSize = new Vector2(cells.GetLength(0), cells.GetLength(1));
+
+                SetStartingCell(cells, decryptedSeed);
+                SetExitCells(cells, decryptedSeed);
+
+                GenerateMaze(cells, decryptedSeed);
+            }
+
+            string fullSeed = SeedCodec.Assemble(_fullSeed);
+            Debug.Log(fullSeed);
+            OnGenerated?.Invoke(fullSeed);
         }
 
         private static void ResetCells()
         {
             _currentPath.Clear();
-            _cells = new MazeCell[0, 0];
             _completedCells = 0;
             _seed.Clear();
             _nextCellItteration = 0;
@@ -47,45 +62,42 @@ namespace UntitledCube.Maze.Generation
         private static void GenerateGrid(Vector2 size, Vector3 worldPosition, Vector3 rotation)
         {
             GridGenerator.Generate(6, size);
-            _cells = GridGenerator.Cells;
-            Debug.Log(_cells.Length);
-            _mazeSize = new Vector2(_cells.GetLength(0), _cells.GetLength(1));
         }
 
-        private static void SetStartingCell(List<int> seed)
+        private static void SetStartingCell(MazeCell[,] cells, List<int> seed)
         {
             int startPoint = seed.Count == 0 ? UnityEngine.Random.Range(0, (int)_mazeSize.x) : seed[0];
-            _currentPath.Add(_cells[startPoint, 0]);
+            _currentPath.Add(cells[startPoint, 0]);
             _currentPath[0].State = CellState.Current;
             _currentPath[0].RemoveWall(Vector2.down);
             _seed.Add(startPoint);
         }
 
-        private static void SetExitCells(List<int> seed)
+        private static void SetExitCells(MazeCell[,] cells, List<int> seed)
         {
             int topExitPoint = seed.Count == 0 ? UnityEngine.Random.Range(0, (int)_mazeSize.x) : seed[1];
-            _cells[topExitPoint, (int)_mazeSize.y - 1].RemoveWall(Vector2.up);
+            cells[topExitPoint, (int)_mazeSize.y - 1].RemoveWall(Vector2.up);
             _seed.Add(topExitPoint);
 
             int leftExitPoint = seed.Count == 0 ? UnityEngine.Random.Range(0, (int)_mazeSize.y) : seed[2];
-            _cells[0, leftExitPoint].RemoveWall(Vector2.left);
+            cells[0, leftExitPoint].RemoveWall(Vector2.left);
             _seed.Add(leftExitPoint);
 
             int rightExitPoint = seed.Count == 0 ? UnityEngine.Random.Range(0, (int)_mazeSize.y) : seed[3];
-            _cells[(int)_mazeSize.x - 1, rightExitPoint].RemoveWall(Vector2.right);
+            cells[(int)_mazeSize.x - 1, rightExitPoint].RemoveWall(Vector2.right);
             _seed.Add(rightExitPoint);
         }
 
-        private static void GenerateMaze(List<int> seed)
+        private static void GenerateMaze(MazeCell[,] cells, List<int> seed)
         {
-            while (_completedCells < _cells.Length)
+            while (_completedCells < cells.Length)
             {
                 _possibleNext.Clear();
 
                 MazeCell currentCell = _currentPath[^1];
                 Vector2 currentCellPos = new(currentCell.Position.x, currentCell.Position.y);
 
-                GetPossibleDirections(currentCellPos);
+                GetPossibleDirections(cells, currentCellPos);
 
                 if (_possibleNext.Count > 0)
                     GoToNextCell(seed);
@@ -94,12 +106,11 @@ namespace UntitledCube.Maze.Generation
             }
 
             string encryptedSeed = SeedCodec.Encrypt(SeedCodec.Encode(_seed));
-
-            OnGenerated?.Invoke(encryptedSeed);
-            Debug.Log($"Encrypted Seed : {encryptedSeed}");
+            Debug.Log(encryptedSeed);
+            _fullSeed.Add(encryptedSeed);
         }
 
-        private static void GetPossibleDirections(Vector2 position)
+        private static void GetPossibleDirections(MazeCell[,] cells, Vector2 position)
         {
             for (int i = 0; i < _directions.Length; i++)
             {
@@ -110,7 +121,7 @@ namespace UntitledCube.Maze.Generation
 
                 int targetX = (int)(position.x + currentDirection.x);
                 int targetY = (int)(position.y + currentDirection.y);
-                MazeCell currentCheckingCell = _cells[targetX, targetY];
+                MazeCell currentCheckingCell = cells[targetX, targetY];
 
                 if (currentCheckingCell.State == CellState.Completed || currentCheckingCell.State == CellState.Current)
                     continue;

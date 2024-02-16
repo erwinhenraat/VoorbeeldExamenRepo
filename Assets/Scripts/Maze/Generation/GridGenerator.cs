@@ -6,15 +6,12 @@ namespace UntitledCube.Maze.Generation
 {
     public static class GridGenerator
     {
-        private static MazeCell[,] _cells;
         private static bool _isGenerated;
-        private static readonly Dictionary<GameObject, List<MazeCell>> _mazeHolders = new();
+        private static readonly Dictionary<GameObject, MazeCell[,]> _gridHolders = new();
         
         private static readonly List<MazeCell> _usedCells = new();
 
-        public static MazeCell[,] Cells => _cells;
-
-        public static Dictionary<GameObject, List<MazeCell>> Mazes => _mazeHolders;
+        public static Dictionary<GameObject, MazeCell[,]> Grids => _gridHolders;
 
         public static void Generate(int amount, Vector2 size)
         {
@@ -27,10 +24,8 @@ namespace UntitledCube.Maze.Generation
 
             for (int i = 0; i < amount; i++)
             {
-                _cells = new MazeCell[(int)size.x, (int)size.y];
-
-                GameObject mazeHolder = new($"Maze Holder {i}");
-                _mazeHolders.Add(mazeHolder, new());
+                GameObject gridHolder = new($"Maze Holder {i}");
+                _gridHolders.Add(gridHolder, new MazeCell[(int)size.x, (int)size.y]);
 
                 for (int x = 0; x < size.x; x++)
                 {
@@ -39,32 +34,31 @@ namespace UntitledCube.Maze.Generation
                         Vector2 position = new(x, y);
                         MazeCell avaibleCell = preLoadedCells[cellCount];
 
-                        _cells.SetValue(avaibleCell, x, y);
+                        _gridHolders[gridHolder].SetValue(avaibleCell, x, y);
 
                         avaibleCell.Position = position;
 
                         avaibleCell.transform.gameObject.SetActive(true);
                         avaibleCell.transform.position = position;
-                        avaibleCell.transform.parent = mazeHolder.transform;
+                        avaibleCell.transform.parent = gridHolder.transform;
                         avaibleCell.transform.rotation = Quaternion.Euler(Vector3.zero);
 
-                        _mazeHolders[mazeHolder].Add(avaibleCell);
                         _usedCells.Add(avaibleCell);
                         cellCount++;
                     }
                 }
 
-                float xpos = mazeHolder.transform.position.x == 0 ? 1 : mazeHolder.transform.position.x;
+                /*float xpos = gridHolder.transform.position.x == 0 ? 1 : gridHolder.transform.position.x;
                 Vector2 positon = new(xpos * (i*6), 0);
-                mazeHolder.transform.position = positon;
+                gridHolder.transform.position = positon;*/
             }
 
-            ShapeMazes(_mazeHolders);
+            ShapeMazes(_gridHolders);
 
             _isGenerated = true;
         }
 
-        private static void ShapeMazes(Dictionary<GameObject, List<MazeCell>> mazes)
+        private static void ShapeMazes(Dictionary<GameObject, MazeCell[,]> mazes)
         {
             GameObject[] spawnPoints = PreLoader.Instance.SpawnPoints;
 
@@ -92,10 +86,10 @@ namespace UntitledCube.Maze.Generation
 
             _usedCells.Clear();
 
-            foreach (GameObject maze in _mazeHolders.Keys)
+            foreach (GameObject maze in _gridHolders.Keys)
                 GameObject.Destroy(maze);
 
-            _mazeHolders.Clear();
+            _gridHolders.Clear();
         }
     }
 }
