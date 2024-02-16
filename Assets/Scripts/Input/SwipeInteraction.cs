@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Input
+namespace UntitledCube.Input
 {
     public class SwipeInteraction : MonoBehaviour
     {
@@ -16,7 +13,7 @@ namespace Input
         private Vector2 _swipePosition;
         private Vector2 _swipeDirection;
 
-        private void Start()
+        private void OnEnable()
         {
             InputSystem.SubscribeToAction("Swipe", Swipe, out _swipeAction);
         }
