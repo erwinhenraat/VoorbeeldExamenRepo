@@ -2,12 +2,13 @@ using System.Collections.Generic;
 using System.Text;
 using System;
 using System.Linq;
+using UnityEngine;
 
 namespace UntitledCube.Maze.Generation
 {
     public static class SeedCodec
     {
-        private static readonly Dictionary<string, string> _premutationTable = new()
+        private static readonly Dictionary<string, string> _encryptionPremutationTable = new()
         {
             {"000", "a"}, {"001", "b"}, {"002", "c"}, {"010", "d"}, {"011", "e"},
             {"012", "f"}, {"020", "g"}, {"021", "h"}, {"022", "i"}, {"100", "j"},
@@ -20,6 +21,21 @@ namespace UntitledCube.Maze.Generation
             {"715", "O"}, {"540", "P"}, {"075", "Q"}, {"371", "R"}, {"015", "S"},
             {"601", "T"}, {"615", "U"}, {"170", "V"}, {"541", "W"}, {"174", "X"},
             {"173", "Y"}, {"501", "Z"}, {"036", "!"}, {"641", "?"}, {"605", "#"}, 
+        };
+
+        private static readonly Dictionary<string, string> _decryptionPremutationTable = new()
+        {
+            {"a", "000"}, {"b", "001"}, {"c", "002"}, {"d", "010"}, {"e", "011"},
+             {"f", "012"}, {"g", "020"}, {"h", "021"}, {"i", "022"}, {"j", "100"},
+             {"k", "101"}, {"l", "102"}, {"m", "110"}, {"n", "111"}, {"o", "112"},
+             {"p", "120"}, {"q", "121"}, {"r", "122"}, {"s", "200"}, {"t", "201"},
+             {"u", "202"}, {"v", "210"}, {"w", "211"}, {"x", "212"}, {"y", "220"},
+             {"z", "221"}, {"A", "016"}, {"B", "156"}, {"C", "460"}, {"D", "146"},
+             {"E", "714"}, {"F", "571"}, {"G", "506"}, {"H", "430"}, {"I", "310"},
+             {"J", "750"}, {"K", "504"}, {"L", "361"}, {"M", "140"}, {"N", "417"},
+             {"O", "715"}, {"P", "540"}, {"Q", "075"}, {"R", "371"}, {"S", "015"},
+             {"T", "601"}, {"U", "615"}, {"V", "170"}, {"W", "541"}, {"X", "174"},
+             {"Y", "173"}, {"Z", "501"}, {"!", "036"}, {"?", "641"}, {"#", "605"}
         };
 
         /// <summary>
@@ -69,7 +85,9 @@ namespace UntitledCube.Maze.Generation
             for (int i = 0; i < data.Length; i += 3)
             {
                 string triplet = data.Substring(i, Math.Min(3, data.Length - i));
-                encodedData += _premutationTable.ContainsKey(triplet) ? _premutationTable[triplet] : triplet;
+                encodedData += _encryptionPremutationTable.ContainsKey(triplet) 
+                    ? _encryptionPremutationTable[triplet] 
+                    : triplet;
             }
 
             return encodedData;
@@ -86,7 +104,9 @@ namespace UntitledCube.Maze.Generation
             foreach (char charToDecode in data)
             {
                 string key = charToDecode.ToString();
-                decodedData += _premutationTable.ContainsKey(key) ? _premutationTable[key] : key;
+                decodedData += _decryptionPremutationTable.ContainsKey(key) 
+                    ? _decryptionPremutationTable[key] 
+                    : key;
             }
 
             return decodedData;
@@ -106,5 +126,12 @@ namespace UntitledCube.Maze.Generation
         /// <returns>A list of strings representing the components of the original string.</returns>
         public static List<string> Disassemble(string seed) => seed.Split('-').ToList();
 
+        public static int StartCell(string seed, int cell)
+        {
+            string decyptedSeed = Decrypt(seed);
+            List<int> decodedSeed = Decode(decyptedSeed);
+            int startCell = decodedSeed[cell];
+            return startCell;
+        }
     }
 }

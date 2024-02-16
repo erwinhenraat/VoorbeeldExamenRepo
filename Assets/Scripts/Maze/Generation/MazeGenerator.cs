@@ -20,6 +20,8 @@ namespace UntitledCube.Maze.Generation
         private static readonly Dictionary<MazeCell, Vector2> _possibleNext = new();
         private static readonly Vector2[] _directions = { Vector2.right, Vector2.left, Vector2.down, Vector2.up };
 
+        private static int _mazeCount = 0;
+
         public static Action<string> OnGenerated;
 
         public static void Generate(Vector2 size, Vector3 worldPosition, Vector3 rotation, string seed = "")
@@ -29,8 +31,9 @@ namespace UntitledCube.Maze.Generation
             ResetCells();
 
             _fullSeed.Clear();
+            _mazeCount = 0;
 
-            GenerateGrid(size, worldPosition, rotation);
+            GridGenerator.Generate(6, size);
 
             foreach (GameObject grid in GridGenerator.Grids.Keys)
             {
@@ -44,6 +47,8 @@ namespace UntitledCube.Maze.Generation
                 SetExitCells(cells, decryptedSeed);
 
                 GenerateMaze(cells, decryptedSeed);
+
+                _mazeCount++;
             }
 
             string fullSeed = SeedCodec.Assemble(_fullSeed);
@@ -59,14 +64,23 @@ namespace UntitledCube.Maze.Generation
             _nextCellItteration = 0;
         }
 
-        private static void GenerateGrid(Vector2 size, Vector3 worldPosition, Vector3 rotation)
-        {
-            GridGenerator.Generate(6, size);
-        }
-
         private static void SetStartingCell(MazeCell[,] cells, List<int> seed)
         {
-            int startPoint = seed.Count == 0 ? UnityEngine.Random.Range(0, (int)_mazeSize.x) : seed[0];
+            int startPoint;
+
+            if (_mazeCount == 1)
+                startPoint = SeedCodec.StartCell(_fullSeed[0], 1);
+            else if (_mazeCount == 2)
+                startPoint = SeedCodec.StartCell(_fullSeed[1], 1);
+            else if (_mazeCount == 3)
+                startPoint = SeedCodec.StartCell(_fullSeed[2], 1);
+            else if (_mazeCount == 4)
+                startPoint = SeedCodec.StartCell(_fullSeed[3], 2);
+            else if (_mazeCount == 5)
+                startPoint = 5 - SeedCodec.StartCell(_fullSeed[3], 3);
+            else
+                startPoint = seed.Count == 0 ? UnityEngine.Random.Range(0, (int)_mazeSize.x) : seed[0];
+
             _currentPath.Add(cells[startPoint, 0]);
             _currentPath[0].State = CellState.Current;
             _currentPath[0].RemoveWall(Vector2.down);
@@ -75,15 +89,41 @@ namespace UntitledCube.Maze.Generation
 
         private static void SetExitCells(MazeCell[,] cells, List<int> seed)
         {
-            int topExitPoint = seed.Count == 0 ? UnityEngine.Random.Range(0, (int)_mazeSize.x) : seed[1];
+            int topExitPoint;
+
+            if(_mazeCount == 3)
+                topExitPoint = SeedCodec.StartCell(_fullSeed[0], 0);
+            else if (_mazeCount == 4)
+                topExitPoint = 5 - SeedCodec.StartCell(_fullSeed[1], 2);
+            else if(_mazeCount == 5 )
+                topExitPoint = SeedCodec.StartCell(_fullSeed[1], 3);
+            else
+                topExitPoint = seed.Count == 0 ? UnityEngine.Random.Range(0, (int)_mazeSize.x) : seed[1];
+
             cells[topExitPoint, (int)_mazeSize.y - 1].RemoveWall(Vector2.up);
             _seed.Add(topExitPoint);
 
-            int leftExitPoint = seed.Count == 0 ? UnityEngine.Random.Range(0, (int)_mazeSize.y) : seed[2];
+            int leftExitPoint;
+
+            if(_mazeCount == 5)
+                leftExitPoint = SeedCodec.StartCell(_fullSeed[0], 3);
+            else if (_mazeCount == 4)
+                leftExitPoint = 5 - SeedCodec.StartCell(_fullSeed[2], 2);
+            else
+                leftExitPoint = seed.Count == 0 ? UnityEngine.Random.Range(0, (int)_mazeSize.y) : seed[2];
+
             cells[0, leftExitPoint].RemoveWall(Vector2.left);
             _seed.Add(leftExitPoint);
 
-            int rightExitPoint = seed.Count == 0 ? UnityEngine.Random.Range(0, (int)_mazeSize.y) : seed[3];
+            int rightExitPoint;
+
+            if (_mazeCount == 5)
+                rightExitPoint =  5 - SeedCodec.StartCell(_fullSeed[2], 3);
+            else if(_mazeCount == 4)
+                rightExitPoint = SeedCodec.StartCell(_fullSeed[0], 2);
+            else
+                rightExitPoint = seed.Count == 0 ? UnityEngine.Random.Range(0, (int)_mazeSize.y) : seed[3];
+
             cells[(int)_mazeSize.x - 1, rightExitPoint].RemoveWall(Vector2.right);
             _seed.Add(rightExitPoint);
         }
