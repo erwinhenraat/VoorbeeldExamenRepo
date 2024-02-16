@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System;
+using System.Linq;
 
 namespace UntitledCube.Maze.Generation
 {
@@ -90,5 +91,20 @@ namespace UntitledCube.Maze.Generation
 
             return decodedData;
         }
+
+        /// <summary>
+        /// Assembles a list of strings into a single string, separated by hyphens.
+        /// </summary>
+        /// <param name="seeds">A list of strings to be assembled.</param>
+        /// <returns>The assembled string.</returns>
+        public static string Assemble(List<string> seeds) => string.Join("-", seeds);
+
+        /// <summary>
+        /// Splits a hyphen-separated string into a list of individual strings.
+        /// </summary>
+        /// <param name="seed">The hyphen-separated string to be disassembled.</param>
+        /// <returns>A list of strings representing the components of the original string.</returns>
+        public static List<string> Disassemble(string seed) => seed.Split('-').ToList();
+
     }
 }
