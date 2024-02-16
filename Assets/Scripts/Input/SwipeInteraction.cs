@@ -9,6 +9,7 @@ namespace Input
     public class SwipeInteraction : MonoBehaviour
     {
         [SerializeField] private float _moveThreshold;
+        [SerializeField] private GameObject _testObject;//todo: changed this to gravityshift script
 
         private InputAction _swipeAction;
 
@@ -30,7 +31,7 @@ namespace Input
 
             if(_swipeDirection != _newSwipeDirection ) 
             {
-                Debug.Log(_newSwipeDirection);
+                _testObject.transform.position = _newSwipeDirection;
                 //GravityShift(direction)
             }
 
