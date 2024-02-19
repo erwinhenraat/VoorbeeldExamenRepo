@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Text;
-using System;
 using System.Linq;
-using UnityEngine;
+using System;
 
 namespace UntitledCube.Maze.Generation
 {
@@ -23,20 +22,7 @@ namespace UntitledCube.Maze.Generation
             {"173", "Y"}, {"501", "Z"}, {"036", "!"}, {"641", "?"}, {"605", "#"}, 
         };
 
-        private static readonly Dictionary<string, string> _decryptionPremutationTable = new()
-        {
-            {"a", "000"}, {"b", "001"}, {"c", "002"}, {"d", "010"}, {"e", "011"},
-             {"f", "012"}, {"g", "020"}, {"h", "021"}, {"i", "022"}, {"j", "100"},
-             {"k", "101"}, {"l", "102"}, {"m", "110"}, {"n", "111"}, {"o", "112"},
-             {"p", "120"}, {"q", "121"}, {"r", "122"}, {"s", "200"}, {"t", "201"},
-             {"u", "202"}, {"v", "210"}, {"w", "211"}, {"x", "212"}, {"y", "220"},
-             {"z", "221"}, {"A", "016"}, {"B", "156"}, {"C", "460"}, {"D", "146"},
-             {"E", "714"}, {"F", "571"}, {"G", "506"}, {"H", "430"}, {"I", "310"},
-             {"J", "750"}, {"K", "504"}, {"L", "361"}, {"M", "140"}, {"N", "417"},
-             {"O", "715"}, {"P", "540"}, {"Q", "075"}, {"R", "371"}, {"S", "015"},
-             {"T", "601"}, {"U", "615"}, {"V", "170"}, {"W", "541"}, {"X", "174"},
-             {"Y", "173"}, {"Z", "501"}, {"!", "036"}, {"?", "641"}, {"#", "605"}
-        };
+        private static readonly Dictionary<string, string> _decryptionPremutationTable = new();
 
         /// <summary>
         /// Encodes a list of integers into a single string representation.
@@ -100,6 +86,9 @@ namespace UntitledCube.Maze.Generation
         /// <returns>The decrypted string.</returns>
         public static string Decrypt(string data)
         {
+            if (_decryptionPremutationTable.Count <= 0)
+                GenerateDecryptionTable();
+
             string decodedData = "";
             foreach (char charToDecode in data)
             {
@@ -126,12 +115,24 @@ namespace UntitledCube.Maze.Generation
         /// <returns>A list of strings representing the components of the original string.</returns>
         public static List<string> Disassemble(string seed) => seed.Split('-').ToList();
 
+        /// <summary>
+        /// Extracts the starting cell index for maze generation from a decoded and decrypted seed.
+        /// </summary>
+        /// <param name="seed">The encoded and encrypted maze seed.</param>
+        /// <param name="cell">The index of the desired starting cell within the decoded seed.</param>
+        /// <returns>The integer value representing the starting cell.</returns>
         public static int StartCell(string seed, int cell)
         {
             string decyptedSeed = Decrypt(seed);
             List<int> decodedSeed = Decode(decyptedSeed);
             int startCell = decodedSeed[cell];
             return startCell;
+        }
+
+        private static void GenerateDecryptionTable()
+        {
+            foreach (KeyValuePair<string, string> pair in _encryptionPremutationTable)
+                _decryptionPremutationTable[pair.Value] = pair.Key;
         }
     }
 }
