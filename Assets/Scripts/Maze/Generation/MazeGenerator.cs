@@ -51,9 +51,7 @@ namespace UntitledCube.Maze.Generation
                 _mazeCount++;
             }
 
-            string fullSeed = SeedCodec.Assemble(_fullSeed);
-            Debug.Log(fullSeed);
-            OnGenerated?.Invoke(fullSeed);
+            OnGenerated?.Invoke(SeedCodec.Assemble(_fullSeed));
         }
 
         private static void ResetCells()
@@ -66,21 +64,7 @@ namespace UntitledCube.Maze.Generation
 
         private static void SetStartingCell(MazeCell[,] cells, List<int> seed)
         {
-            int startPoint;
-
-            if (_mazeCount == 1)
-                startPoint = SeedCodec.StartCell(_fullSeed[0], 1);
-            else if (_mazeCount == 2)
-                startPoint = SeedCodec.StartCell(_fullSeed[1], 1);
-            else if (_mazeCount == 3)
-                startPoint = SeedCodec.StartCell(_fullSeed[2], 1);
-            else if (_mazeCount == 4)
-                startPoint = SeedCodec.StartCell(_fullSeed[3], 2);
-            else if (_mazeCount == 5)
-                startPoint = 5 - SeedCodec.StartCell(_fullSeed[3], 3);
-            else
-                startPoint = seed.Count == 0 ? UnityEngine.Random.Range(0, (int)_mazeSize.x) : seed[0];
-
+            int startPoint = CalculateStartPoint(seed);
             _currentPath.Add(cells[startPoint, 0]);
             _currentPath[0].State = CellState.Current;
             _currentPath[0].RemoveWall(Vector2.down);
@@ -89,43 +73,56 @@ namespace UntitledCube.Maze.Generation
 
         private static void SetExitCells(MazeCell[,] cells, List<int> seed)
         {
-            int topExitPoint;
+            (int Top, int Left, int Right) = CalculateExitPoints(seed);
 
-            if(_mazeCount == 3)
-                topExitPoint = SeedCodec.StartCell(_fullSeed[0], 0);
-            else if (_mazeCount == 4)
-                topExitPoint = 5 - SeedCodec.StartCell(_fullSeed[1], 2);
-            else if(_mazeCount == 5 )
-                topExitPoint = SeedCodec.StartCell(_fullSeed[1], 3);
-            else
-                topExitPoint = seed.Count == 0 ? UnityEngine.Random.Range(0, (int)_mazeSize.x) : seed[1];
+            cells[Top, (int)_mazeSize.y - 1].RemoveWall(Vector2.up);
+            _seed.Add(Top);
 
-            cells[topExitPoint, (int)_mazeSize.y - 1].RemoveWall(Vector2.up);
-            _seed.Add(topExitPoint);
+            cells[0, Left].RemoveWall(Vector2.left);
+            _seed.Add(Left);
 
-            int leftExitPoint;
+            cells[(int)_mazeSize.x - 1, Right].RemoveWall(Vector2.right);
+            _seed.Add(Right);
+        }
 
-            if(_mazeCount == 5)
-                leftExitPoint = SeedCodec.StartCell(_fullSeed[0], 3);
-            else if (_mazeCount == 4)
-                leftExitPoint = 5 - SeedCodec.StartCell(_fullSeed[2], 2);
-            else
-                leftExitPoint = seed.Count == 0 ? UnityEngine.Random.Range(0, (int)_mazeSize.y) : seed[2];
+        private static int CalculateStartPoint(List<int> seed)
+        {
+            if (_mazeCount >= 1 && _mazeCount <= 5)
+            {
+                if (_mazeCount == 5)
+                    return 5 - SeedCodec.StartCell(_fullSeed[3], 3);
+                int index = _mazeCount == 4 ? 3 : _mazeCount - 1;
+                int factor = _mazeCount == 4 ? 2 : 1;
+                return SeedCodec.StartCell(_fullSeed[index], factor);
+            }
+            return seed.Count == 0 ? UnityEngine.Random.Range(0, (int)_mazeSize.x) : seed[0];
+        }
 
-            cells[0, leftExitPoint].RemoveWall(Vector2.left);
-            _seed.Add(leftExitPoint);
+        private static (int Top, int Left, int Right) CalculateExitPoints(List<int> seed)
+        {
+            int topExitPoint = _mazeCount switch
+            {
+                3 => SeedCodec.StartCell(_fullSeed[0], 0),
+                4 => 5 - SeedCodec.StartCell(_fullSeed[1], 2),
+                5 => SeedCodec.StartCell(_fullSeed[1], 3),
+                _ => seed.Count == 0 ? UnityEngine.Random.Range(0, (int)_mazeSize.x) : seed[1],
+            };
 
-            int rightExitPoint;
+            int leftExitPoint = _mazeCount switch
+            {
+                4 => 5 - SeedCodec.StartCell(_fullSeed[2], 2),
+                5 => SeedCodec.StartCell(_fullSeed[0], 3),
+                _ => seed.Count == 0 ? UnityEngine.Random.Range(0, (int)_mazeSize.y) : seed[2],
+            };
 
-            if (_mazeCount == 5)
-                rightExitPoint =  5 - SeedCodec.StartCell(_fullSeed[2], 3);
-            else if(_mazeCount == 4)
-                rightExitPoint = SeedCodec.StartCell(_fullSeed[0], 2);
-            else
-                rightExitPoint = seed.Count == 0 ? UnityEngine.Random.Range(0, (int)_mazeSize.y) : seed[3];
+            int rightExitPoint = _mazeCount switch
+            {
+                4 => SeedCodec.StartCell(_fullSeed[0], 2),
+                5 => 5 - SeedCodec.StartCell(_fullSeed[2], 3),
+                _ => seed.Count == 0 ? UnityEngine.Random.Range(0, (int)_mazeSize.y) : seed[3],
+            };
 
-            cells[(int)_mazeSize.x - 1, rightExitPoint].RemoveWall(Vector2.right);
-            _seed.Add(rightExitPoint);
+            return (topExitPoint, leftExitPoint, rightExitPoint);
         }
 
         private static void GenerateMaze(MazeCell[,] cells, List<int> seed)
@@ -145,9 +142,7 @@ namespace UntitledCube.Maze.Generation
                     Backtrack();
             }
 
-            string encryptedSeed = SeedCodec.Encrypt(SeedCodec.Encode(_seed));
-            Debug.Log(encryptedSeed);
-            _fullSeed.Add(encryptedSeed);
+            _fullSeed.Add(SeedCodec.Encrypt(SeedCodec.Encode(_seed)));
         }
 
         private static void GetPossibleDirections(MazeCell[,] cells, Vector2 position)

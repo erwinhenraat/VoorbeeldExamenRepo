@@ -807,10 +807,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1967515587}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -1085}
-  m_SizeDelta: {x: 1400, y: 875}
+  m_AnchorMin: {x: 0.5, y: 0.9}
+  m_AnchorMax: {x: 0.5, y: 0.9}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1400, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1304340834
 MonoBehaviour:
@@ -834,18 +834,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 122
+    m_FontSize: 75
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 122
+    m_MinSize: 0
+    m_MaxSize: 197
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0033012211010100001020001100000000000001
+  m_Text: 115hblbjrjajaja-103300mjgbajbsdda-f410krpbdlddjaa-113rheaemaaadaa-323522mabgsaqaaja-Hmreeaabaebaa
 --- !u!222 &1304340835
 CanvasRenderer:
   m_ObjectHideFlags: 0
