@@ -54,16 +54,27 @@ namespace Car
         private void Update()
         {
             // Player automatically goes forward
-            _characterController.Move(-transform.right * (moveSpeed * Time.deltaTime));
+            var transform1 = transform;
+            var localPosition = transform1.localPosition;
+            localPosition = new Vector3(localPosition.x, 0f, localPosition.z);
+            transform1.localPosition = localPosition;
+            
+            _characterController.Move(-transform1.right * (moveSpeed * Time.deltaTime));
 
             Debug.Log("_isGoingLeft: " + _isGoingLeft);
             Debug.Log("_isGoingRight: " + _isGoingRight);
 
             // Move left or right while the corresponding button is held down
             if (_isGoingLeft)
+            {
                 _characterController.Move(-transform.forward * (moveSpeed * Time.deltaTime));
+                transform.localRotation = Quaternion.Euler(0f, 75f, 0);
+            }
             else if (_isGoingRight)
+            {
                 _characterController.Move(transform.forward * (moveSpeed * Time.deltaTime));
+                transform.localRotation = Quaternion.Euler(0f, 105f, 0);
+            }
         }
     }
 }
