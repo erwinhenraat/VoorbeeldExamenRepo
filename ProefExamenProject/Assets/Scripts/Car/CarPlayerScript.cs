@@ -55,14 +55,15 @@ namespace Car
         {
             // Player automatically goes forward
             var transform1 = transform;
-            var localPosition = transform1.localPosition;
-            localPosition = new Vector3(localPosition.x, 0f, localPosition.z);
-            transform1.localPosition = localPosition;
+            
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity))
+            {
+                var distanceToGround = hit.distance;
+                transform.position -= new Vector3(0, distanceToGround - 0.439f, 0f);
+            }
             
             _characterController.Move(-transform1.right * (moveSpeed * Time.deltaTime));
-
-            Debug.Log("_isGoingLeft: " + _isGoingLeft);
-            Debug.Log("_isGoingRight: " + _isGoingRight);
 
             // Move left or right while the corresponding button is held down
             if (_isGoingLeft)

@@ -15,9 +15,13 @@ namespace Car
             // Calculate the desired x-position of the camera
             var desiredXPosition = playerTransform.position.z;
 
+            
+            var position = transform.position;
+            
             // Smoothly move the camera towards the desired x-position
-            var smoothedXPosition = Mathf.Lerp(transform.position.z, desiredXPosition, smoothSpeed * Time.deltaTime);
-            transform.position = new Vector3(transform.position.x, transform.position.y, smoothedXPosition);
+            var smoothedXPosition = Mathf.Lerp(position.z, desiredXPosition, smoothSpeed * Time.deltaTime);
+            position = new Vector3(position.x, position.y, smoothedXPosition);
+            transform.position = position;
         }
     }
 }
