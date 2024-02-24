@@ -1,6 +1,8 @@
 using System.Security.Cryptography.X509Certificates;
+using Input.Script;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.UI;
 
 namespace Car
@@ -10,10 +12,13 @@ namespace Car
 
         [Header("Car Controller: ")] 
         [SerializeField] private float moveSpeed = 5f;
+        [SerializeField] private InputHandler handler;
         private CharacterController _characterController;
         
         private bool _isGoingLeft;
         private bool _isGoingRight;
+        private float _rotSpeed = 90f;
+        private float _maxRotAngle = 30f;
 
         [Header("Assign Buttons: ")] 
         [SerializeField] private Button leftButton;
@@ -66,16 +71,24 @@ namespace Car
             _characterController.Move(-transform1.right * (moveSpeed * Time.deltaTime));
 
             // Move left or right while the corresponding button is held down
-            if (_isGoingLeft)
+            if (_isGoingLeft || handler.phoneInput == InputHandler.InputState.Left)
             {
                 _characterController.Move(-transform.forward * (moveSpeed * Time.deltaTime));
-                transform.localRotation = Quaternion.Euler(0f, 75f, 0);
+                RotateCar(-1);
             }
-            else if (_isGoingRight)
+            else if (_isGoingRight || handler.phoneInput == InputHandler.InputState.Right)
             {
                 _characterController.Move(transform.forward * (moveSpeed * Time.deltaTime));
-                transform.localRotation = Quaternion.Euler(0f, 105f, 0);
+                RotateCar(1);
             }
+        }
+ 
+        private void RotateCar(int dir)
+        {
+            var rotAngle = _rotSpeed * Time.deltaTime * dir;
+            
+            if (Mathf.Abs(transform.localEulerAngles.y) < _maxRotAngle)
+                transform.Rotate(0,rotAngle,0);
         }
     }
 }
