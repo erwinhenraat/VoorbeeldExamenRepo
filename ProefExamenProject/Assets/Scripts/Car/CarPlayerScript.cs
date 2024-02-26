@@ -85,8 +85,11 @@ namespace Car
  
         private void RotateCar(int dir)
         {
-            var rotAngle = _rotSpeed * Time.deltaTime * dir;
-            
+            var targetAngle = dir * _maxRotAngle;
+            var rotationAmount = _rotSpeed * Time.deltaTime * dir;
+            var currentAngle = transform.localEulerAngles.y;
+            var rotAngle = Mathf.LerpAngle(currentAngle, targetAngle, rotationAmount);
+
             if (Mathf.Abs(transform.localEulerAngles.y) < _maxRotAngle)
                 transform.Rotate(0,rotAngle,0);
         }
