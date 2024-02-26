@@ -129,6 +129,23 @@ namespace UntitledCube.Maze.Generation
             return startCell;
         }
 
+        /// <summary>
+        /// Processes a seed string by disassembling, decrypting, and decoding its components, 
+        /// returning a nested list of integer results.
+        /// </summary>
+        /// <param name="seed">The input seed string.</param>
+        /// <returns>A list of lists, where each inner list represents the decoded integers.</returns>
+        public static List<List<int>> ProcessSeed(string seed)
+        {
+            if (string.IsNullOrEmpty(seed))
+                return null;
+
+            return Disassemble(seed)
+                   .Select(Decrypt)
+                   .Select(Decode)
+                   .ToList();
+        }
+
         private static void GenerateDecryptionTable()
         {
             foreach (KeyValuePair<string, string> pair in _encryptionPremutationTable)

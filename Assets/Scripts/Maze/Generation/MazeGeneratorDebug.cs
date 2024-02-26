@@ -23,7 +23,7 @@ public class MazeGeneratorDebug : MonoBehaviour
     {
         //Vector3 rot = new(UnityEngine.Random.RandomRange(0, 360), UnityEngine.Random.RandomRange(0, 360), UnityEngine.Random.RandomRange(0, 360));
 
-        MazeGenerator.Generate(size, position, rotation, seed);
+        MazeGenerator.Generate(size, seed);
     }
 
     private void Awake()
