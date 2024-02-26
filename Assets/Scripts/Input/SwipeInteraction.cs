@@ -46,9 +46,7 @@ namespace UntitledCube.Input
             return Vector2.zero;
         }
 
-        private void OnDisable()
-        {
-            InputSystem.UnsubscribeToAction(_swipeAction, Swipe);
-        }
+        private void OnDisable() => InputSystem.UnsubscribeToAction(_swipeAction, Swipe);
+        
     }
 }
