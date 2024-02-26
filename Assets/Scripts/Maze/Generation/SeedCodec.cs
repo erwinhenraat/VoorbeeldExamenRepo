@@ -24,8 +24,6 @@ namespace UntitledCube.Maze.Generation
 
         private static readonly Dictionary<string, string> _decryptionPremutationTable = new();
 
-        private static List<int> _decodedSeed = new();
-
         /// <summary>
         /// Encodes a list of integers into a single string representation.
         /// </summary>
@@ -48,7 +46,7 @@ namespace UntitledCube.Maze.Generation
         /// <returns>A list of integers, or null if the input string contains non-digit characters.</returns>
         public static List<int> Decode(string encodedString)
         {
-            _decodedSeed.Clear();
+            List<int> decodedSeed = new();
 
             foreach (char digitChar in encodedString)
             {
@@ -56,10 +54,10 @@ namespace UntitledCube.Maze.Generation
                     return null;
 
                 int value = digitChar - '0';
-                _decodedSeed.Add(value);
+                decodedSeed.Add(value);
             }
 
-            return _decodedSeed;
+            return decodedSeed;
         }
 
         /// <summary>
@@ -108,14 +106,31 @@ namespace UntitledCube.Maze.Generation
         /// </summary>
         /// <param name="seeds">A list of strings to be assembled.</param>
         /// <returns>The assembled string.</returns>
-        public static string Assemble(List<string> seeds) => string.Join("-", seeds);
+        public static string Assemble(List<string> seeds, int endPoint)
+        {
+            string assembledSeed = string.Join("-", seeds);
+            assembledSeed += $";{endPoint}";
+            return assembledSeed;
+        }
 
         /// <summary>
-        /// Splits a hyphen-separated string into a list of individual strings.
+        /// Disassembles a seed string with a word-number format (e.g., "hello-world-12") into
+        /// a list of the component words and the trailing number.
         /// </summary>
-        /// <param name="seed">The hyphen-separated string to be disassembled.</param>
-        /// <returns>A list of strings representing the components of the original string.</returns>
-        public static List<string> Disassemble(string seed) => seed.Split('-').ToList();
+        /// <param name="seed">The string to be disassembled.</param>
+        /// <returns>A tuple containing: (1) a list of the disassembled words and (2) the extracted number.</returns>
+        public static (List<string>, int) Disassemble(string seed)
+        {
+            if (string.IsNullOrEmpty(seed))
+                return (null, 0);
+
+            string modifiedSeed = seed[..^2];
+            int endPoint = int.Parse(seed[^1..]);
+
+            List<string> disassembledSeed = modifiedSeed.Split('-').ToList();
+
+            return (disassembledSeed, endPoint);
+        }
 
         /// <summary>
         /// Extracts the starting cell index for maze generation from a decoded and decrypted seed.
@@ -137,15 +152,19 @@ namespace UntitledCube.Maze.Generation
         /// </summary>
         /// <param name="seed">The input seed string.</param>
         /// <returns>A list of lists, where each inner list represents the decoded integers.</returns>
-        public static List<List<int>> ProcessSeed(string seed)
+        public static (List<List<int>>, int) ProcessSeed(string seed)
         {
             if (string.IsNullOrEmpty(seed))
-                return null;
+                return (null, 0);
 
-            return Disassemble(seed)
-                   .Select(Decrypt)
-                   .Select(Decode)
-                   .ToList();
+            (List<string> mazeSeeds, int endPoint) = Disassemble(seed);
+
+            List<List<int>> processedSeed = new();
+
+            foreach(string mazeSeed in mazeSeeds)
+                processedSeed.Add(Decode(Decrypt(mazeSeed)));
+
+            return (processedSeed, endPoint);
         }
 
         private static void GenerateDecryptionTable()

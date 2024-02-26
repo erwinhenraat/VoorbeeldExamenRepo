@@ -13,6 +13,11 @@ namespace UntitledCube.Maze.Generation
 
         public static Dictionary<GameObject, MazeCell[,]> Grids => _gridHolders;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <param name="size"></param>
         public static void Generate(int amount, Vector2 size)
         {
             if(_isGenerated) 
@@ -47,10 +52,6 @@ namespace UntitledCube.Maze.Generation
                         cellCount++;
                     }
                 }
-
-                /*float xpos = gridHolder.transform.position.x == 0 ? 1 : gridHolder.transform.position.x;
-                Vector2 positon = new(xpos * (i*6), 0);
-                gridHolder.transform.position = positon;*/
             }
 
             ShapeMazes(_gridHolders);
@@ -77,7 +78,7 @@ namespace UntitledCube.Maze.Generation
             {
                 MazeCell currentCell = _usedCells[i];
 
-                currentCell.SetWallsActive(true);
+                currentCell.Reset();
                 currentCell.gameObject.SetActive(false);
                 currentCell.State = CellState.Available;
                 currentCell.transform.position = Vector3.zero;

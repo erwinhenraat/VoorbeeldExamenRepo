@@ -21,6 +21,7 @@ namespace UntitledCube.Maze.Generation
         private static readonly Vector2[] _directions = { Vector2.right, Vector2.left, Vector2.down, Vector2.up };
 
         private static int _mazeCount = 0;
+        private static bool _startSet = false;
 
         public static Action<string> OnGenerated;
 
@@ -31,12 +32,16 @@ namespace UntitledCube.Maze.Generation
         /// <param name="seed">The seed to generate a specific meaze.</param>
         public static void Generate(Vector2 size, string seed = "")
         {
-            List<List<int>> decryptedSeed = SeedCodec.ProcessSeed(seed);
+            (List<List<int>> decryptedSeed, int endPoint) = SeedCodec.ProcessSeed(seed);
             
             ResetCells();
 
             _fullSeed.Clear();
             _mazeCount = 0;
+
+            _startSet = false;
+
+            int randomEnd = decryptedSeed == null ? UnityEngine.Random.Range(1, 5) : endPoint; 
 
             GridGenerator.Generate(6, size);
 
@@ -53,10 +58,13 @@ namespace UntitledCube.Maze.Generation
 
                 GenerateMaze(cells, decryptedSeed);
 
+                GenerateStartRoom(cells);
+                GenerateEndRoom(cells, randomEnd);
+
                 _mazeCount++;
             }
 
-            OnGenerated?.Invoke(SeedCodec.Assemble(_fullSeed));
+            OnGenerated?.Invoke(SeedCodec.Assemble(_fullSeed, randomEnd));
         }
 
         private static void ResetCells()
@@ -99,6 +107,7 @@ namespace UntitledCube.Maze.Generation
             {
                 if (_mazeCount == 5)
                     return 5 - SeedCodec.StartCell(_fullSeed[3], 3);
+
                 int index = _mazeCount == 4 ? 3 : _mazeCount - 1;
                 int factor = _mazeCount == 4 ? 2 : 1;
                 return SeedCodec.StartCell(_fullSeed[index], factor);
@@ -136,7 +145,6 @@ namespace UntitledCube.Maze.Generation
 
             return (topExitPoint, leftExitPoint, rightExitPoint);
         }
-
 
         private static void GenerateMaze(MazeCell[,] cells, List<List<int>> seed)
         {
@@ -205,6 +213,30 @@ namespace UntitledCube.Maze.Generation
 
             _currentPath[^1].State = CellState.Completed;
             _currentPath.RemoveAt(_currentPath.Count - 1);
+        }
+
+        private static void GenerateStartRoom(MazeCell[,] cells)
+        {
+            if (_startSet)
+                return;
+
+            cells[2, 2].Start = true;
+            cells[2, 3].Start = true;
+            cells[3, 2].Start = true;
+            cells[3, 3].Start = true;
+
+            _startSet = true;
+        }
+
+        private static void GenerateEndRoom(MazeCell[,] cells, int endCount)
+        {
+            if (endCount != _mazeCount)
+                return;
+
+            cells[2, 2].End = true;
+            cells[2, 3].End = true;
+            cells[3, 2].End = true;
+            cells[3, 3].End = true;
         }
 
         private static bool IsOutOfBounds(Vector2 potentialPosition)
