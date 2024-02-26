@@ -24,6 +24,8 @@ namespace UntitledCube.Maze.Generation
 
         private static readonly Dictionary<string, string> _decryptionPremutationTable = new();
 
+        private static List<int> _decodedSeed = new();
+
         /// <summary>
         /// Encodes a list of integers into a single string representation.
         /// </summary>
@@ -46,7 +48,7 @@ namespace UntitledCube.Maze.Generation
         /// <returns>A list of integers, or null if the input string contains non-digit characters.</returns>
         public static List<int> Decode(string encodedString)
         {
-            List<int> intList = new();
+            _decodedSeed.Clear();
 
             foreach (char digitChar in encodedString)
             {
@@ -54,10 +56,10 @@ namespace UntitledCube.Maze.Generation
                     return null;
 
                 int value = digitChar - '0';
-                intList.Add(value);
+                _decodedSeed.Add(value);
             }
 
-            return intList;
+            return _decodedSeed;
         }
 
         /// <summary>
