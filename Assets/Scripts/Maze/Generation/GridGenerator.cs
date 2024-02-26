@@ -14,10 +14,11 @@ namespace UntitledCube.Maze.Generation
         public static Dictionary<GameObject, MazeCell[,]> Grids => _gridHolders;
 
         /// <summary>
-        /// 
+        /// Generates a grid of MazeCell objects, organized into "Maze Holder" GameObjects. 
+        /// Optionally uses preloaded cells and shapes the resulting maze. 
         /// </summary>
-        /// <param name="amount"></param>
-        /// <param name="size"></param>
+        /// <param name="amount">The number of "Maze Holder" GameObjects to generate.</param>
+        /// <param name="size">The dimensions (width and height) of each maze grid.</param>
         public static void Generate(int amount, Vector2 size)
         {
             if(_isGenerated) 

@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+// TESTING ONLY
+
 using UnityEngine;
 
 public class LevelShowCase : MonoBehaviour
