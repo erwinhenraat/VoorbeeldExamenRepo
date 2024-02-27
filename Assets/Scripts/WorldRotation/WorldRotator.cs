@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace UntitledCube.WorldRotation
@@ -14,6 +15,8 @@ namespace UntitledCube.WorldRotation
         [Header("Settings")]
         [SerializeField] private float _stepAmount = 200;
         [SerializeField] private float _stepSpeed = 0.005f;
+        [SerializeField] private float _step;
+        //[SerializeField] private float _step = 0;
 
         private Dictionary<RotationDirection, Vector3> _directions = new();
         private Vector3 _currentRotation;
@@ -35,7 +38,8 @@ namespace UntitledCube.WorldRotation
             _directions.TryGetValue(direction, out Vector3 rotationValue);
             Vector3 step = rotationValue / _stepAmount;
 
-            StartCoroutine(RotationSteps(step));
+            //_step = _stepAmount / 100;
+            StartCoroutine(RotationSteps(direction));
         }
 
         private void SetValues()
@@ -55,12 +59,28 @@ namespace UntitledCube.WorldRotation
             }
         }
 
-        private IEnumerator RotationSteps(Vector3 step)
+        private IEnumerator RotationSteps(RotationDirection rotationDiraction)
         {
-            for (int i = 0; i < _stepAmount; i++)
+            var firstRotation = transform.rotation;
+            var startRotationX = transform.rotation.x;
+            var startRotationY = transform.rotation.y;
+
+            _directions.TryGetValue(rotationDiraction, out Vector3 endRoationother);
+            var endRotationX = endRoationother.x;
+            var endRotationY = endRoationother.y;
+            
+            for (_step = 0; _step <= 1.1; _step += 0.1f)
             {
-                _currentRotation += step;
-                transform.eulerAngles = _currentRotation;
+                Debug.Log("LOOPING");
+                Quaternion midRotation = Quaternion.Euler(
+                    Mathf.Lerp(startRotationX, endRotationX, _step),
+                    Mathf.Lerp(startRotationY, endRotationY, _step),
+                    0f
+                );
+                Debug.Log("Mid Rotation: " + midRotation.eulerAngles);
+
+                transform.rotation = firstRotation * midRotation;
+
                 yield return new WaitForSeconds(_stepSpeed);
             }
 
