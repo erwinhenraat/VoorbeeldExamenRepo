@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace UntitledCube.StateMachine.States
+namespace MarkUlrich.StateMachine.States
 {
     /// <summary>
     /// Represents a base class for game states in the game state machine.

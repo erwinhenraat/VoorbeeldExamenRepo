@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-namespace UntitledCube.Utils
+namespace MarkUlrich.Utils
 {
     public abstract class SingletonInstance<T> : MonoBehaviour where T : Component
 {

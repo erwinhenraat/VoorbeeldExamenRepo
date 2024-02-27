@@ -1,6 +1,8 @@
 using UnityEngine;
+using MarkUlrich.StateMachine.States;
+using MarkUlrich.Utils;
 
-namespace UntitledCube.StateMachine
+namespace MarkUlrich.StateMachine
 {
     public class GameStateMachine : SingletonInstance<GameStateMachine>
     {
@@ -21,10 +23,6 @@ namespace UntitledCube.StateMachine
             // Example of how to set the initial state.
             SetState<BootState>();
         }
-
-        private void Start() => StateMachineTestStart();
-        
-        private void Update() => StateMachineTestUpdate();
 
         /// <summary>
         /// Subscribes a state to the game state machine.
@@ -56,34 +54,5 @@ namespace UntitledCube.StateMachine
         /// Moves the state machine to the next state in the static flow.
         /// </summary>
         public void MoveToNextState() => StateMachine.MoveToNextState();
-
-#region Testing
-        private void StateMachineTestStart() 
-            => StateMachine.GetState<GameState>().OnStateEnter += DebugStateInstance;
-
-        private void StateMachineTestUpdate()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-                DebugNextState();
-
-            if (Input.GetKeyDown(KeyCode.I))
-                DebugPrintStates();
-        }
-
-        private void DebugNextState() => StateMachine.MoveToNextState();
-
-        private void DebugPrintStates()
-        {
-            print("Currently Subscribed States: ");
-            for (int i = 0; i < StateMachine.States.Count; i++)
-                print($"{i} : {StateMachine.States[i]} : {StateMachine.States[i].GetHashCode()}");
-        }
-
-        private void DebugStateInstance()
-        {
-            if (_enableDebugging)
-                print("I work!");
-        }
-#endregion
     }
 }

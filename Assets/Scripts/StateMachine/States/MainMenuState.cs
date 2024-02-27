@@ -1,4 +1,4 @@
-namespace UntitledCube.StateMachine.States
+namespace MarkUlrich.StateMachine.States
 {
     public class MainMenuState : State
     {
