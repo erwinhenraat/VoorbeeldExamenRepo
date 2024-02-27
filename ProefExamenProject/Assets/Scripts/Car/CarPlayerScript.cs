@@ -17,8 +17,8 @@ namespace Car
         
         private bool _isGoingLeft;
         private bool _isGoingRight;
-        private float _rotSpeed = 90f;
-        private float _maxRotAngle = 30f;
+        private float _rotSpeed = 10f;
+        private float _currentRotationSpeed = 0f;
 
         [Header("Assign Buttons: ")] 
         [SerializeField] private Button leftButton;
@@ -60,14 +60,6 @@ namespace Car
         {
             // Player automatically goes forward
             var transform1 = transform;
-            
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity))
-            {
-                var distanceToGround = hit.distance;
-                transform.position -= new Vector3(0, distanceToGround - 0.439f, 0f);
-            }
-            
             _characterController.Move(-transform1.right * (moveSpeed * Time.deltaTime));
 
             // Move left or right while the corresponding button is held down
@@ -81,17 +73,21 @@ namespace Car
                 _characterController.Move(transform.forward * (moveSpeed * Time.deltaTime));
                 RotateCar(1);
             }
+            else if (!_isGoingLeft && !_isGoingRight || handler.phoneInput == InputHandler.InputState.None)
+            {
+                RotateCar(0);
+            }
         }
  
         private void RotateCar(int dir)
         {
-            var targetAngle = dir * _maxRotAngle;
-            var rotationAmount = _rotSpeed * Time.deltaTime * dir;
+            var targetAngle = dir > 0 ? 115f : dir < 0 ? 65f : 90f;
             var currentAngle = transform.localEulerAngles.y;
-            var rotAngle = Mathf.LerpAngle(currentAngle, targetAngle, rotationAmount);
+            _currentRotationSpeed = Mathf.Lerp(_currentRotationSpeed, _rotSpeed, Time.deltaTime);
+            var newAngle = Mathf.LerpAngle(currentAngle, targetAngle, _currentRotationSpeed * Time.deltaTime);
 
-            if (Mathf.Abs(transform.localEulerAngles.y) < _maxRotAngle)
-                transform.Rotate(0,rotAngle,0);
+            // Apply the new rotation to the car
+            transform.localEulerAngles = new Vector3(0, newAngle, 0);
         }
     }
 }

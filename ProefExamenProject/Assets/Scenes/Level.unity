@@ -1266,13 +1266,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 296382208}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.70056194, y: 0.12858315, z: 0.6961407, w: -0.08981901}
+  m_LocalRotation: {x: 0.70600367, y: 0.018647164, z: 0.7076707, w: 0.02033266}
   m_LocalPosition: {x: 0.00267, y: -0.00033, z: 0.00002}
   m_LocalScale: {x: 0.1, y: 0.045382287, z: 0.076568}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2391417885592084288}
-  m_LocalEulerAnglesHint: {x: -17.75, y: 90.881, z: 176.683}
+  m_LocalEulerAnglesHint: {x: 0.133, y: 89.861, z: 176.841}
 --- !u!199 &296382210
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -10724,7 +10724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 2391417885592084288}
-  smoothSpeed: 0.75
+  smoothSpeed: 1.25
 --- !u!54 &963194230
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -18638,7 +18638,7 @@ Transform:
   m_GameObject: {fileID: 3061274881615922682}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.77, y: -0.439, z: -6.64}
+  m_LocalPosition: {x: 0.77, y: -0.429, z: -6.64}
   m_LocalScale: {x: 285.70868, y: 316.3458, z: 317.74155}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -18662,7 +18662,7 @@ GameObject:
   - component: {fileID: 3565488855323026485}
   - component: {fileID: 3565488855323026486}
   m_Layer: 0
-  m_Name: lamborghini_min
+  m_Name: MainCar
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18729,8 +18729,8 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 0.0015708818
-  m_Radius: 0.002941204
+  m_Height: 0.001
+  m_Radius: 0.001
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -18796,7 +18796,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 798e50480fabdd84f83cfab2bcde0f34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 7.5
   handler: {fileID: 3565488855323026486}
   leftButton: {fileID: 1485081394}
   rightButton: {fileID: 1116295328}
