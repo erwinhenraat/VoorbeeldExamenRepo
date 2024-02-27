@@ -1,6 +1,7 @@
 using UnityEngine.Advertisements;
 using UnityEngine;
 using swzwij.Singletons;
+using System;
 
 namespace UntitledCube.Advertisements
 {
@@ -10,6 +11,16 @@ namespace UntitledCube.Advertisements
         private const string IOS_AD_UNITY_ID = "Interstitial_iOS";
 
         private string _adUnitId;
+
+        /// <summary>
+        /// Called when an advertisement is about to be loaded.
+        /// </summary>
+        public Action OnLoadAdvertisement;
+
+        /// <summary>
+        /// Called when an advertisement has finished loading.
+        /// </summary>
+        public Action OnAdvertisementLoaded;
 
         private void Awake()
         {
@@ -21,7 +32,11 @@ namespace UntitledCube.Advertisements
         /// <summary>
         /// Initiates the loading of an advertisement from the Unity Ads service.
         /// </summary>
-        public void LoadAd() => Advertisement.Load(_adUnitId, this);
+        public void LoadAd() 
+        {
+            OnLoadAdvertisement?.Invoke();
+            Advertisement.Load(_adUnitId, this);
+        }
 
         /// <summary>
         /// Logs a success message when an ad unit is loaded.
@@ -55,8 +70,8 @@ namespace UntitledCube.Advertisements
         /// Called when an advertisement starts playing. (Currently empty)
         /// </summary>
         /// <param name="placementId">The ID of the ad unit.</param>
-        public void OnUnityAdsShowStart(string placementId) { }
-
+        public void OnUnityAdsShowStart(string placementId) => OnAdvertisementLoaded?.Invoke(); 
+        
         /// <summary>
         /// Called when the user clicks on an advertisement. (Currently empty)
         /// </summary>
