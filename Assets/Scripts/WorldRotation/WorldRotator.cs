@@ -52,7 +52,7 @@ namespace UntitledCube.WorldRotation
             Quaternion startRotation = transform.rotation;
             _directions.TryGetValue(rotationDiraction, out Vector3 endRotation);
 
-            for (float i = 0; i <= 1.1; i += _stepAmount)
+            for (float i = 0; i <= 1; i += _stepAmount)
             {
                 Quaternion midRotation = Quaternion.Euler(
                     Mathf.Lerp(startRotation.x, endRotation.x, i),
