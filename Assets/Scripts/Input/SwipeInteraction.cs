@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UntitledCube.Gravity;
 
 namespace UntitledCube.Input
 {
     public class SwipeInteraction : MonoBehaviour
     {
         [SerializeField] private float _moveThreshold;
-        [SerializeField] private float _gravityMultiplier = 1f;
+
+        [SerializeField] private GravityManager GravityManager; // Switch to Singleton once implemented
 
         private InputAction _swipeAction;
 
@@ -27,7 +29,7 @@ namespace UntitledCube.Input
                 return;
 
             if(_swipeDirection != _newSwipeDirection ) 
-                Physics.gravity = _newSwipeDirection * 9.81f * _gravityMultiplier;
+                GravityManager.SetGravityDirection(_newSwipeDirection);
 
             _swipeDirection = _newSwipeDirection;
         }
