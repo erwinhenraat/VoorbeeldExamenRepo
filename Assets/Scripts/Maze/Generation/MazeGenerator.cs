@@ -21,9 +21,12 @@ namespace UntitledCube.Maze.Generation
         private static readonly Vector2[] _directions = { Vector2.right, Vector2.left, Vector2.down, Vector2.up };
 
         private static int _mazeCount = 0;
+        private static int randomEnd;
         private static bool _startSet = false;
 
         public static Action<string> OnGenerated;
+
+        public static string Seed => SeedCodec.Assemble(_fullSeed, randomEnd);
 
         /// <summary>
         /// Generates a maze based on the given seed and size.
@@ -41,7 +44,7 @@ namespace UntitledCube.Maze.Generation
 
             _startSet = false;
 
-            int randomEnd = decryptedSeed == null ? UnityEngine.Random.Range(1, 5) : endPoint; 
+            randomEnd = decryptedSeed == null ? UnityEngine.Random.Range(1, 5) : endPoint; 
 
             GridGenerator.Generate(6, size);
 
