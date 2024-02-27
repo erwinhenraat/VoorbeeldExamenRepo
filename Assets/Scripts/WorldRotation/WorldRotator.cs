@@ -15,12 +15,17 @@ namespace UntitledCube.WorldRotation
         [SerializeField] private float _stepAmount = 0.01f;
         [SerializeField] private float _betweenSteps = 0.01f;
 
-        private Dictionary<RotationDirection, Vector3> _directions = new();
+        private Dictionary<RotationDirection, Vector3> _directions = new Dictionary<RotationDirection, Vector3>()
+        {
+            { RotationDirection.UP, new Vector3(-90f, 0f, 0f) },
+            { RotationDirection.DOWN, new Vector3(90f, 0f, 0f) },
+            { RotationDirection.LEFT, new Vector3(0f, 90f, 0f) },
+            { RotationDirection.RIGHT, new Vector3(0f, -90f, 0f) }
+        };
 
         public Action<RotationDirection> OnStartRotate;
         public Action OnFinishRotate;
 
-        private void Awake() => SetValues();
         private void Start() => StartCoroutine(RotatingSides());
 
         /// <summary>
@@ -31,14 +36,6 @@ namespace UntitledCube.WorldRotation
         {
             OnStartRotate?.Invoke(direction);
             StartCoroutine(RotationSteps(direction));
-        }
-
-        private void SetValues()
-        {
-            _directions.Add(RotationDirection.UP, new Vector3(-90f, 0f, 0f));
-            _directions.Add(RotationDirection.DOWN, new Vector3(90f, 0f, 0f));
-            _directions.Add(RotationDirection.LEFT, new Vector3(0f, 90f, 0f));
-            _directions.Add(RotationDirection.RIGHT, new Vector3(0f, -90f, 0f));
         }
 
         private IEnumerator RotatingSides()
