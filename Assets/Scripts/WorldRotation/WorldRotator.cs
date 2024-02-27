@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
 
@@ -13,13 +14,10 @@ namespace UntitledCube.WorldRotation
         [SerializeField] private float _timebetweenRotations = 2f;
 
         [Header("Settings")]
-        [SerializeField] private float _stepAmount = 200;
-        [SerializeField] private float _stepSpeed = 0.005f;
-        [SerializeField] private float _step;
-        //[SerializeField] private float _step = 0;
+        [SerializeField] private float _stepAmount = 0.01f;
+        [SerializeField] private float _betweenSteps = 0.01f;
 
         private Dictionary<RotationDirection, Vector3> _directions = new();
-        private Vector3 _currentRotation;
 
         public Action<RotationDirection> OnStartRotate;
         public Action OnFinishRotate;
@@ -34,11 +32,6 @@ namespace UntitledCube.WorldRotation
         public void RotateWorld(RotationDirection direction)
         {
             OnStartRotate?.Invoke(direction);
-
-            _directions.TryGetValue(direction, out Vector3 rotationValue);
-            Vector3 step = rotationValue / _stepAmount;
-
-            //_step = _stepAmount / 100;
             StartCoroutine(RotationSteps(direction));
         }
 
@@ -61,27 +54,19 @@ namespace UntitledCube.WorldRotation
 
         private IEnumerator RotationSteps(RotationDirection rotationDiraction)
         {
-            var firstRotation = transform.rotation;
-            var startRotationX = transform.rotation.x;
-            var startRotationY = transform.rotation.y;
+            Quaternion startRotation = transform.rotation;
+            _directions.TryGetValue(rotationDiraction, out Vector3 endRotation);
 
-            _directions.TryGetValue(rotationDiraction, out Vector3 endRoationother);
-            var endRotationX = endRoationother.x;
-            var endRotationY = endRoationother.y;
-            
-            for (_step = 0; _step <= 1.1; _step += 0.1f)
+            for (float i = 0; i <= 1.1; i += _stepAmount)
             {
-                Debug.Log("LOOPING");
                 Quaternion midRotation = Quaternion.Euler(
-                    Mathf.Lerp(startRotationX, endRotationX, _step),
-                    Mathf.Lerp(startRotationY, endRotationY, _step),
+                    Mathf.Lerp(startRotation.x, endRotation.x, i),
+                    Mathf.Lerp(startRotation.y, endRotation.y, i),
                     0f
                 );
-                Debug.Log("Mid Rotation: " + midRotation.eulerAngles);
+                transform.rotation = startRotation * midRotation;
 
-                transform.rotation = firstRotation * midRotation;
-
-                yield return new WaitForSeconds(_stepSpeed);
+                yield return new WaitForSeconds(_betweenSteps);
             }
 
             OnFinishRotate?.Invoke();
