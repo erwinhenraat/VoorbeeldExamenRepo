@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace StateMachine
+namespace UntitledCube.StateMachine.States
 {
     /// <summary>
     /// Represents a base class for game states in the game state machine.
@@ -13,8 +13,7 @@ namespace StateMachine
 
         private State _nextState;
 
-        protected GameStateMachine OwningStateMachine { get; private set; } 
-            = GameStateMachine.Instance;
+        protected GameStateMachine OwningStateMachine { get; private set; } = GameStateMachine.Instance;
 
         public Action OnStateEnter;
         public Action OnStateExit;

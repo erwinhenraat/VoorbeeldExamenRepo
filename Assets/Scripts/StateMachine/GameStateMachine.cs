@@ -1,11 +1,10 @@
 using UnityEngine;
 
-namespace StateMachine
+namespace UntitledCube.StateMachine
 {
     public class GameStateMachine : SingletonInstance<GameStateMachine>
     {
-        [SerializeField]
-        private bool _enableDebugging = true;
+        [SerializeField] private bool _enableDebugging = true;
 
         private StateMachine StateMachine { get; set; } = new();
         
@@ -27,6 +26,10 @@ namespace StateMachine
         
         private void Update() => StateMachineTestUpdate();
 
+        /// <summary>
+        /// Subscribes a state to the game state machine.
+        /// </summary>
+        /// <param name="state">The state to subscribe.</param>
         public void Subscribe(State state) => StateMachine.Subscribe(state);
 
         /// <summary>

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StateMachine
+namespace UntitledCube.StateMachine
 {
     /// <summary>
     /// Represents a class that manages the state machine for the game.

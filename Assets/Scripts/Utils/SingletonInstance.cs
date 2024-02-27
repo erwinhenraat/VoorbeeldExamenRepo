@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public abstract class SingletonInstance<T> : MonoBehaviour where T : Component
+
+namespace UntitledCube.Utils
+{
+    public abstract class SingletonInstance<T> : MonoBehaviour where T : Component
 {
     private static T _instance;
     public static T Instance
@@ -39,4 +42,5 @@ public abstract class SingletonInstance<T> : MonoBehaviour where T : Component
 
         return Instance;
     }
+}
 }
