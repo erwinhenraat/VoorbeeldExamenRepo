@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UntitledCube.Maze.Cell;
-using swzwij.Singletons;
+using MarkUlrich.Utils;
 using UnityEngine;
 
 namespace UntitledCube.Maze.Generation
 {
-    public class PreLoader : SingletonBehaviour<PreLoader>
+    public class PreLoader : SingletonInstance<PreLoader>
     {
         [SerializeField] private int _preloadAmount;
         [SerializeField] private MazeCell _cellPrefab;

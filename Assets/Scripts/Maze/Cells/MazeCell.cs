@@ -21,7 +21,7 @@ namespace UntitledCube.Maze.Cell
 
         public Vector2 Position { get; set; }
 
-        public bool Start
+        public bool IsStart
         {
             set
             {
@@ -33,7 +33,7 @@ namespace UntitledCube.Maze.Cell
             get => _isStart; 
         }
 
-        public bool End
+        public bool IsEnd
         {
             set
             {
@@ -74,8 +74,8 @@ namespace UntitledCube.Maze.Cell
         /// </summary>
         public void Reset()
         {
-            End = false;
-            Start = false;
+            IsEnd = false;
+            IsStart = false;
             SetWallsActive(true);
             _floorRenderer.gameObject.SetActive(false);
         }

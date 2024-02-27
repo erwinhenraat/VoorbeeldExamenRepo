@@ -1,20 +1,29 @@
-// TESTING ONLY
-
 using UnityEngine;
 
-public class LevelShowCase : MonoBehaviour
+namespace UntitledCube.Maze
 {
-    public bool rotate = false;
-    public float rotationSpeed = 45f;
-
-    void Update()
+    public class LevelShowCase : MonoBehaviour
     {
-        if (!rotate)
-            return;
-        transform.Rotate(
-            rotationSpeed * Time.deltaTime,
-            rotationSpeed * Time.deltaTime,
-            rotationSpeed * Time.deltaTime
-        );
+        [SerializeField] private bool shouldRotate = false;
+        [SerializeField] private float rotationSpeed = 45f;
+
+        public bool ShouldRotate
+        {
+            get => shouldRotate;
+            set => shouldRotate = value;
+        }
+
+        private void Update()
+        {
+            if (!shouldRotate)
+                return;
+
+            transform.Rotate
+            (
+                rotationSpeed * Time.deltaTime,
+                rotationSpeed * Time.deltaTime,
+                rotationSpeed * Time.deltaTime
+            );
+        }
     }
 }
