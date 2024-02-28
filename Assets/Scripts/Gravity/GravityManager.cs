@@ -5,11 +5,9 @@ namespace UntitledCube.Gravity
 {
     public class GravityManager : SingletonInstance<GravityManager>
     {
-        [SerializeField]
-        private float _gravityMultiplier = 1f;
+        [SerializeField] private float _gravityMultiplier = 1f;
         
-        [SerializeField]
-        private float _gravityAmount = 9.81f;
+        [SerializeField] private float _gravityAmount = 9.81f;
 
         public void SetGravityMultiplier(float multiplier) 
             => _gravityMultiplier = multiplier;
