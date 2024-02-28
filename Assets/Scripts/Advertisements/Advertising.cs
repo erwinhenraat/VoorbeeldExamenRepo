@@ -1,11 +1,12 @@
 using UnityEngine.Advertisements;
+using MarkUlrich.Utils;
 using UnityEngine;
-using swzwij.Singletons;
 using System;
+using UntitledCube.Utils;
 
 namespace UntitledCube.Advertisements
 {
-    public class Advertising : SingletonBehaviour<Advertising>, IUnityAdsLoadListener, IUnityAdsShowListener
+    public class Advertising : SingletonInstance<Advertising>, IUnityAdsLoadListener, IUnityAdsShowListener
     {
         private const string ANDROID_AD_UNITY_ID = "Interstitial_Android";
         private const string IOS_AD_UNITY_ID = "Interstitial_iOS";
@@ -34,6 +35,9 @@ namespace UntitledCube.Advertisements
         /// </summary>
         public void LoadAd() 
         {
+            if (!NetworkStatus.IsConnected)
+                return;
+
             OnLoadAdvertisement?.Invoke();
             Advertisement.Load(_adUnitId, this);
         }
