@@ -9,12 +9,10 @@ namespace UntitledCube.Gravity
         
         [SerializeField] private float _gravityAmount = 9.81f;
 
-        public void SetGravityMultiplier(float multiplier) 
-            => _gravityMultiplier = multiplier;
-
-        public void SetGravityAmount(float amount) 
-            => _gravityAmount = amount;
-
+        /// <summary>
+        /// Sets the gravity direction to the specified direction.
+        /// </summary>
+        /// <param name="direction">The direction of the gravity.</param>
         public void SetGravityDirection(Vector3 direction) 
             => Physics.gravity = direction * _gravityAmount * _gravityMultiplier;
     }

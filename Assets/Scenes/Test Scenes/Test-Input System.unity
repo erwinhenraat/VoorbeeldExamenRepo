@@ -1139,7 +1139,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveThreshold: 20
-  GravityManager: {fileID: 2255870393802619658}
 --- !u!1 &597544034
 GameObject:
   m_ObjectHideFlags: 0
@@ -5379,17 +5378,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3835d6f245178f24d8f35c227c835764, type: 3}
---- !u!114 &2255870393802619658 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2822339900275735154, guid: 3835d6f245178f24d8f35c227c835764, type: 3}
-  m_PrefabInstance: {fileID: 2255870393802619657}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 397beb656da699d46ae5f363a42161a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6128161695276804752
 PrefabInstance:
   m_ObjectHideFlags: 0
