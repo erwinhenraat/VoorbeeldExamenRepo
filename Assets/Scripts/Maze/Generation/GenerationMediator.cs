@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UntitledCube.Advertisements;
 
 namespace UntitledCube.Maze.Generation
 {
@@ -7,6 +8,8 @@ namespace UntitledCube.Maze.Generation
     {
         [SerializeField] private string _seed;
         [SerializeField] private Button _button;
+
+        private bool _initialized = false;
 
         private void OnEnable() => _button.onClick.AddListener(GenerateMaze);
 
@@ -17,6 +20,13 @@ namespace UntitledCube.Maze.Generation
         /// <summary>
         /// Generate maze.
         /// </summary>
-        public void GenerateMaze() => MazeGenerator.Generate(new(6, 6), _seed);
+        public void GenerateMaze()
+        {
+            if (_initialized)
+                Advertising.Instance.LoadAd();
+
+            _initialized = true;
+            MazeGenerator.Generate(new(6, 6), _seed);
+        }
     }
 }
