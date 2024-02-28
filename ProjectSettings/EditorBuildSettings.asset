@@ -4,11 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/Test Scenes/Advertisements.unity
-    guid: 8274e88f41f6814448c0dfc810fa5567
+  m_Scenes: []
   m_configObjects:
-    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: a64a918c166a61f44b09719860541c45, type: 2}
-    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 5f5a1adc0c3842a47b6fa8e53e55006e, type: 2}
-    com.unity.addressableassets: {fileID: 11400000, guid: b1560da96ff76a344a28b5da24d3304e, type: 2}
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: a64a918c166a61f44b09719860541c45,
+      type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
+      guid: 5f5a1adc0c3842a47b6fa8e53e55006e, type: 2}
+    com.unity.addressableassets: {fileID: 11400000, guid: b1560da96ff76a344a28b5da24d3304e,
+      type: 2}
