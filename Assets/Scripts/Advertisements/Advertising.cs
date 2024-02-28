@@ -59,7 +59,7 @@ namespace UntitledCube.Advertisements
         /// <param name="error">The type of error that occurred.</param>
         /// <param name="message">Additional error details.</param>
         public void OnUnityAdsFailedToLoad(string _adUnitId, UnityAdsLoadError error, string message) 
-            => Debug.Log($"Error loading Ad Unit: {_adUnitId} - {error} - {message}");
+            => Debug.LogError($"Error loading Ad Unit: {_adUnitId} - {error} - {message}");
 
         /// <summary>
         /// Logs an error message if a loaded ad fails to display. 
@@ -68,7 +68,7 @@ namespace UntitledCube.Advertisements
         /// <param name="error">The type of error that occurred.</param>
         /// <param name="message">Additional error details.</param>
         public void OnUnityAdsShowFailure(string _adUnitId, UnityAdsShowError error, string message) 
-            => Debug.Log($"Error showing Ad Unit {_adUnitId}: {error} - {message}");
+            => Debug.LogError($"Error showing Ad Unit {_adUnitId}: {error} - {message}");
 
         /// <summary>
         /// Called when an advertisement starts playing. (Currently empty)
