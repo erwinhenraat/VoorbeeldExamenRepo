@@ -1,67 +1,16 @@
 using System;
 using System.Collections;
+using System.IO;
+using System.Xml.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.UI;
 
 public class AppShareManager : MonoBehaviour
 {
-    public Image screenshotImage; // Reference to your screenshot image
-    public string messageToShare = "Check out this cool screenshot!"; // Text to share
-
-    private bool isProcessing = false;
-
-    public void ShareScreenshot()
-    {
-        if (!isProcessing)
-            StartCoroutine(ShareScreenshotCoroutine());
-    }
-
-    private IEnumerator ShareScreenshotCoroutine()
-    {
-        isProcessing = true;
-
-        // Capture a screenshot (you can replace this with your own screenshot logic)
-        Texture2D screenshotTexture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
-        screenshotTexture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
-        screenshotTexture.Apply();
-
-        // Convert the screenshot to a byte array
-        byte[] screenshotBytes = screenshotTexture.EncodeToPNG();
-
-        // Save the screenshot to a temporary file
-        string screenshotPath = Application.persistentDataPath + "/screenshot.png";
-        System.IO.File.WriteAllBytes(screenshotPath, screenshotBytes);
-
-        // Create an intent for sharing
-        AndroidJavaClass intentClass = new AndroidJavaClass("android.content.Intent");
-        AndroidJavaObject intentObject = new AndroidJavaObject("android.content.Intent");
-        intentObject.Call<AndroidJavaObject>("setAction", intentClass.GetStatic<string>("ACTION_SEND"));
-        intentObject.Call<AndroidJavaObject>("setType", "image/png");
-
-        // Attach the screenshot
-        AndroidJavaClass uriClass = new AndroidJavaClass("android.net.Uri");
-        AndroidJavaObject uriObject = uriClass.CallStatic<AndroidJavaObject>("parse", "file://" + screenshotPath);
-        intentObject.Call<AndroidJavaObject>("putExtra", intentClass.GetStatic<string>("EXTRA_STREAM"), uriObject);
-
-        // Attach the text
-        intentObject.Call<AndroidJavaObject>("putExtra", intentClass.GetStatic<string>("EXTRA_TEXT"), messageToShare);
-
-        // Get the current activity and start the sharing intent
-        AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-        AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-        AndroidJavaObject chooser = intentClass.CallStatic<AndroidJavaObject>("createChooser", intentObject, "Share via");
-        currentActivity.Call("startActivity", chooser);
-
-        // Wait for a frame to allow the permission dialog to appear
-        yield return new WaitForEndOfFrame();
-
-        // Clean up
-        System.IO.File.Delete(screenshotPath);
-        isProcessing = false;
-    }
-}
-/*    [SerializeField] private Image testRemoveLater;
+    [SerializeField] private Image testRemoveLater;
+    [SerializeField] private TextMeshProUGUI removeLater;
 
     private bool _isFocus;
     private bool _isProcessing;
@@ -79,8 +28,8 @@ public class AppShareManager : MonoBehaviour
         _isProcessing = true;
         yield return new WaitForEndOfFrame();
 
-        string screenshotName = "HighScore_" + DateTime.UtcNow.ToOADate();
-        string screenShotPath = Application.persistentDataPath + "/" + screenshotName;
+        string screenshotName = $"HighScore_{DateTime.UtcNow.ToOADate()}.jpg";
+        string screenShotPath = Path.Combine(Application.persistentDataPath, screenshotName);
         string seedNumber = "123456";
         string time = "21 secs";
         string message = $"I challenge you to beat my time of *{time}* in this seed: {seedNumber}" +
@@ -88,29 +37,57 @@ public class AppShareManager : MonoBehaviour
 
         ScreenCapture.CaptureScreenshot(screenshotName, 1);
 
-        yield return new WaitForSeconds(0.5f);
+        removeLater.text = screenShotPath;
+
+        yield return new WaitForEndOfFrame();
 
         AndroidJavaClass intentClass = new AndroidJavaClass("android.content.Intent");
-        AndroidJavaObject intent = new AndroidJavaObject("android.content.Intent");
+        AndroidJavaObject intentObject = new AndroidJavaObject("android.content.Intent");
 
-        intent.Call<AndroidJavaObject>("setAction", intentClass.GetStatic<string>("ACTION_SEND"));
+        intentObject.Call<AndroidJavaObject>("setAction", intentClass.GetStatic<string>("ACTION_SEND"));
+        intentObject.Call<AndroidJavaObject>("putExtra", intentClass.GetStatic<string>("EXTRA_SUBJECT"), "TEST");
+        intentObject.Call<AndroidJavaObject>("putExtra", intentClass.GetStatic<string>("EXTRA_TITLE"), "TEST");
+        intentObject.Call<AndroidJavaObject>("putExtra", intentClass.GetStatic<string>("EXTRA_TEXT"), message);
 
         AndroidJavaClass uriClass = new AndroidJavaClass("android.net.Uri");
-        AndroidJavaObject uriObject = uriClass.CallStatic<AndroidJavaObject>("parse", "file://" + screenShotPath);
+        AndroidJavaObject uriObject = uriClass.CallStatic<AndroidJavaObject>("parse", screenShotPath);
+        AndroidJavaObject uriList = new AndroidJavaObject("java.util.ArrayList");
 
-        intent.Call<AndroidJavaObject>("putExtra", intentClass.GetStatic<string>("EXTRA_STREAM"), uriObject);
-        intent.Call<AndroidJavaObject>("setType", "image/png");
-        intent.Call<AndroidJavaObject>("putExtra", intentClass.GetStatic<string>("EXTRA_TEXT"), message);
+        uriList.Call<bool>("add", uriObject);
+        intentObject.Call<AndroidJavaObject>("putParcelableArrayListExtra", intentClass.GetStatic<string>("EXTRA_STREAM"), uriList);
+        intentObject.Call<AndroidJavaObject>("setType", "image/png");
 
-        AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-        AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-        AndroidJavaObject chooser = intentClass.CallStatic<AndroidJavaObject>("createChooser", intent, "Share your Time");
+        AndroidJavaClass unity = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        AndroidJavaObject currentActivity = unity.GetStatic<AndroidJavaObject>("currentActivity");
 
-        currentActivity.Call("startActivity", chooser);
+        currentActivity.Call("startActivity", intentObject);
         testRemoveLater.color = Color.blue;
+
         yield return new WaitUntil(() => _isFocus);
 
         testRemoveLater.color = Color.cyan;
-        _isProcessing = false;*/
-/*    }
-}*/
+        _isProcessing = false;
+    }
+}
+
+    /*
+            AndroidJavaClass intentClass = new AndroidJavaClass("android.content.Intent");
+            AndroidJavaObject intentObject = new AndroidJavaObject("android.content.Intent");
+
+            intentObject.Call<AndroidJavaObject>("setAction", intentClass.GetStatic<string>("ACTION_SEND"));
+            intentObject.Call<AndroidJavaObject>("setType", "image/jpeg");
+
+            AndroidJavaClass uriClass = new AndroidJavaClass("android.net.Uri");
+            AndroidJavaClass fileClass = new AndroidJavaClass("java.io.File");
+
+            AndroidJavaObject fileObject = new AndroidJavaObject("java.io.File", screenShotPath);
+            AndroidJavaObject uriObject = uriClass.CallStatic<AndroidJavaObject>("fromFile", fileObject);
+
+            intentObject.Call<AndroidJavaObject>("putExtra", intentClass.GetStatic<string>("EXTRA_STREAM"), uriObject);
+
+            AndroidJavaClass unity = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+            AndroidJavaObject currentActivity = unity.GetStatic<AndroidJavaObject>("currentActivity");
+
+            AndroidJavaObject jChooser = intentClass.CallStatic<AndroidJavaObject>("createChooser", intentObject, "Share Image");
+            currentActivity.Call("startActivity", jChooser);*/
+
