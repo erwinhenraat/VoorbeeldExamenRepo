@@ -8,8 +8,6 @@ namespace UntitledCube.Input
     {
         [SerializeField] private float _moveThreshold;
 
-        [SerializeField] private GravityManager GravityManager; // Switch to Singleton once implemented
-
         private InputAction _swipeAction;
 
         private Vector2 _swipePosition;
@@ -29,7 +27,7 @@ namespace UntitledCube.Input
                 return;
 
             if(_swipeDirection != _newSwipeDirection ) 
-                GravityManager.SetGravityDirection(_newSwipeDirection);
+                GravityManager.Instance.SetGravityDirection(_newSwipeDirection);
 
             _swipeDirection = _newSwipeDirection;
         }

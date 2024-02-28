@@ -1,8 +1,9 @@
+using MarkUlrich.Utils;
 using UnityEngine;
 
 namespace UntitledCube.Gravity
 {
-    public class GravityManager : MonoBehaviour
+    public class GravityManager : SingletonInstance<GravityManager>
     {
         [SerializeField]
         private float _gravityMultiplier = 1f;
