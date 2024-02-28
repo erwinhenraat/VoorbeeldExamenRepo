@@ -1,8 +1,9 @@
+using MarkUlrich.Utils;
 using UnityEngine;
 
-public class RuntimeHandler : MonoBehaviour // Todo: make this a singleton when implemented
+public class RuntimeHandler : SingletonInstance<RuntimeHandler>
 {
     [SerializeField] private int _targetFrameRate = 120;
 
-    private void OnEnable() => Application.targetFrameRate = _targetFrameRate;
+    private void Awake() => Application.targetFrameRate = _targetFrameRate;
 }
