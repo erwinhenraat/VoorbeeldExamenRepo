@@ -10724,7 +10724,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 2391417885592084288}
-  smoothSpeed: 1.25
+  smoothSpeed: 2
+  distanceFromPlayer: 0
 --- !u!54 &963194230
 Rigidbody:
   m_ObjectHideFlags: 0

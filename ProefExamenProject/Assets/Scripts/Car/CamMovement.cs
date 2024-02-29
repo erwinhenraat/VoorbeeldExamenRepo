@@ -8,20 +8,22 @@ namespace Car
         [Header("Camera Follows Car Settings: ")] 
         [SerializeField] private Transform playerTransform;
         [SerializeField] private float smoothSpeed;
+        [SerializeField] private float distanceFromPlayer;
+
+        private Vector3 _offset;
+
+        private void Start() => _offset = transform.position - playerTransform.position;
         
         // Update is called once per frame
         private void FixedUpdate()
         {
             // Calculate the desired x-position of the camera
-            var desiredXPosition = playerTransform.position.z;
-
-            
-            var position = transform.position;
+            var desiredXPosition = playerTransform.position + _offset;
+            desiredXPosition.z -= distanceFromPlayer;
             
             // Smoothly move the camera towards the desired x-position
-            var smoothedXPosition = Mathf.Lerp(position.z, desiredXPosition, smoothSpeed * Time.deltaTime);
-            position = new Vector3(position.x, position.y, smoothedXPosition);
-            transform.position = position;
+            var smoothedPos = Vector3.Lerp(transform.position, desiredXPosition, smoothSpeed * Time.deltaTime);
+            transform.position = smoothedPos;
         }
     }
 }
