@@ -32,7 +32,6 @@ namespace Input.Script
                 var touch = UnityEngine.Input.touches[i];
                 if (touch.position.x < Screen.width / 2)
                 {
-                    Debug.Log("Left");
                     phoneInput = InputState.Left;
                     if (touch.phase == TouchPhase.Began)
                         _leftTouched = true;
@@ -42,7 +41,6 @@ namespace Input.Script
                 }
                 else
                 {
-                    Debug.Log("Right");
                     phoneInput = InputState.Right;
                     if (touch.phase == TouchPhase.Began)
                         _rightTouched = true;
@@ -51,7 +49,6 @@ namespace Input.Script
                 }
                 if (_leftTouched && _rightTouched)
                 {
-                    Debug.Log("Both");
                     phoneInput = InputState.Both;
                 }
             }
