@@ -21,7 +21,7 @@ namespace UntitledCube.Advertisements
         /// <summary>
         /// Called when an advertisement has finished loading.
         /// </summary>
-        public Action OnAdvertisementLoaded;
+        public Action OnAdvertisementShown;
 
         private void Awake()
         {
@@ -87,7 +87,7 @@ namespace UntitledCube.Advertisements
         /// Called when an advertisement starts playing. (Currently empty)
         /// </summary>
         /// <param name="placementId">The ID of the ad unit.</param>
-        public void OnUnityAdsShowStart(string placementId) => OnAdvertisementLoaded?.Invoke(); 
+        public void OnUnityAdsShowStart(string placementId) => OnAdvertisementShown?.Invoke(); 
         
         /// <summary>
         /// Called when the user clicks on an advertisement. (Currently empty)
