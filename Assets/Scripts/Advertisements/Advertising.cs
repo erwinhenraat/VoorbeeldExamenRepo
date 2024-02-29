@@ -30,8 +30,6 @@ namespace UntitledCube.Advertisements
                 : ANDROID_AD_UNITY_ID;
         }
 
-        private void Start() => LoadAd();
-
         /// <summary>
         /// Initiates the loading of an advertisement from the Unity Ads service.
         /// </summary>
@@ -52,6 +50,7 @@ namespace UntitledCube.Advertisements
                 return;
 
             OnShowAdvertisement?.Invoke();
+
             Advertisement.Show(_adUnitId, this);
             Advertisement.Load(_adUnitId, this);
         }
