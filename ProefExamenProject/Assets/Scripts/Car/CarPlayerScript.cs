@@ -73,12 +73,34 @@ namespace Car
                 _characterController.Move(transform.forward * (moveSpeed * Time.deltaTime));
                 RotateCar(1);
             }
-            else if (!_isGoingLeft && !_isGoingRight || handler.phoneInput == InputHandler.InputState.None)
+            if (handler.phoneInput == InputHandler.InputState.None)
             {
                 RotateCar(0);
+                if (moveSpeed < 7.5f)
+                    ReturnSpeed();
             }
+            else if (handler.phoneInput == InputHandler.InputState.Both)
+                Brake();
         }
- 
+
+        private void Brake()
+        {
+            Debug.Log("Ghello?");
+            moveSpeed = Mathf.Lerp(moveSpeed, 0, Time.deltaTime * 2f);
+
+            if (moveSpeed < 0.01f)
+                moveSpeed = 0;
+        }
+
+        private void ReturnSpeed()
+        {
+            Debug.Log("Going back?");
+            moveSpeed = Mathf.Lerp(moveSpeed, 7.5f, Time.deltaTime * 2f);
+
+            if (moveSpeed > 7.4f)
+                moveSpeed = 7.5f;
+        }
+        
         private void RotateCar(int dir)
         {
             var targetAngle = dir > 0 ? 115f : dir < 0 ? 65f : 90f;
