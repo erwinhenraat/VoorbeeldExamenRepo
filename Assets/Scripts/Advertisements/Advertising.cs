@@ -4,6 +4,7 @@ using System.Collections;
 using MarkUlrich.Utils;
 using UnityEngine;
 using System;
+using UntitledCube.Loading;
 
 namespace UntitledCube.Advertisements
 {
@@ -52,6 +53,8 @@ namespace UntitledCube.Advertisements
             if (_isCountdownRunning || !NetworkStatus.IsConnected)
                 return;
 
+            LoadingScreen.Instance.Load(true);
+
             OnShowAdvertisement?.Invoke();
             Advertisement.Show(_adUnitId, this);
             Advertisement.Load(_adUnitId, this);
@@ -89,7 +92,11 @@ namespace UntitledCube.Advertisements
         /// Called when an advertisement starts playing. (Currently empty)
         /// </summary>
         /// <param name="placementId">The ID of the ad unit.</param>
-        public void OnUnityAdsShowStart(string placementId) => OnAdvertisementShown?.Invoke(); 
+        public void OnUnityAdsShowStart(string placementId)
+        {
+            LoadingScreen.Instance.Load(false);
+            OnAdvertisementShown?.Invoke();
+        }
         
         /// <summary>
         /// Called when the user clicks on an advertisement. (Currently empty)
