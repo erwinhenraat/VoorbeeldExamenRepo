@@ -42,7 +42,7 @@ namespace UntitledCube.Advertisements
         }
 
         /// <summary>
-        /// 
+        /// Displays an advertisement if the device has a network connection. 
         /// </summary>
         public void ShowAd()
         {
