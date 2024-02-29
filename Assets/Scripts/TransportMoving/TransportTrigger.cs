@@ -1,10 +1,11 @@
 using UnityEngine;
+using UntitledCube.WorldRotation;
 
 namespace UntitledCube.Transport
 {
     public class TransportTrigger : MonoBehaviour
     {
-        [SerializeField] private Sides _transportSide;
+        [SerializeField] private WorldRotations _transportSide;
         [SerializeField] private LayerMask[] _TransportableLayer;
 
         private TransportMover _transportMover;
@@ -20,7 +21,6 @@ namespace UntitledCube.Transport
             }
 
             GameObject currentObject = other.gameObject;
-            currentObject.GetComponent<Rigidbody>().isKinematic = true;
 
             _transportMover.TransportToSide(_transportSide, currentObject, gameObject);
         }
