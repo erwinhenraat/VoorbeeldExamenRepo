@@ -16,7 +16,7 @@ namespace UntitledCube.Advertisements
         /// <summary>
         /// Called when an advertisement is about to be loaded.
         /// </summary>
-        public Action OnLoadAdvertisement;
+        public Action OnShowAdvertisement;
 
         /// <summary>
         /// Called when an advertisement has finished loading.
@@ -30,6 +30,8 @@ namespace UntitledCube.Advertisements
                 : ANDROID_AD_UNITY_ID;
         }
 
+        private void Start() => LoadAd();
+
         /// <summary>
         /// Initiates the loading of an advertisement from the Unity Ads service.
         /// </summary>
@@ -38,7 +40,19 @@ namespace UntitledCube.Advertisements
             if (!NetworkStatus.IsConnected)
                 return;
 
-            OnLoadAdvertisement?.Invoke();
+            Advertisement.Load(_adUnitId, this);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ShowAd()
+        {
+            if (!NetworkStatus.IsConnected)
+                return;
+
+            OnShowAdvertisement?.Invoke();
+            Advertisement.Show(_adUnitId, this);
             Advertisement.Load(_adUnitId, this);
         }
 

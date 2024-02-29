@@ -23,7 +23,7 @@ namespace UntitledCube.Maze.Generation
         public void GenerateMaze()
         {
             if (_initialized)
-                Advertising.Instance.LoadAd();
+                Advertising.Instance.ShowAd();
 
             _initialized = true;
             MazeGenerator.Generate(new(6, 6), _seed);
