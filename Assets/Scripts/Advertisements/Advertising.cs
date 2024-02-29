@@ -16,12 +16,12 @@ namespace UntitledCube.Advertisements
         /// <summary>
         /// Called when an advertisement is about to be loaded.
         /// </summary>
-        public Action OnLoadAdvertisement;
+        public Action OnShowAdvertisement;
 
         /// <summary>
         /// Called when an advertisement has finished loading.
         /// </summary>
-        public Action OnAdvertisementLoaded;
+        public Action OnAdvertisementShown;
 
         private void Awake()
         {
@@ -38,7 +38,20 @@ namespace UntitledCube.Advertisements
             if (!NetworkStatus.IsConnected)
                 return;
 
-            OnLoadAdvertisement?.Invoke();
+            Advertisement.Load(_adUnitId, this);
+        }
+
+        /// <summary>
+        /// Displays an advertisement if the device has a network connection. 
+        /// </summary>
+        public void ShowAd()
+        {
+            if (!NetworkStatus.IsConnected)
+                return;
+
+            OnShowAdvertisement?.Invoke();
+
+            Advertisement.Show(_adUnitId, this);
             Advertisement.Load(_adUnitId, this);
         }
 
@@ -74,7 +87,7 @@ namespace UntitledCube.Advertisements
         /// Called when an advertisement starts playing. (Currently empty)
         /// </summary>
         /// <param name="placementId">The ID of the ad unit.</param>
-        public void OnUnityAdsShowStart(string placementId) => OnAdvertisementLoaded?.Invoke(); 
+        public void OnUnityAdsShowStart(string placementId) => OnAdvertisementShown?.Invoke(); 
         
         /// <summary>
         /// Called when the user clicks on an advertisement. (Currently empty)
