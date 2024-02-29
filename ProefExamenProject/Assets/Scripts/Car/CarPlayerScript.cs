@@ -85,7 +85,6 @@ namespace Car
 
         private void Brake()
         {
-            Debug.Log("Ghello?");
             moveSpeed = Mathf.Lerp(moveSpeed, 0, Time.deltaTime * 2f);
 
             if (moveSpeed < 0.01f)
@@ -94,7 +93,6 @@ namespace Car
 
         private void ReturnSpeed()
         {
-            Debug.Log("Going back?");
             moveSpeed = Mathf.Lerp(moveSpeed, 7.5f, Time.deltaTime * 2f);
 
             if (moveSpeed > 7.4f)
