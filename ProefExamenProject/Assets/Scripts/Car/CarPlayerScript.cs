@@ -20,41 +20,8 @@ namespace Car
         private float _rotSpeed = 10f;
         private float _currentRotationSpeed = 0f;
 
-        [Header("Assign Buttons: ")] 
-        [SerializeField] private Button leftButton;
-        [SerializeField] private Button rightButton;
-
         // Start is called before the first frame update
-        private void Start()
-        { 
-            _characterController = GetComponent<CharacterController>();
-            
-            // Add listeners for button press events
-            leftButton.onClick.AddListener(() => {
-                _isGoingLeft = true;
-                _isGoingRight = false;
-            });
-
-            rightButton.onClick.AddListener(() => {
-                _isGoingRight = true;
-                _isGoingLeft = false;
-            });
-
-            // Add listeners for button release events
-            var leftTrigger = leftButton.gameObject.AddComponent<EventTrigger>();
-            var leftEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerUp};
-            leftEntry.callback.AddListener(_ => {
-                _isGoingLeft = false;
-            });
-            leftTrigger.triggers.Add(leftEntry);
-
-            var rightTrigger = rightButton.gameObject.AddComponent<EventTrigger>();
-            var rightEntry = new EventTrigger.Entry {eventID = EventTriggerType.PointerUp};
-            rightEntry.callback.AddListener(_ => {
-                _isGoingRight = false;
-            });
-            rightTrigger.triggers.Add(rightEntry);
-        }
+        private void Start() => _characterController = GetComponent<CharacterController>();
 
         private void Update()
         {
