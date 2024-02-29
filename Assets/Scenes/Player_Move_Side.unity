@@ -242,9 +242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transportSide: 2
-  _TransportableLayer:
-  - serializedVersion: 2
-    m_Bits: 64
+  _transportableLayer: []
 --- !u!1 &507493906
 GameObject:
   m_ObjectHideFlags: 0
@@ -722,9 +720,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transportSide: 3
-  _TransportableLayer:
-  - serializedVersion: 2
-    m_Bits: 64
+  _transportableLayer: []
 --- !u!1 &1818484447
 GameObject:
   m_ObjectHideFlags: 0
@@ -813,7 +809,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 1aa7ad62a44347e47bd23ead27c4dcb2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -977,9 +973,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transportSide: 0
-  _TransportableLayer:
-  - serializedVersion: 2
-    m_Bits: 64
+  _transportableLayer: []
 --- !u!1 &2065449167
 GameObject:
   m_ObjectHideFlags: 0
@@ -1099,9 +1093,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transportSide: 1
-  _TransportableLayer:
-  - serializedVersion: 2
-    m_Bits: 64
+  _transportableLayer: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

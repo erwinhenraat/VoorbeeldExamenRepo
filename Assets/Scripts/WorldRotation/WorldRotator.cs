@@ -17,9 +17,9 @@ namespace UntitledCube.WorldRotation
 
         private Dictionary<WorldRotations, Vector3> _directions = new Dictionary<WorldRotations, Vector3>()
         {
-            { WorldRotations.UP, new Vector3(-90f, 0f, 0f) },
+            { WorldRotations.UP, new Vector3(270f, 0f, 0f) },
             { WorldRotations.DOWN, new Vector3(90f, 0f, 0f) },
-            { WorldRotations.LEFT, new Vector3(0f, -90f, 0f) },
+            { WorldRotations.LEFT, new Vector3(0f, 270f, 0f) },
             { WorldRotations.RIGHT, new Vector3(0f, 90f, 0f) }
         };
 

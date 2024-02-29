@@ -6,7 +6,7 @@ namespace UntitledCube.Transport
     public class TransportTrigger : MonoBehaviour
     {
         [SerializeField] private WorldRotations _transportSide;
-        [SerializeField] private LayerMask[] _TransportableLayer;
+        [SerializeField] private LayerMask[] _transportableLayer;
 
         private TransportMover _transportMover;
 
@@ -14,7 +14,7 @@ namespace UntitledCube.Transport
 
         private void OnTriggerEnter(Collider other)
         {
-            foreach (LayerMask layerMask in _TransportableLayer)
+            foreach (LayerMask layerMask in _transportableLayer)
             {
                 if ((layerMask.value & (1 << other.gameObject.layer)) == 0)
                     return;
