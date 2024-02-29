@@ -1,8 +1,9 @@
 using UnityEngine.Advertisements;
+using UntitledCube.Utils;
+using System.Collections;
 using MarkUlrich.Utils;
 using UnityEngine;
 using System;
-using UntitledCube.Utils;
 
 namespace UntitledCube.Advertisements
 {
@@ -10,8 +11,10 @@ namespace UntitledCube.Advertisements
     {
         private const string ANDROID_AD_UNITY_ID = "Interstitial_Android";
         private const string IOS_AD_UNITY_ID = "Interstitial_iOS";
-
+        private const float COUNTDOWN_DURATION = 120f;
+        
         private string _adUnitId;
+        private bool _isCountdownRunning = false;
 
         /// <summary>
         /// Called when an advertisement is about to be loaded.
@@ -46,11 +49,10 @@ namespace UntitledCube.Advertisements
         /// </summary>
         public void ShowAd()
         {
-            if (!NetworkStatus.IsConnected)
+            if (_isCountdownRunning || !NetworkStatus.IsConnected)
                 return;
 
             OnShowAdvertisement?.Invoke();
-
             Advertisement.Show(_adUnitId, this);
             Advertisement.Load(_adUnitId, this);
         }
@@ -100,6 +102,14 @@ namespace UntitledCube.Advertisements
         /// </summary>
         /// <param name="placementId">The ID of the ad unit.</param>
         /// <param name="showCompletionState">Indicates if the ad was watched in its entirety.</param>
-        public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState) { }
+        public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState) 
+            => StartCoroutine(AdCountdown());
+
+        private IEnumerator AdCountdown()
+        {
+            _isCountdownRunning = true;
+            yield return new WaitForSeconds(COUNTDOWN_DURATION);
+            _isCountdownRunning = false;
+        }
     }
 }
