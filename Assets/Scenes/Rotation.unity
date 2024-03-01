@@ -1656,7 +1656,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _triggerOffset: 1
-  _placementOffset: 0.25
+  _placementOffset: -0.2
 --- !u!1 &1429371226
 GameObject:
   m_ObjectHideFlags: 0
