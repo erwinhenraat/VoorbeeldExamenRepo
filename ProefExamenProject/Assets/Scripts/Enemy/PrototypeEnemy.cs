@@ -35,7 +35,14 @@ public class PrototypeEnemy : MonoBehaviour
         else
         {
             speed = baseSpeed;
+        }  
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject == _player)
+        {
+            Destroy(_player);
         }
-        
     }
 }
