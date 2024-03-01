@@ -64,11 +64,7 @@ namespace UntitledCube.Advertisements
         /// Logs a success message when an ad unit is loaded.
         /// </summary>
         /// <param name="adUnitId">The ID of the loaded ad unit.</param>
-        public void OnUnityAdsAdLoaded(string adUnitId)
-        {
-            Debug.Log($"Successfully loaded Ad Unit: {adUnitId}");
-            Advertisement.Show(_adUnitId, this);
-        }
+        public void OnUnityAdsAdLoaded(string adUnitId) => Advertisement.Show(_adUnitId, this);
 
         /// <summary>
         /// Logs an error message if an ad unit fails to load.
