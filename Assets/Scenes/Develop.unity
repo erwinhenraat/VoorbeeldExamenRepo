@@ -1579,10 +1579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be70deb788700584f934a3706dc45f42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationDirections: 
-  _timebetweenRotations: 3
-  _stepAmount: 0.03
-  _betweenSteps: 0.01
+  _rotationDuration: 1
 --- !u!114 &1370537475
 MonoBehaviour:
   m_ObjectHideFlags: 0
