@@ -64,6 +64,7 @@ namespace UntitledCube.Transport
             _currentObject.GetComponent<Collider>().enabled = true;
             _currentObject.GetComponent<Rigidbody>().isKinematic = false;
             _currentObject.transform.SetParent(null);
+            _currentObject.transform.rotation = Quaternion.identity;
         }
     }
 }

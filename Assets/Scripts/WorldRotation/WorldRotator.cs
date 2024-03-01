@@ -32,20 +32,11 @@ namespace UntitledCube.WorldRotation
             Quaternion startRotation = transform.rotation;
             Quaternion endRotation = startRotation * _directions[direction];
 
-            Debug.Log($"Rotate. Start: {startRotation} End: {endRotation}");
-
-            StartCoroutine(LerpRotation(startRotation, endRotation, GetTransform()));
+            StartCoroutine(LerpRotation(startRotation, endRotation));
         }
 
-        private Transform GetTransform()
+        private IEnumerator LerpRotation(Quaternion startRotation, Quaternion endRotation)
         {
-            return transform;
-        }
-
-        private IEnumerator LerpRotation(Quaternion startRotation, Quaternion endRotation, Transform transform)
-        {
-            Debug.Log($"Rotate. Start: {startRotation} End: {endRotation}");
-
             float startTime = Time.time;
 
             while (Time.time - startTime < _rotationDuration)
@@ -56,8 +47,6 @@ namespace UntitledCube.WorldRotation
             }
 
             transform.rotation = endRotation;
-
-            Debug.Log("end rotate");
 
             OnFinishRotate?.Invoke();
         }
