@@ -18,6 +18,12 @@ namespace UntitledCube.Transport
             _rotator.OnFinishRotate += UnStickToWorld; 
         }
 
+        /// <summary>
+        /// Transports the specified GameObject to the specified side, aligning it with the corresponding trigger object.
+        /// </summary>
+        /// <param name="side">The side to which the object should be transported (e.g., UP, DOWN, LEFT, RIGHT).</param>
+        /// <param name="currentObject">The GameObject to be transported.</param>
+        /// <param name="currentTrigger">The trigger object that determines the destination alignment.</param>
         public void TransportToSide(WorldRotations side, GameObject currentObject, GameObject currentTrigger)
         {
             _currentObject = currentObject;
