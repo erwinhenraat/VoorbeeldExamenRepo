@@ -13,23 +13,17 @@ namespace Spawner
 
         private const float MinSpawnTime = 0.5f;
         private const float MaxSpawnTime = 5.5f;
-        private int _maxSpawnedIn = 10;
+        private const int MaxSpawnedIn = 10;
 
         private Queue<GameObject> _spawnedObjects;
 
         // Start is called before the first frame update
-        private void Start() => InvokeRepeating(nameof(SpawnIn), Random.Range(MinSpawnTime, MaxSpawnTime),MaxSpawnTime);
-
-        private void Update()
+        private void Start()
         {
-            // ReSharper disable once InvertIf
-            if (_spawnedObjects.Count > _maxSpawnedIn)
-            {
-                var oldestObject = _spawnedObjects.Dequeue();
-                Destroy(oldestObject);
-            }
-        }
-        
+            _spawnedObjects = new Queue<GameObject>();
+            InvokeRepeating(nameof(SpawnIn), Random.Range(MinSpawnTime, MaxSpawnTime),MaxSpawnTime);
+        } 
+
         private void SpawnIn()
         {
             var objectToSpawn = randomObjects[Random.Range(0, randomObjects.Length)];
@@ -39,6 +33,13 @@ namespace Spawner
             
             var newObject = Instantiate(objectToSpawn, spawnPos, Quaternion.Euler(rotation.x, rotation.y, rotation.z));
             _spawnedObjects.Enqueue(newObject);
+            
+            // ReSharper disable once InvertIf
+            if (_spawnedObjects is { Count: > MaxSpawnedIn })
+            {
+                var oldestObject = _spawnedObjects.Dequeue();
+                Destroy(oldestObject);
+            }
         }
     }
 }
