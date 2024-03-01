@@ -1,21 +1,14 @@
+using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net;
-using UnityEngine;
-using static UnityEngine.GridBrushBase;
 
 namespace UntitledCube.WorldRotation
 {
     public class WorldRotator : MonoBehaviour
     {
-        [Header ("Rotation Testing")]
-        [SerializeField] private List<WorldRotations> _rotationDirections = new();
-        [SerializeField] private float _timebetweenRotations = 2f;
-
         [Header("Settings")]
-        [SerializeField] private float _stepAmount = 0.01f;
-        [SerializeField] private float _betweenSteps = 0.01f;
+        [SerializeField] private float _rotationDuration;
 
         private readonly Dictionary<WorldRotations, Quaternion> _directions = new()
         {
@@ -28,8 +21,6 @@ namespace UntitledCube.WorldRotation
         public Action<WorldRotations> OnStartRotate;
         public Action OnFinishRotate;
 
-        private void Start() => StartCoroutine(RotatingSides());
-
         /// <summary>
         /// Starts the rotation of the world object to one of the neighbouring faces.
         /// </summary>
@@ -37,80 +28,38 @@ namespace UntitledCube.WorldRotation
         public void RotateWorld(WorldRotations direction)
         {
             OnStartRotate?.Invoke(direction);
-            //StartCoroutine(RotateStep(direction));
-            Rotate(direction);
-        }
 
-        private IEnumerator RotatingSides()
-        {
-            foreach (WorldRotations rotation in _rotationDirections)
-            {
-                RotateWorld(rotation);
-                yield return new WaitForSeconds(_timebetweenRotations);
-            }
-        }
-
-        /*private IEnumerator RotationSteps(WorldRotations rotationDiraction)
-        {
             Quaternion startRotation = transform.rotation;
-            _directions.TryGetValue(rotationDiraction, out Vector3 endRotation);
+            Quaternion endRotation = startRotation * _directions[direction];
 
-            for (float i = 0; i <= 1; i += _stepAmount)
+            Debug.Log($"Rotate. Start: {startRotation} End: {endRotation}");
+
+            StartCoroutine(LerpRotation(startRotation, endRotation, GetTransform()));
+        }
+
+        private Transform GetTransform()
+        {
+            return transform;
+        }
+
+        private IEnumerator LerpRotation(Quaternion startRotation, Quaternion endRotation, Transform transform)
+        {
+            Debug.Log($"Rotate. Start: {startRotation} End: {endRotation}");
+
+            float startTime = Time.time;
+
+            while (Time.time - startTime < _rotationDuration)
             {
-                Quaternion midRotation = Quaternion.Euler(
-                    Mathf.Lerp(startRotation.x, endRotation.x, i),
-                    Mathf.Lerp(startRotation.y, endRotation.y, i),
-                    0f
-                );
-                transform.rotation = startRotation * midRotation;
-                    
-                yield return new WaitForSeconds(_betweenSteps);
+                float time = (Time.time - startTime) / _rotationDuration;
+                transform.rotation = Quaternion.Lerp(startRotation, endRotation, time);
+                yield return null;
             }
 
-            Debug.Log(startRotation.eulerAngles);
-            Vector3 testPosition = new Vector3(startRotation.eulerAngles.x + endRotation.x, startRotation.eulerAngles.y + endRotation.y, 0f);
-            transform.rotation = Quaternion.Euler(testPosition);
+            transform.rotation = endRotation;
+
+            Debug.Log("end rotate");
 
             OnFinishRotate?.Invoke();
         }
-
-        private IEnumerator RotateStep(WorldRotations direction) 
-        {
-            Vector3 startRotation = transform.rotation.eulerAngles;
-            _directions.TryGetValue(direction, out Vector3 endRotation);
-
-
-            for (float i = 0; i <= 1; i += _stepAmount)
-            {
-                Vector3 midRotation = new
-                (
-                    Mathf.Lerp(startRotation.x, endRotation.x, i), 
-                    Mathf.Lerp(startRotation.y, endRotation.y, i),
-                    0f
-                );
-
-                transform.rotation = Quaternion.Euler(startRotation + midRotation);
-
-                yield return new WaitForSeconds(_betweenSteps);
-            }
-
-            transform.rotation = Quaternion.Euler(endRotation);
-
-            OnFinishRotate?.Invoke();
-        }*/
-
-        private void Rotate(WorldRotations direction)
-        {
-            Quaternion startRotation = transform.rotation;
-            Quaternion endRotation = _directions[direction];
-            Quaternion newRotation = startRotation * endRotation;
-
-            transform.rotation = newRotation;
-
-            Debug.Log($"{startRotation} + {endRotation} = {newRotation}");
-
-            OnFinishRotate?.Invoke();
-        }
-
     }
 }
