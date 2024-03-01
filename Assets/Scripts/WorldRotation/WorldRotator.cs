@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 namespace UntitledCube.WorldRotation
@@ -17,9 +18,9 @@ namespace UntitledCube.WorldRotation
 
         private Dictionary<WorldRotations, Vector3> _directions = new Dictionary<WorldRotations, Vector3>()
         {
-            { WorldRotations.UP, new Vector3(270f, 0f, 0f) },
+            { WorldRotations.UP, new Vector3(-90f, 0f, 0f) },
             { WorldRotations.DOWN, new Vector3(90f, 0f, 0f) },
-            { WorldRotations.LEFT, new Vector3(0f, 270f, 0f) },
+            { WorldRotations.LEFT, new Vector3(0f, -90f, 0f) },
             { WorldRotations.RIGHT, new Vector3(0f, 90f, 0f) }
         };
 
@@ -60,9 +61,13 @@ namespace UntitledCube.WorldRotation
                     0f
                 );
                 transform.rotation = startRotation * midRotation;
-
+                    
                 yield return new WaitForSeconds(_betweenSteps);
             }
+
+            Debug.Log(startRotation.eulerAngles);
+            Vector3 testPosition = new Vector3(startRotation.eulerAngles.x + endRotation.x, startRotation.eulerAngles.y + endRotation.y, 0f);
+            transform.rotation = Quaternion.Euler(testPosition);
 
             OnFinishRotate?.Invoke();
         }
