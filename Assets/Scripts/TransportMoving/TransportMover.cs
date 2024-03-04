@@ -1,19 +1,24 @@
+using System;
 using UnityEngine;
 using UntitledCube.WorldRotation;
+using System.Collections.Generic;
 
 namespace UntitledCube.Transport
 {
     public class TransportMover : MonoBehaviour
     {
         [SerializeField] private float _triggerOffset = 0.6f;
-        [SerializeField] private float _placementOffset = 0.25f;
+        [SerializeField] private OffsetDirection[] _offsetDirections;
 
+        private Dictionary<WorldRotations, OffsetDirection> _placementOffset = new();
         private GameObject _currentObject;
-
         private WorldRotator _rotator;
 
         private void Awake() 
         {
+            foreach (OffsetDirection offset in _offsetDirections)
+                _placementOffset.Add(offset.Side, offset);
+            
             _rotator = FindObjectOfType<WorldRotator>();
             _rotator.OnFinishRotate += UnStickToWorld; 
         }
@@ -33,24 +38,11 @@ namespace UntitledCube.Transport
             Vector3 objectPosition = currentObject.transform.position;
             Vector3 triggerPosition = currentTrigger.transform.position;
 
-            float placementOffset = _placementOffset;
-            placementOffset = (side == WorldRotations.DOWN || side == WorldRotations.RIGHT)
-                ? -_placementOffset
-                : _placementOffset;
+            Vector3 placementOffset = _placementOffset[side].Offset;
 
-            if (side == WorldRotations.LEFT || side == WorldRotations.RIGHT)
-            {
-                transportPosition.x = triggerPosition.x + _triggerOffset;
-                transportPosition.y = objectPosition.y;
-                transportPosition.z = triggerPosition.z + placementOffset;
-            }
-
-            if (side == WorldRotations.UP || side == WorldRotations.DOWN)
-            {
-                transportPosition.x = objectPosition.x;
-                transportPosition.y = triggerPosition.y + placementOffset;
-                transportPosition.z = triggerPosition.z + _triggerOffset;
-            }
+            transportPosition.x = triggerPosition.x + _triggerOffset + placementOffset.x;
+            transportPosition.y = objectPosition.y + placementOffset.y;
+            transportPosition.z = triggerPosition.z + placementOffset.z;
 
             _currentObject.transform.position = transportPosition;
 
@@ -72,5 +64,15 @@ namespace UntitledCube.Transport
             _currentObject.transform.SetParent(null);
             _currentObject.transform.rotation = Quaternion.identity;
         }
+    }
+
+    [Serializable]
+    public struct OffsetDirection
+    {
+        [SerializeField] private WorldRotations _side;
+        [SerializeField] private Vector3 _offset;
+
+        public readonly WorldRotations Side => _side;
+        public readonly Vector3 Offset => _offset;
     }
 }

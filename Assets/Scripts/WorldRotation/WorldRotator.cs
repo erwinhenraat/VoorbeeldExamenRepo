@@ -7,7 +7,7 @@ namespace UntitledCube.WorldRotation
 {
     public class WorldRotator : MonoBehaviour
     {
-        [Header("Settings")]
+        [SerializeField] private GameObject _gyroscope;
         [SerializeField] private float _rotationDuration;
 
         private readonly Dictionary<WorldRotations, Quaternion> _directions = new()
@@ -21,6 +21,8 @@ namespace UntitledCube.WorldRotation
         public Action<WorldRotations> OnStartRotate;
         public Action OnFinishRotate;
 
+        private void Awake() => transform.parent = _gyroscope.transform;
+
         /// <summary>
         /// Starts the rotation of the world object to one of the neighbouring faces.
         /// </summary>
@@ -29,7 +31,7 @@ namespace UntitledCube.WorldRotation
         {
             OnStartRotate?.Invoke(direction);
 
-            Quaternion startRotation = transform.rotation;
+            Quaternion startRotation = _gyroscope.transform.rotation;
             Quaternion endRotation = startRotation * _directions[direction];
 
             StartCoroutine(LerpRotation(startRotation, endRotation));
@@ -42,12 +44,20 @@ namespace UntitledCube.WorldRotation
             while (Time.time - startTime < _rotationDuration)
             {
                 float time = (Time.time - startTime) / _rotationDuration;
-                transform.rotation = Quaternion.Lerp(startRotation, endRotation, time);
+                _gyroscope.transform.rotation = Quaternion.Lerp(startRotation, endRotation, time);
                 yield return null;
             }
 
-            transform.rotation = endRotation;
+            _gyroscope.transform.rotation = endRotation;
 
+            FinishRotate();
+        }
+
+        private void FinishRotate()
+        {
+            transform.parent = null;
+            _gyroscope.transform.rotation = Quaternion.identity;
+            transform.parent = _gyroscope.transform;
             OnFinishRotate?.Invoke();
         }
     }
