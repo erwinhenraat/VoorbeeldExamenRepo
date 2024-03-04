@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UntitledCube.Timer;
 
 namespace UntitledCube.Maze.Cell
 {
@@ -10,6 +11,8 @@ namespace UntitledCube.Maze.Cell
 
         [SerializeField] private Material _startMaterial;
         [SerializeField] private Material _endMaterial;
+
+        [SerializeField] private BoxCollider _boxCollider;
 
         private readonly Dictionary<Vector2, GameObject> _walls = new();
         private readonly Vector2[] _directions = { Vector2.right, Vector2.left, Vector2.up, Vector2.down };
@@ -41,6 +44,7 @@ namespace UntitledCube.Maze.Cell
                 SetWallsActive(false);
                 _floorRenderer.gameObject.SetActive(value);
                 _floorRenderer.material = _endMaterial;
+                _boxCollider.enabled = value;
             }
             get => _isEnd;
         }
@@ -50,6 +54,8 @@ namespace UntitledCube.Maze.Cell
             for (int i = 0; i < _wallObjects.Length; i++)
                 _walls.Add(_directions[i], _wallObjects[i]);
         }
+
+        private void OnTriggerEnter(Collider other) => Stopwatch.Instance.Stop();
 
         /// <summary>
         /// Deactivates a specific wall object.
