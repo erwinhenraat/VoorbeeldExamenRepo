@@ -1,10 +1,5 @@
-using System;
-using System.Security.Cryptography.X509Certificates;
 using Input.Script;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Experimental.GlobalIllumination;
-using UnityEngine.UI;
 
 namespace Car
 {
@@ -15,10 +10,13 @@ namespace Car
         [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private InputHandler handler;
         private CharacterController _characterController;
+
+        [Header("Emission of Particles: ")] 
+        [SerializeField] private ParticleSystem emissionGas;
         
         private bool _isGoingLeft;
         private bool _isGoingRight;
-        private float _rotSpeed = 10f;
+        private const float RotSpeed = 10f;
         private float _currentRotationSpeed = 0f;
 
         // Start is called before the first frame update
@@ -57,6 +55,9 @@ namespace Car
 
             if (moveSpeed < 0.01f)
                 moveSpeed = 0;
+
+            var emission = emissionGas.emission;
+            emission.rateOverTime = moveSpeed / 2f;
         }
 
         private void ReturnSpeed()
@@ -65,13 +66,16 @@ namespace Car
 
             if (moveSpeed > 7.4f)
                 moveSpeed = 7.5f;
+            
+            var emission = emissionGas.emission;
+            emission.rateOverTime = moveSpeed * 10f;
         }
         
         private void RotateCar(int dir)
         {
             var targetAngle = dir > 0 ? 115f : dir < 0 ? 65f : 90f;
             var currentAngle = transform.localEulerAngles.y;
-            _currentRotationSpeed = Mathf.Lerp(_currentRotationSpeed, _rotSpeed, Time.deltaTime);
+            _currentRotationSpeed = Mathf.Lerp(_currentRotationSpeed, RotSpeed, Time.deltaTime);
             var newAngle = Mathf.LerpAngle(currentAngle, targetAngle, _currentRotationSpeed * Time.deltaTime);
 
             // Apply the new rotation to the car

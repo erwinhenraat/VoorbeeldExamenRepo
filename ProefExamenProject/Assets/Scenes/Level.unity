@@ -1399,13 +1399,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 296382208}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.70600367, y: 0.018647164, z: 0.7076707, w: 0.02033266}
+  m_LocalRotation: {x: 0.70572835, y: 0.06732314, z: 0.7047078, w: -0.028321031}
   m_LocalPosition: {x: 0.00267, y: -0.00033, z: 0.00002}
   m_LocalScale: {x: 0.1, y: 0.045382287, z: 0.076568}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2391417885592084288}
-  m_LocalEulerAnglesHint: {x: 0.133, y: 89.861, z: 176.841}
+  m_LocalEulerAnglesHint: {x: -7.751, y: 90.299, z: 176.812}
 --- !u!199 &296382210
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -18626,6 +18626,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 7.5
   handler: {fileID: 3565488855323026486}
+  emissionGas: {fileID: 296382211}
 --- !u!114 &3565488855323026486
 MonoBehaviour:
   m_ObjectHideFlags: 0
