@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4c171c0e37475047b66f4c87319d9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testRemoveLater: {fileID: 0}
+  testRemoveLater: {fileID: 348536864}
   removeLater: {fileID: 1495190709}
 --- !u!4 &539260539
 Transform:
