@@ -34,15 +34,23 @@ namespace UntitledCube.Transport
             _currentObject = currentObject;
 
             Vector3 transportPosition = new();
-
-            Vector3 objectPosition = currentObject.transform.position;
             Vector3 triggerPosition = currentTrigger.transform.position;
-
+            Vector3 objectPosition = currentObject.transform.position;
             Vector3 placementOffset = _placementOffset[side].Offset;
 
-            transportPosition.x = triggerPosition.x + _triggerOffset + placementOffset.x;
-            transportPosition.y = objectPosition.y + placementOffset.y;
-            transportPosition.z = triggerPosition.z + placementOffset.z;
+            if (side == WorldRotations.LEFT || side == WorldRotations.RIGHT)
+            {
+                transportPosition.x = triggerPosition.x + _triggerOffset + placementOffset.x;
+                transportPosition.y = objectPosition.y + placementOffset.y;
+                transportPosition.z = triggerPosition.z + placementOffset.z + placementOffset.z;
+            }
+
+            if (side == WorldRotations.UP || side == WorldRotations.DOWN)
+            {
+                transportPosition.x = objectPosition.x + placementOffset.x;
+                transportPosition.y = triggerPosition.y + placementOffset.y;
+                transportPosition.z = triggerPosition.z + _triggerOffset + placementOffset.z;
+            }
 
             _currentObject.transform.position = transportPosition;
 
