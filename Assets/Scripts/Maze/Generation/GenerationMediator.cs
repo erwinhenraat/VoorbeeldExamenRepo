@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UntitledCube.Advertisements;
+using UntitledCube.Timer;
 
 namespace UntitledCube.Maze.Generation
 {
@@ -33,6 +34,8 @@ namespace UntitledCube.Maze.Generation
 
             _initialized = true;
             MazeGenerator.Generate(new(6, 6), _seed);
+
+            Stopwatch.Instance.StartStopWatch();
         }
 
         private void DisplaySeed(string seed) => _seedDisplay.text = seed;
