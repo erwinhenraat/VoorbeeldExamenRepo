@@ -4,52 +4,66 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UntitledCube.Maze.Generation;
+using UntitledCube.Timer;
 
-public class AppShareManager : MonoBehaviour
+namespace UntitledCube.Sharing
 {
-    private bool _isProcessing;
-    private List<string> challengeTexts = new List<string>()
+    public class AppShareManager : MonoBehaviour
     {
-        "I challenge you to beat my time of 1 secs in this IMPOSSIBLE seed: 23456", 
-        "Think you can beat my time? I clocked 1 seconds in seed: 23456 . Let's see what you've got!", 
-        "Seed 23456 is mine – 1 seconds flat. But I dare you to try and top it 😉", 
-        "Okay, hotshots. I just blazed through seed 23456 in 1 seconds. Your turn!", 
-        "My fingers were FLYING. I nailed a 1 -second run in seed 23456 . Show me your skills!", 
-        "1 seconds in seed 23456 . It's your time to shine... or get crushed 😏" 
-    };
+        private bool _isProcessing;
+        private string _scoreTimer;
 
-    public void CallSharePopUp()
-    {
-        if (!_isProcessing)
-            StartCoroutine(ShareScreenshotInAnroid());
-    }
+        private Stopwatch _stopwatch;
+        private List<string> challengeTexts = new List<string>()
+        {
+            "I challenge you to beat my time of 1 secs in this IMPOSSIBLE seed: \n 23456",
+            "Think you can beat my time? I clocked 1 seconds in seed: \n 23456 \n Let's see what you've got!",
+            "Seed \n 23456 \n is mine – 1 seconds flat. But I dare you to try and top it 😉",
+            "Okay, hotshots. I just blazed through seed \n 23456 \n in 1 seconds. Your turn!",
+            "My fingers were FLYING. I nailed a 1 -second run in seed \n 23456 \n Show me your skills!",
+            "1 seconds in seed \n 23456 \n It's your time to shine... or get crushed 😏"
+        };
 
-    private IEnumerator ShareScreenshotInAnroid()
-    {
-        _isProcessing = true;
-        yield return new WaitForEndOfFrame();
+        private void Start()
+        {
+            _stopwatch = FindObjectOfType<Stopwatch>();
+            _stopwatch.OnTimerStopped += SetScoreTimer;
+        }
 
-        string screenshotName = $"HighScore_{DateTime.UtcNow.ToOADate()}.jpg";
-        string screenShotPath = Path.Combine(Application.persistentDataPath, screenshotName);
+        public void CallSharePopUp()
+        {
+            if (!_isProcessing)
+                StartCoroutine(ShareScreenshotInAnroid());
+        }
 
-        string message = challengeTexts[UnityEngine.Random.Range(0, challengeTexts.Count)];
+        private void SetScoreTimer(string timer) => _scoreTimer = timer;
 
-        string seedNumber = MazeGenerator.Seed;
-        string time = "21 secs";
+        private IEnumerator ShareScreenshotInAnroid()
+        {
+            _isProcessing = true;
+            yield return new WaitForEndOfFrame();
 
-        message = message.Replace("1", time);
-        message = message.Replace("23456", seedNumber);
+            string screenshotName = $"HighScore_{DateTime.UtcNow.ToOADate()}.jpg";
+            string screenShotPath = Path.Combine(Application.persistentDataPath, screenshotName);
 
-        ScreenCapture.CaptureScreenshot(screenshotName, 1);
+            string message = challengeTexts[UnityEngine.Random.Range(0, challengeTexts.Count)];
 
-        yield return new WaitForEndOfFrame();
+            string seedNumber = MazeGenerator.Seed;
 
-        new NativeShare().AddFile(screenShotPath)
-        .SetSubject("Untitled Cube Highscore").SetText(message).SetUrl("\n\n https://TotallyARealLinkThatGoesToOurApp")
-        .SetCallback((result, shareTarget) => Debug.Log("Share result: " + result + ", selected app: " + shareTarget))
-        .Share();
+            message = message.Replace("1", _scoreTimer);
+            message = message.Replace("23456", seedNumber);
 
-        yield return new WaitForEndOfFrame();
-        _isProcessing = false;
+            ScreenCapture.CaptureScreenshot(screenshotName, 1);
+
+            yield return new WaitForEndOfFrame();
+
+            new NativeShare().AddFile(screenShotPath)
+            .SetSubject("Untitled Cube Highscore").SetText(message).SetUrl("\n\n https://TotallyARealLinkThatGoesToOurApp")
+            .SetCallback((result, shareTarget) => Debug.Log("Share result: " + result + ", selected app: " + shareTarget))
+            .Share();
+
+            yield return new WaitForEndOfFrame();
+            _isProcessing = false;
+        }
     }
 }
