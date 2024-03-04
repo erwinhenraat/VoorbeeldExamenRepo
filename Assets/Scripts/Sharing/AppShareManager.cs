@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UntitledCube.Maze.Generation;
 
 public class AppShareManager : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class AppShareManager : MonoBehaviour
 
         string message = challengeTexts[UnityEngine.Random.Range(0, challengeTexts.Count)];
 
-        string seedNumber = "123456";
+        string seedNumber = MazeGenerator.Seed;
         string time = "21 secs";
 
         message = message.Replace("1", time);
