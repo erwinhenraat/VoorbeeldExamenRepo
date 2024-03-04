@@ -1,3 +1,4 @@
+using System;
 using MarkUlrich.Utils;
 using UnityEngine;
 using UntitledCube.Maze.Generation;
@@ -17,13 +18,18 @@ namespace UntitledCube.Gravity
         }
 
         private void OnDisable() => MazeGenerator.OnGenerated -= ResetGravity;
+        
+        public Action<Vector3> OnGravityChanged;
 
         /// <summary>
         /// Sets the gravity direction to the specified direction.
         /// </summary>
         /// <param name="direction">The direction of the gravity.</param>
-        public void SetGravityDirection(Vector3 direction) 
-            => Physics.gravity = direction * _gravityAmount * _gravityMultiplier;
+        public void SetGravityDirection(Vector3 direction)
+        {
+            Physics.gravity = _gravityAmount * _gravityMultiplier * direction;
+            OnGravityChanged?.Invoke(direction);
+        }
 
         private void ResetGravity(string _) => SetGravityDirection(Vector3.down);
     }
