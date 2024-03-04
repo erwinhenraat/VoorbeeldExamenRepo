@@ -1,6 +1,6 @@
 namespace UntitledCube.WorldRotation
 {
-    public enum RotationDirection
+    public enum WorldRotations
     {
         UP,
         DOWN,

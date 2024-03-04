@@ -1,69 +1,63 @@
+using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace UntitledCube.WorldRotation
 {
     public class WorldRotator : MonoBehaviour
     {
-        [Header ("Rotation Testing")]
-        [SerializeField] private List<RotationDirection> _rotationDirections = new();
-        [SerializeField] private float _timebetweenRotations = 2f;
+        [SerializeField] private GameObject _gyroscope;
+        [SerializeField] private float _rotationDuration;
 
-        [Header("Settings")]
-        [SerializeField] private float _stepAmount = 0.01f;
-        [SerializeField] private float _betweenSteps = 0.01f;
-
-        private Dictionary<RotationDirection, Vector3> _directions = new Dictionary<RotationDirection, Vector3>()
+        private readonly Dictionary<WorldRotations, Quaternion> _directions = new()
         {
-            { RotationDirection.UP, new Vector3(-90f, 0f, 0f) },
-            { RotationDirection.DOWN, new Vector3(90f, 0f, 0f) },
-            { RotationDirection.LEFT, new Vector3(0f, 90f, 0f) },
-            { RotationDirection.RIGHT, new Vector3(0f, -90f, 0f) }
+            { WorldRotations.UP, Quaternion.AngleAxis(-90f, Vector3.right) }, 
+            { WorldRotations.DOWN, Quaternion.AngleAxis(90f, Vector3.right) },
+            { WorldRotations.LEFT, Quaternion.AngleAxis(-90f, Vector3.up) },
+            { WorldRotations.RIGHT, Quaternion.AngleAxis(90f, Vector3.up) }
         };
 
-        public Action<RotationDirection> OnStartRotate;
+        public Action<WorldRotations> OnStartRotate;
         public Action OnFinishRotate;
 
-        private void Start() => StartCoroutine(RotatingSides());
+        private void Awake() => transform.parent = _gyroscope.transform;
 
         /// <summary>
         /// Starts the rotation of the world object to one of the neighbouring faces.
         /// </summary>
         /// <param name="direction"> The side the world object will rotate towards. </param>
-        public void RotateWorld(RotationDirection direction)
+        public void RotateWorld(WorldRotations direction)
         {
             OnStartRotate?.Invoke(direction);
-            StartCoroutine(RotationSteps(direction));
+
+            Quaternion startRotation = _gyroscope.transform.rotation;
+            Quaternion endRotation = startRotation * _directions[direction];
+
+            StartCoroutine(LerpRotation(startRotation, endRotation));
         }
 
-        private IEnumerator RotatingSides()
+        private IEnumerator LerpRotation(Quaternion startRotation, Quaternion endRotation)
         {
-            foreach (RotationDirection rotation in _rotationDirections)
+            float startTime = Time.time;
+
+            while (Time.time - startTime < _rotationDuration)
             {
-                RotateWorld(rotation);
-                yield return new WaitForSeconds(_timebetweenRotations);
+                float time = (Time.time - startTime) / _rotationDuration;
+                _gyroscope.transform.rotation = Quaternion.Lerp(startRotation, endRotation, time);
+                yield return null;
             }
+
+            _gyroscope.transform.rotation = endRotation;
+
+            FinishRotate();
         }
 
-        private IEnumerator RotationSteps(RotationDirection rotationDiraction)
+        private void FinishRotate()
         {
-            Quaternion startRotation = transform.rotation;
-            _directions.TryGetValue(rotationDiraction, out Vector3 endRotation);
-
-            for (float i = 0; i <= 1; i += _stepAmount)
-            {
-                Quaternion midRotation = Quaternion.Euler(
-                    Mathf.Lerp(startRotation.x, endRotation.x, i),
-                    Mathf.Lerp(startRotation.y, endRotation.y, i),
-                    0f
-                );
-                transform.rotation = startRotation * midRotation;
-
-                yield return new WaitForSeconds(_betweenSteps);
-            }
-
+            transform.parent = null;
+            _gyroscope.transform.rotation = Quaternion.identity;
+            transform.parent = _gyroscope.transform;
             OnFinishRotate?.Invoke();
         }
     }
