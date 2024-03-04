@@ -18,7 +18,7 @@ namespace UntitledCube.Gravity
         /// <param name="direction">The direction of the gravity.</param>
         public void SetGravityDirection(Vector3 direction)
         {
-            Physics.gravity = direction * _gravityAmount * _gravityMultiplier;
+            Physics.gravity = _gravityAmount * _gravityMultiplier * direction;
             OnGravityChanged?.Invoke(direction);
         }
     }

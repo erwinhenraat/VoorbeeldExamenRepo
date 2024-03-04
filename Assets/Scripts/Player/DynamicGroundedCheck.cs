@@ -9,6 +9,7 @@ public class DynamicGroundedCheck : MonoBehaviour
     public bool IsGrounded => Physics.Raycast(transform.position, _raycastDirection, _raycastDistance);
 
     private void Awake() => GravityManager.Instance.OnGravityChanged += SetRayCastDirection;
+    
     private void SetRayCastDirection(Vector3 direction) => _raycastDirection = direction.normalized;
 
     private void OnDestroy() 
@@ -17,7 +18,8 @@ public class DynamicGroundedCheck : MonoBehaviour
             GravityManager.Instance.OnGravityChanged -= SetRayCastDirection;
     }
 
-    private void OnDrawGizmos() {
+    private void OnDrawGizmos() 
+    {
         Gizmos.color = Color.red;
         Gizmos.DrawRay(transform.position, _raycastDirection * _raycastDistance);
     }
