@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UntitledCube.Gravity;
 
 namespace UntitledCube.Input
 {
     public class SwipeInteraction : MonoBehaviour
     {
         [SerializeField] private float _moveThreshold;
-        [SerializeField] private GameObject _testObject;//todo: changed this to gravityshift script
 
         private InputAction _swipeAction;
 
@@ -15,6 +15,8 @@ namespace UntitledCube.Input
 
         private void OnEnable() => InputSystem.SubscribeToAction("Swipe", Swipe, out _swipeAction);
 
+        private void Start() => Application.targetFrameRate = 120;
+        
         private void Swipe(InputAction.CallbackContext callbackContext)
         {
             _swipePosition = callbackContext.ReadValue<Vector2>();
@@ -25,10 +27,7 @@ namespace UntitledCube.Input
                 return;
 
             if(_swipeDirection != _newSwipeDirection ) 
-            {
-                _testObject.transform.position = _newSwipeDirection;
-                //GravityShift(direction)
-            }
+                GravityManager.Instance.SetGravityDirection(_newSwipeDirection);
 
             _swipeDirection = _newSwipeDirection;
         }
