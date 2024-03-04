@@ -1,6 +1,7 @@
 using System;
 using MarkUlrich.Utils;
 using UnityEngine;
+using UntitledCube.Maze.Generation;
 
 namespace UntitledCube.Gravity
 {
@@ -10,6 +11,14 @@ namespace UntitledCube.Gravity
         
         [SerializeField] private float _gravityAmount = 9.81f;
 
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            MazeGenerator.OnGenerated += ResetGravity;
+        }
+
+        private void OnDisable() => MazeGenerator.OnGenerated -= ResetGravity;
+        
         public Action<Vector3> OnGravityChanged;
 
         /// <summary>
@@ -21,5 +30,7 @@ namespace UntitledCube.Gravity
             Physics.gravity = _gravityAmount * _gravityMultiplier * direction;
             OnGravityChanged?.Invoke(direction);
         }
+
+        private void ResetGravity(string _) => SetGravityDirection(Vector3.down);
     }
 }

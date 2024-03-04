@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UntitledCube.Maze.Generation;
 
 namespace UntitledCube.WorldRotation
 {
@@ -22,6 +23,10 @@ namespace UntitledCube.WorldRotation
         public Action OnFinishRotate;
 
         private void Awake() => transform.parent = _gyroscope.transform;
+
+        private void OnEnable() => MazeGenerator.OnGenerate += ResetRotation;
+
+        private void OnDisable() => MazeGenerator.OnGenerate -= ResetRotation;
 
         /// <summary>
         /// Starts the rotation of the world object to one of the neighbouring faces.
@@ -59,6 +64,16 @@ namespace UntitledCube.WorldRotation
             _gyroscope.transform.rotation = Quaternion.identity;
             transform.parent = _gyroscope.transform;
             OnFinishRotate?.Invoke();
+        }
+
+        private void ResetRotation()
+        {
+            transform.parent = null;
+
+            transform.rotation = Quaternion.identity;
+            _gyroscope.transform.rotation = Quaternion.identity;
+
+            transform.parent = _gyroscope.transform;
         }
     }
 }

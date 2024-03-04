@@ -24,6 +24,7 @@ namespace UntitledCube.Maze.Generation
         private static int randomEnd;
         private static bool _startSet = false;
 
+        public static Action OnGenerate;
         public static Action<string> OnGenerated;
 
         public static string Seed => SeedCodec.Assemble(_fullSeed, randomEnd);
@@ -35,6 +36,8 @@ namespace UntitledCube.Maze.Generation
         /// <param name="seed">The seed to generate a specific meaze.</param>
         public static void Generate(Vector2 size, string seed = "")
         {
+            OnGenerate?.Invoke();
+
             (List<List<int>> decryptedSeed, int endPoint) = SeedCodec.ProcessSeed(seed);
             
             ResetCells();
