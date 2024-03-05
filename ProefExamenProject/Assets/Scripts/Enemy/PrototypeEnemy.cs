@@ -16,7 +16,6 @@ public class PrototypeEnemy : MonoBehaviour
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
-
     }
     
     void Update()
@@ -43,8 +42,6 @@ public class PrototypeEnemy : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == _player)
-        {
             Destroy(_player);
-        }
     }
 }

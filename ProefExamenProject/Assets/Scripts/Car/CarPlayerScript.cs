@@ -1,9 +1,5 @@
-using System.Security.Cryptography.X509Certificates;
 using Input.Script;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Experimental.GlobalIllumination;
-using UnityEngine.UI;
 
 namespace Car
 {
@@ -17,8 +13,8 @@ namespace Car
         
         private bool _isGoingLeft;
         private bool _isGoingRight;
-        private float _rotSpeed = 10f;
-        private float _currentRotationSpeed = 0f;
+        private const float RotSpeed = 10f;
+        private float _currentRotationSpeed;
 
         // Start is called before the first frame update
         private void Start() => _characterController = GetComponent<CharacterController>();
@@ -40,14 +36,21 @@ namespace Car
                 _characterController.Move(transform.forward * (moveSpeed * Time.deltaTime));
                 RotateCar(1);
             }
-            if (handler.phoneInput == InputHandler.InputState.None)
+            
+            // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
+            switch (handler.phoneInput)
             {
-                RotateCar(0);
-                if (moveSpeed < 7.5f)
-                    ReturnSpeed();
+                case InputHandler.InputState.None:
+                {
+                    RotateCar(0);
+                    if (moveSpeed < 7.5f)
+                        ReturnSpeed();
+                    break;
+                }
+                case InputHandler.InputState.Both:
+                    Brake();
+                    break;
             }
-            else if (handler.phoneInput == InputHandler.InputState.Both)
-                Brake();
         }
 
         private void Brake()
@@ -70,7 +73,7 @@ namespace Car
         {
             var targetAngle = dir > 0 ? 115f : dir < 0 ? 65f : 90f;
             var currentAngle = transform.localEulerAngles.y;
-            _currentRotationSpeed = Mathf.Lerp(_currentRotationSpeed, _rotSpeed, Time.deltaTime);
+            _currentRotationSpeed = Mathf.Lerp(_currentRotationSpeed, RotSpeed, Time.deltaTime);
             var newAngle = Mathf.LerpAngle(currentAngle, targetAngle, _currentRotationSpeed * Time.deltaTime);
 
             // Apply the new rotation to the car

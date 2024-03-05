@@ -258,8 +258,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 394219569907898739}
   - {fileID: 155698458}
+  - {fileID: 394219569907898739}
   - {fileID: 1256628781}
   - {fileID: 684808757}
   - {fileID: 1230480001}
@@ -8464,6 +8464,59 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2432090755550338912, guid: b9c5ec21299db26469f7a98f71d557f1, type: 3}
+--- !u!1 &660247832
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 660247833}
+  - component: {fileID: 660247834}
+  m_Layer: 0
+  m_Name: StreetLimit (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &660247833
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 660247832}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.053815123, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 394219569907898739}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &660247834
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 660247832}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.032517653, y: 0.01980871, z: 0.6840922}
+  m_Center: {x: 0.027637439, y: -0.00007781526, z: 0.20926376}
 --- !u!1 &671694895
 GameObject:
   m_ObjectHideFlags: 0
@@ -8961,7 +9014,7 @@ Transform:
   m_GameObject: {fileID: 714059894}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: -4.25, y: -0, z: 62.07}
+  m_LocalPosition: {x: -4.25, y: 0, z: 62.07}
   m_LocalScale: {x: 500, y: -533.66754, z: 500}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10676,7 +10729,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 100.5
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -10724,8 +10777,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 2391417885592084288}
-  smoothSpeed: 2
-  distanceFromPlayer: 0
+  smoothSpeed: 3.5
+  distanceFromPlayer: 0.67
 --- !u!54 &963194230
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -16262,6 +16315,59 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -1933454733758863510, guid: b67a50522c5a0154f8505bb0c9aa385a, type: 3}
+--- !u!1 &1785574707
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1785574708}
+  - component: {fileID: 1785574709}
+  m_Layer: 0
+  m_Name: StreetLimit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1785574708
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785574707}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.0015, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 394219569907898739}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1785574709
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785574707}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.032517653, y: 0.01980871, z: 0.6840922}
+  m_Center: {x: 0.027637439, y: -0.00007781526, z: 0.20926376}
 --- !u!1 &1787369862
 GameObject:
   m_ObjectHideFlags: 0
@@ -16585,7 +16691,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1872421479
 Transform:
   m_ObjectHideFlags: 0
@@ -16615,7 +16721,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   randomObjects:
   - {fileID: 2245788758206908067, guid: 54523ee1b348efe478318ba077628c01, type: 3}
-  randomSpawn: {fileID: 1872421479}
+  boundsObject: {fileID: 1023262904413995977}
+  maxSpawnedIn: 10
+  minSpawnTime: 0.5
+  maxSpawnTime: 2.5
+  gridRows: 5
+  gridCols: 5
 --- !u!1 &1886533034
 GameObject:
   m_ObjectHideFlags: 0
@@ -18485,10 +18596,12 @@ Transform:
   m_GameObject: {fileID: 1023262904413995977}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 6.1075616, y: -0, z: 95.15236}
+  m_LocalPosition: {x: 6.1075616, y: 0, z: 95.15236}
   m_LocalScale: {x: 500, y: 9999.999, z: 17.775055}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1785574708}
+  - {fileID: 660247833}
   m_Father: {fileID: 60202115}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &405810491094327914
@@ -18555,6 +18668,7 @@ GameObject:
   - component: {fileID: 394219569907898739}
   - component: {fileID: 3663492520032147158}
   - component: {fileID: 1527740898027364892}
+  - component: {fileID: 3663492520032147159}
   m_Layer: 0
   m_Name: Street
   m_TagString: Untagged
@@ -18868,6 +18982,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1023262904413995977}
   m_Mesh: {fileID: 7645108262248895976, guid: f4f2998e556b1be4b8f78d295533f8c2, type: 3}
+--- !u!114 &3663492520032147159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1023262904413995977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44f6421d46b8dc948bd5520c900e98c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomObjects:
+  - {fileID: 933926259477956512, guid: c88b476238dd20a41b2158de313bc51d, type: 3}
+  - {fileID: 2245788758206908067, guid: 54523ee1b348efe478318ba077628c01, type: 3}
+  boundsObject: {fileID: 1023262904413995977}
+  maxSpawnedIn: 20
+  minSpawnTime: 0.5
+  maxSpawnTime: 1
+  gridRows: 250
+  gridCols: 250
 --- !u!33 &4264101876571738347
 MeshFilter:
   m_ObjectHideFlags: 0

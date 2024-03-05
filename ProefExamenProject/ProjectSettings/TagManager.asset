@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ScoreBoardScore
   - Car
+  - Obstacle
   layers:
   - Default
   - TransparentFX
