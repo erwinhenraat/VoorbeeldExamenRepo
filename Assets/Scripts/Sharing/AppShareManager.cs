@@ -14,19 +14,19 @@ namespace UntitledCube.Sharing
         private string _scoreTimer;
 
         private Stopwatch _stopwatch;
-        private List<string> challengeTexts = new List<string>()
+        private readonly List<string> challengeTexts = new List<string>()
         {
             "I challenge you to beat my time of 1 in this IMPOSSIBLE seed: \n 23456 \n",
             "Think you can beat my time? I clocked 1 in this seed. Let's see what you've got! \n 23456 \n",
             "23456 \n Seed is mine – beaten in 1 . But I dare you to try and top it 😉 \n",
-            "Okay, hotshots. I just blazed through this seed in 1 . Your turn!  \n 23456 \n",
+            "Okay, hotshot. I just blazed through this seed in 1 . Your turn!  \n 23456 \n",
             "My fingers were FLYING. I nailed a 1 run in this seed. Show me your skills! \n 23456 \n",
             "1 seconds in this seed! It's your time to shine... or get crushed 😏 \n 23456 \n"
         };
 
         private void Start()
         {
-            _stopwatch = FindObjectOfType<Stopwatch>();
+            _stopwatch = Stopwatch.Instance;
             _stopwatch.OnTimerStopped += SetScoreTimer;
         }
 
@@ -35,23 +35,20 @@ namespace UntitledCube.Sharing
         /// </summary>
         public void CallSharePopUp()
         {
-            if (!_isProcessing)
-            {
-                RemoveAllTempFiles();
-                StartCoroutine(ShareScreenshotInAnroid());
-            }
+            if (_isProcessing) return;
+        
+            RemoveAllTempFiles();
+            StartCoroutine(ShareScreenshotInAnroid());
         }
 
         private void SetScoreTimer(string timer) => _scoreTimer = timer;
 
         private void RemoveAllTempFiles()
         {
-            DirectoryInfo di = new DirectoryInfo(Path.Combine(Application.persistentDataPath));
+            DirectoryInfo directoryInfo = new(Path.Combine(Application.persistentDataPath));
 
-            foreach (FileInfo file in di.GetFiles())
-            {
+            foreach (FileInfo file in directoryInfo.GetFiles())
                 file.Delete();
-            }
         }
 
         private IEnumerator ShareScreenshotInAnroid()
