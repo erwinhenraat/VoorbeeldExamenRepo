@@ -31,7 +31,7 @@ namespace UntitledCube.Sharing
         }
 
         /// <summary>
-        /// Checks if sharing isn't in procces, clears the temp folder and calls share screenshot
+        /// Checks if sharing isn't in procces, clears the temp folder and calls share screenshot.
         /// </summary>
         public void CallSharePopUp()
         {
