@@ -1,19 +1,24 @@
+using UnityEngine.SceneManagement;
+
 namespace MarkUlrich.StateMachine.States
 {
     public class MainMenuState : State
     {
-        /// <summary>
-        /// Executes code related to entering the Main Menu state.
-        /// </summary>
+        private const string SCENE_NAME = "MainMenu";
+
         public override void EnterState()
         {
             base.EnterState();
+            LoadSceneAsync(SCENE_NAME, LoadSceneMode.Single);
             SetNextState<GameState>();
+
+            MoveToNextState(); // Added so that the game will start, remove when added UI
         }
 
-        /// <summary>
-        /// Executes code related to leaving the Main Menu state.
-        /// </summary>
-        public override void ExitState() => base.ExitState();
+        public override void ExitState()
+        {
+            base.ExitState();
+            UnloadScene(SCENE_NAME);
+        }
     }
 }

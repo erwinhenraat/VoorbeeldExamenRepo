@@ -2,17 +2,15 @@ using UnityEngine.SceneManagement;
 
 namespace MarkUlrich.StateMachine.States
 {
-    public class BootState : State
+    public class PausedState : State
     {
-        private const string SCENE_NAME = "Boot";
+        private const string SCENE_NAME = "Pause";
 
         public override void EnterState()
         {
             base.EnterState();
-            LoadSceneAsync(SCENE_NAME, LoadSceneMode.Single);
-            SetNextState<MainMenuState>();
-
-            MoveToNextState();
+            LoadSceneAsync(SCENE_NAME, LoadSceneMode.Additive);
+            SetNextState<GameState>();
         }
 
         public override void ExitState()
