@@ -2,15 +2,14 @@ using UnityEngine.SceneManagement;
 
 namespace MarkUlrich.StateMachine.States
 {
-    public class MainMenuState : State
+    public class ShareState : State
     {
-        private const string SCENE_NAME = "MainMenu";
+        private const string SCENE_NAME = "Share";
 
         public override void EnterState()
         {
             base.EnterState();
-            LoadSceneAsync(SCENE_NAME, LoadSceneMode.Single);
-            SetNextState<MainMenuState>();
+            LoadSceneAsync(SCENE_NAME, LoadSceneMode.Additive);
         }
 
         public override void ExitState()

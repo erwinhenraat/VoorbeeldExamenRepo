@@ -25,11 +25,11 @@ namespace MarkUlrich.StateMachine.States
         protected void SetNextState<TState>() where TState: State, new() 
             => _nextState = OwningStateMachine.GetState<TState>();
 
-        protected void LoadScene(string sceneName, bool forceReload = false)
+        protected void LoadScene(string sceneName, LoadSceneMode loadSceneMode, bool forceReload = false)
         {
             if (forceReload)
             {
-                SceneManager.LoadScene(sceneName);
+                SceneManager.LoadScene(sceneName, loadSceneMode);
 
                 if (OwningStateMachine.IsDebugging)
                     Debug.Log($"Loaded Scene ({sceneName})");
@@ -39,10 +39,41 @@ namespace MarkUlrich.StateMachine.States
             if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName(sceneName))
                 return;
             
-            SceneManager.LoadScene(sceneName);
+            SceneManager.LoadScene(sceneName, loadSceneMode);
 
             if (OwningStateMachine.IsDebugging)
                 Debug.Log($"Loaded Scene ({sceneName})");
+        }
+
+        protected void LoadSceneAsync(string sceneName, LoadSceneMode loadSceneMode, bool forceReload = false)
+        {
+            if (forceReload)
+            {
+                SceneManager.LoadSceneAsync(sceneName, loadSceneMode);
+
+                if (OwningStateMachine.IsDebugging)
+                    Debug.Log($"Loaded Scene ({sceneName}) Async");
+                return;
+            }
+
+            if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName(sceneName))
+                return;
+            
+            SceneManager.LoadSceneAsync(sceneName, loadSceneMode);
+
+            if (OwningStateMachine.IsDebugging)
+                Debug.Log($"Loaded Scene ({sceneName}) Async");
+        }
+
+        protected void UnloadScene(string sceneName)
+        {
+            if (SceneManager.GetSceneByName(sceneName).isLoaded)
+            {
+                SceneManager.UnloadSceneAsync(sceneName);
+
+                if (OwningStateMachine.IsDebugging)
+                    Debug.Log($"Unloaded Scene ({sceneName})");
+            }
         }
 
         /// <summary>

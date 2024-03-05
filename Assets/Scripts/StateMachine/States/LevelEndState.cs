@@ -2,15 +2,15 @@ using UnityEngine.SceneManagement;
 
 namespace MarkUlrich.StateMachine.States
 {
-    public class MainMenuState : State
+    public class LevelEndState : State
     {
-        private const string SCENE_NAME = "MainMenu";
+        private const string SCENE_NAME = "LevelEnd";
 
         public override void EnterState()
         {
             base.EnterState();
             LoadSceneAsync(SCENE_NAME, LoadSceneMode.Single);
-            SetNextState<MainMenuState>();
+            SetNextState<GameState>();
         }
 
         public override void ExitState()

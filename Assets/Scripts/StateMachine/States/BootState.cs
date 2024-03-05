@@ -1,25 +1,24 @@
+using UnityEngine.SceneManagement;
+
 namespace MarkUlrich.StateMachine.States
 {
     public class BootState : State
     {
-        private const string LOAD_SCENE_NAME = "Statemachine";
+        private const string SCENE_NAME = "Boot";
 
-        /// <summary>
-        /// Executes code related to entering the Boot state.
-        /// </summary>
         public override void EnterState()
         {
             base.EnterState();
+            LoadSceneAsync(SCENE_NAME, LoadSceneMode.Single);
             SetNextState<MainMenuState>();
 
-            LoadScene(LOAD_SCENE_NAME);
-            
             MoveToNextState();
         }
 
-        /// <summary>
-        /// Executes code related to leaving the Boot state.
-        /// </summary>
-        public override void ExitState() =>  base.ExitState();
+        public override void ExitState()
+        {
+            base.ExitState();
+            UnloadScene(SCENE_NAME);
+        }
     }
 }
