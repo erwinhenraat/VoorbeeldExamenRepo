@@ -56,27 +56,43 @@ namespace UntitledCube.Sharing
             _isProcessing = true;
             yield return new WaitForEndOfFrame();
 
-            string screenshotName = $"HighScore_{DateTime.UtcNow.ToOADate()}.jpg";
+            CaptureScreenShot(out string screenshotName); 
+
             string screenShotPath = Path.Combine(Application.persistentDataPath, screenshotName);
+            string shareText = RandomiseShareText();
 
+            yield return new WaitForEndOfFrame();
+
+            SetSharePopUp(screenShotPath, shareText);
+
+            yield return new WaitForEndOfFrame();
+            _isProcessing = false;
+        }
+
+        private string RandomiseShareText()
+        {
             string message = challengeTexts[UnityEngine.Random.Range(0, challengeTexts.Count)];
-
             string seedNumber = MazeGenerator.Seed;
 
             message = message.Replace("$", _scoreTimer);
             message = message.Replace("#", seedNumber);
 
+            return message;
+        }
+
+        private void CaptureScreenShot(out string screenshotName)
+        {
+            screenshotName = $"HighScore_{DateTime.UtcNow.ToOADate()}.jpg";
+
             ScreenCapture.CaptureScreenshot(screenshotName, 1);
+        }
 
-            yield return new WaitForEndOfFrame();
-
+        private void SetSharePopUp(string screenShotPath, string message)
+        {
             new NativeShare().AddFile(screenShotPath)
-                .SetSubject("Untitled Cube Highscore").SetText(message).SetUrl("\n\n https://github.com/swzwij/Proeve-van-Bekwaamheid-2023-2024/releases/tag/Sprint_1")
-                .SetCallback((result, shareTarget) => Debug.Log("Share result: " + result + ", selected app: " + shareTarget))
-                .Share();
-
-            yield return new WaitForEndOfFrame();
-            _isProcessing = false;
+            .SetSubject("Untitled Cube Highscore").SetText(message).SetUrl("\n\n https://github.com/swzwij/Proeve-van-Bekwaamheid-2023-2024/releases/tag/Sprint_1")
+            .SetCallback((result, shareTarget) => Debug.Log("Share result: " + result + ", selected app: " + shareTarget))
+            .Share();
         }
     }
 }
