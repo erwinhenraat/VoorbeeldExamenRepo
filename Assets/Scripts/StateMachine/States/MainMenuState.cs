@@ -10,7 +10,9 @@ namespace MarkUlrich.StateMachine.States
         {
             base.EnterState();
             LoadSceneAsync(SCENE_NAME, LoadSceneMode.Single);
-            SetNextState<MainMenuState>();
+            SetNextState<GameState>();
+
+            MoveToNextState(); // Added so that the game will start, remove when added UI
         }
 
         public override void ExitState()
