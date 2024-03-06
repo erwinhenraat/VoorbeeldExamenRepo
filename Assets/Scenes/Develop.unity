@@ -2357,17 +2357,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2651718224677591182, guid: 3835d6f245178f24d8f35c227c835764, type: 3}
   m_PrefabInstance: {fileID: 1949904243}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1528533479 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2822339900275735154, guid: 3835d6f245178f24d8f35c227c835764, type: 3}
-  m_PrefabInstance: {fileID: 1949904243}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 397beb656da699d46ae5f363a42161a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1619825548
 GameObject:
   m_ObjectHideFlags: 0
@@ -2601,6 +2590,7 @@ GameObject:
   - component: {fileID: 1672181396}
   - component: {fileID: 1672181395}
   - component: {fileID: 1672181394}
+  - component: {fileID: 1672181397}
   m_Layer: 5
   m_Name: RetryButton
   m_TagString: Untagged
@@ -2671,55 +2661,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1672181395}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1370537474}
-        m_TargetAssemblyTypeName: UntitledCube.WorldRotation.WorldRotator, Assembly-CSharp
-        m_MethodName: ResetRotation
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1370537480}
-        m_TargetAssemblyTypeName: UntitledCube.Spawning.PlayerSpawnPoint, Assembly-CSharp
-        m_MethodName: SpawnPlayer
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1420468645}
-        m_TargetAssemblyTypeName: UntitledCube.Timer.Stopwatch, Assembly-CSharp
-        m_MethodName: StartStopWatch
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1528533479}
-        m_TargetAssemblyTypeName: UntitledCube.Gravity.GravityManager, Assembly-CSharp
-        m_MethodName: ResetGravity
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1672181395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2758,6 +2700,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1672181392}
   m_CullTransparentMesh: 1
+--- !u!114 &1672181397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672181392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 843ad40a75c00334ba037b1a14c311c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _retryButton: {fileID: 1672181394}
 --- !u!1 &1716960089
 GameObject:
   m_ObjectHideFlags: 0
