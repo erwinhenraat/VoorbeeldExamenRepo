@@ -35,7 +35,8 @@ namespace UntitledCube.Sharing
         /// </summary>
         public void CallSharePopUp()
         {
-            if (_isProcessing) return;
+            if (_isProcessing) 
+                return;
         
             RemoveAllTempFiles();
             StartCoroutine(ShareScreenshotInAnroid());
@@ -74,10 +75,7 @@ namespace UntitledCube.Sharing
             string message = challengeTexts[UnityEngine.Random.Range(0, challengeTexts.Count)];
             string seedNumber = MazeGenerator.Seed;
 
-            message = message.Replace("$", _scoreTimer);
-            message = message.Replace("#", seedNumber);
-
-            return message;
+            return message.Replace("$", _scoreTimer).Replace("#", seedNumber);
         }
 
         private void CaptureScreenShot(out string screenshotName)
