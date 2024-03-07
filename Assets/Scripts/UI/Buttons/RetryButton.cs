@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UntitledCube.Advertisements;
 using UntitledCube.Gravity;
 using UntitledCube.Spawning;
+using UntitledCube.Timer;
 using UntitledCube.WorldRotation;
 
 namespace UntitledCube.UI.Buttons
@@ -14,6 +15,7 @@ namespace UntitledCube.UI.Buttons
         private WorldRotator _rotator;
         private PlayerSpawnPoint _spawnPoint;
         private GravityManager _gravityManager;
+        private Stopwatch _stopwatch;
         private Advertising _advertising;
 
         private void Start()
@@ -21,6 +23,7 @@ namespace UntitledCube.UI.Buttons
             _rotator = FindAnyObjectByType<WorldRotator>();
             _spawnPoint = FindAnyObjectByType<PlayerSpawnPoint>();
             _gravityManager = GravityManager.Instance;
+            _stopwatch = Stopwatch.Instance;
             _advertising = Advertising.Instance;
 
             _retryButton.onClick.AddListener(ResetLevel);
@@ -31,6 +34,7 @@ namespace UntitledCube.UI.Buttons
             _rotator.ResetRotation();
             _spawnPoint.SpawnPlayer("");
             _gravityManager.ResetGravity("");
+            _stopwatch.StartStopWatch();
             _advertising.ShowAd();
         }
     }
