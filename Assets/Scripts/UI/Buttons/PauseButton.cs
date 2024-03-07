@@ -2,8 +2,6 @@ using MarkUlrich.StateMachine;
 using MarkUlrich.StateMachine.States;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
-using UnityEngine.InputSystem;
 
 namespace UntitledCube.UI.Buttons
 {
@@ -11,10 +9,8 @@ namespace UntitledCube.UI.Buttons
     {
         [SerializeField] private Button _pauseButton;
 
-        private void Start()
-        {
-            _pauseButton.onClick.AddListener(TogglePauseState);
-        }
+        private void Start() => _pauseButton.onClick.AddListener(TogglePauseState);
+       
 
         private void TogglePauseState()
         {
