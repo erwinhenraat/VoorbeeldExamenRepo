@@ -1,37 +1,38 @@
-
 using UnityEngine;
 using UnityEngine.UI;
+using UntitledCube.Advertisements;
 using UntitledCube.Gravity;
 using UntitledCube.Spawning;
-using UntitledCube.Timer;
 using UntitledCube.WorldRotation;
 
-public class RetryButton : MonoBehaviour
+namespace UntitledCube.UI.Buttons
 {
-    [SerializeField] private Button _retryButton;
-
-    private WorldRotator _rotator;
-    private PlayerSpawnPoint _spawnPoint;
-    private Stopwatch _stopwatch;
-    private GravityManager _gravityManager;
-
-    private void Start()
+    public class RetryButton : MonoBehaviour
     {
-        _rotator = FindAnyObjectByType<WorldRotator>();
-        _spawnPoint = FindAnyObjectByType<PlayerSpawnPoint>();
+        [SerializeField] private Button _retryButton;
 
-        _stopwatch = Stopwatch.Instance;
-        _gravityManager = GravityManager.Instance;
+        private WorldRotator _rotator;
+        private PlayerSpawnPoint _spawnPoint;
+        private GravityManager _gravityManager;
+        private Advertising _advertising;
 
-        _retryButton.onClick.AddListener(ResetLevel);
-    }
+        private void Start()
+        {
+            _rotator = FindAnyObjectByType<WorldRotator>();
+            _spawnPoint = FindAnyObjectByType<PlayerSpawnPoint>();
+            _gravityManager = GravityManager.Instance;
+            _advertising = Advertising.Instance;
 
-    private void ResetLevel()
-    {
-        _rotator.ResetRotation();
-        _spawnPoint.SpawnPlayer("");
-        _stopwatch.StartStopWatch();
-        _gravityManager.ResetGravity("");
+            _retryButton.onClick.AddListener(ResetLevel);
+        }
+
+        private void ResetLevel()
+        {
+            _rotator.ResetRotation();
+            _spawnPoint.SpawnPlayer("");
+            _gravityManager.ResetGravity("");
+            _advertising.ShowAd();
+        }
     }
 }
  
