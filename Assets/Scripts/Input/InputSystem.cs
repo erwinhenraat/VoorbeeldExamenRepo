@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.InputSystem;
 
 namespace UntitledCube.Input 
@@ -7,6 +8,22 @@ namespace UntitledCube.Input
     {
         private static InputActions _inputAction = new();
         private static Dictionary<System.Action<InputAction.CallbackContext>, InputAction> _subscribedInputs = new();
+
+        /// <summary>
+        /// Enables or Disables Input based on isActive
+        /// </summary>
+        public static void ToggleAllInputs(bool isActive) 
+        {
+            List<InputAction> actions = _subscribedInputs.Values.ToList();
+
+            foreach (InputAction action in actions)
+            {
+                if (isActive)
+                    action.Enable();
+                else 
+                    action.Disable();
+            }
+        }
 
         /// <summary>
         /// Tries to get an action based on the given name

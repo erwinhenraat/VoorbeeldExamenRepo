@@ -2,16 +2,26 @@ using MarkUlrich.StateMachine;
 using MarkUlrich.StateMachine.States;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
-public class PauseButton : MonoBehaviour
+namespace UntitledCube.UI.Buttons
 {
-    [SerializeField] private Button _pauseButton;
-
-    private void Start()
+    public class PauseButton : MonoBehaviour
     {
-        _pauseButton.onClick.AddListener(GoToPauseState);
-    }
+        [SerializeField] private Button _pauseButton;
 
-    private void GoToPauseState() => GameStateMachine.Instance.SetState<PausedState>();
+        private void Start()
+        {
+            _pauseButton.onClick.AddListener(TogglePauseState);
+        }
 
+        private void TogglePauseState()
+        {
+            if (GameStateMachine.Instance.CurrentState is PausedState)
+                GameStateMachine.Instance.MoveToNextState();
+            else
+                GameStateMachine.Instance.SetState<PausedState>();
+        }
+    } 
 }
