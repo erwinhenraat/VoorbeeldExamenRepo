@@ -1,7 +1,6 @@
 using UnityEngine;
 using MarkUlrich.StateMachine.States;
 using MarkUlrich.Utils;
-using UnityEditor;
 
 namespace MarkUlrich.StateMachine
 {
@@ -21,8 +20,21 @@ namespace MarkUlrich.StateMachine
             if (_enableDebugging)
                 Debug.Log($"Initialising StateMachine ({StateMachineHashCode})...");
 
+            InitStates();
+
             // Example of how to set the initial state.
             SetState<BootState>();
+        }
+
+        public void InitStates()
+        {
+            StateMachine.GetState<BootState>();
+            StateMachine.GetState<GameState>();
+            StateMachine.GetState<LevelEndState>();
+            StateMachine.GetState<MainMenuState>();
+            StateMachine.GetState<PausedState>();
+            StateMachine.GetState<ScoreboardState>();
+            StateMachine.GetState<ShareState>();
         }
 
         /// <summary>
@@ -47,8 +59,8 @@ namespace MarkUlrich.StateMachine
         /// <summary>
         /// Sets the current state to the state parsed in the monoscript param.
         /// </summary>
-        public void SetState(MonoScript monoScript)
-            => StateMachine.SetState(monoScript);
+        public void SetState(string stateName)
+            => StateMachine.SetState(stateName);
 
         /// <summary>
         /// Retrieves the state of type <typeparamref name="TState"/> from the owning state machine.

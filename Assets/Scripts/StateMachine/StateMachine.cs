@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using MarkUlrich.StateMachine.States;
-using UnityEditor;
 
 namespace MarkUlrich.StateMachine
 {
@@ -53,8 +52,8 @@ namespace MarkUlrich.StateMachine
         /// Sets the state of the state machine based on the provided MonoScript.
         /// </summary>
         /// <param name="monoScript">The MonoScript representing the state.</param>
-        internal void SetState(MonoScript monoScript)
-            => SetState(GetState(monoScript));
+        internal void SetState(string stateName)
+            => SetState(GetState(stateName));
 
         /// <summary>
         /// Moves the current state to the next state set in the state.
@@ -91,10 +90,9 @@ namespace MarkUlrich.StateMachine
         /// <summary>
         /// Returns the reference of a state based on the monoscript param in the StateMachine. Will create new instance if not yet available.
         /// </summary>
-        public State GetState(MonoScript monoScript)
+        public State GetState(string stateName)
         {
-            return States.FirstOrDefault(s => monoScript.GetClass().ToString().Contains(s.ToString())) 
-                ?? (State)monoScript.GetClass().GetConstructor(new System.Type[] { }).Invoke(new object[] { });
+            return States.FirstOrDefault(s => s.ToString().Contains(stateName));
         }
     }
 }
