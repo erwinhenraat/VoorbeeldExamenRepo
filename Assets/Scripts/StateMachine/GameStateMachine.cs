@@ -1,6 +1,7 @@
 using UnityEngine;
 using MarkUlrich.StateMachine.States;
 using MarkUlrich.Utils;
+using UnityEditor;
 
 namespace MarkUlrich.StateMachine
 {
@@ -42,6 +43,12 @@ namespace MarkUlrich.StateMachine
         /// <typeparam name="TState">The type reference of the state to change to.</typeparam>
         public void SetState<TState>() where TState : State, new()
             => StateMachine.SetState<TState>();
+
+        /// <summary>
+        /// Sets the current state to the state parsed in the monoscript param.
+        /// </summary>
+        public void SetState(MonoScript monoScript)
+            => StateMachine.SetState(monoScript);
 
         /// <summary>
         /// Retrieves the state of type <typeparamref name="TState"/> from the owning state machine.
