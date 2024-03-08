@@ -14,9 +14,8 @@ namespace MarkUlrich.StateMachine.States
             base.EnterState();
 
             LoadSceneMode loadSceneMode = SceneManager.GetActiveScene() == null ? LoadSceneMode.Single : LoadSceneMode.Additive;
-            LoadSceneAsync(SCENE_NAME, loadSceneMode);
+            LoadScene(SCENE_NAME, loadSceneMode);
             SetNextState<LevelEndState>();
-
         }
 
         public override void ExitState()

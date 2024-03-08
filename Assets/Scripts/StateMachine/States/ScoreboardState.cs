@@ -10,7 +10,7 @@ namespace MarkUlrich.StateMachine.States
         {
             base.EnterState();
             LoadSceneAsync(SCENE_NAME, LoadSceneMode.Single);
-            SetNextState<MainMenuState>();
+            SetNextState<SeedInputState>();
         }
 
         public override void ExitState()

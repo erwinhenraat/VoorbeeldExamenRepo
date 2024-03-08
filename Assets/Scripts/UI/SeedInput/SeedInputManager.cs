@@ -1,6 +1,5 @@
 using MarkUlrich.StateMachine;
 using MarkUlrich.StateMachine.States;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -24,25 +23,28 @@ namespace UntitledCube.UI.SeedInput
             _pasteButton.onClick.AddListener(PasteCode);
         }
 
+        private void OnEnable() => GameStateMachine.Instance.GetState<GameState>().OnSceneLoaded += UnloadMainMenu;
+
+        private void OnDisable() => GameStateMachine.Instance.GetState<GameState>().OnSceneLoaded -= UnloadMainMenu;
+
         private void GetSeed(string givenSeed) => _wantedSeed = givenSeed;
 
         private void EnterSeed()
         {
             if (string.IsNullOrEmpty(_wantedSeed))
             {
+                Debug.LogError("Yes");
                 //make error appear
                 return;
             }
             GameStateMachine.Instance.SetState<GameState>();
-            UnloadMainMenu();
         }
 
-        private async void UnloadMainMenu()
+        private void UnloadMainMenu()
         {
-            await Task.Delay(100);
-
-            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+            print("here");
             FindObjectOfType<GenerationMediator>().GenerateMaze(_wantedSeed);
+            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         }
 
         private void PasteCode()
@@ -50,6 +52,6 @@ namespace UntitledCube.UI.SeedInput
             _wantedSeed = GUIUtility.systemCopyBuffer;
             _inputField.text = _wantedSeed;
         }
-        
+
     }
 }
