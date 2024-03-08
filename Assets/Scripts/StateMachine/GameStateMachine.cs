@@ -21,8 +21,21 @@ namespace MarkUlrich.StateMachine
             if (_enableDebugging)
                 Debug.Log($"Initialising StateMachine ({StateMachineHashCode})...");
 
+            InitStates();
+
             // Example of how to set the initial state.
             SetState<BootState>();
+        }
+
+        public void InitStates()
+        {
+            StateMachine.GetState<BootState>();
+            StateMachine.GetState<GameState>();
+            StateMachine.GetState<LevelEndState>();
+            StateMachine.GetState<MainMenuState>();
+            StateMachine.GetState<PausedState>();
+            StateMachine.GetState<ScoreboardState>();
+            StateMachine.GetState<ShareState>();
         }
 
         /// <summary>
@@ -43,6 +56,12 @@ namespace MarkUlrich.StateMachine
         /// <typeparam name="TState">The type reference of the state to change to.</typeparam>
         public void SetState<TState>() where TState : State, new()
             => StateMachine.SetState<TState>();
+
+        /// <summary>
+        /// Sets the current state to the state parsed in the monoscript param.
+        /// </summary>
+        public void SetState(string stateName)
+            => StateMachine.SetState(stateName);
 
         /// <summary>
         /// Retrieves the state of type <typeparamref name="TState"/> from the owning state machine.

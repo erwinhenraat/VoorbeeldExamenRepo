@@ -167,6 +167,33 @@ namespace UntitledCube.Maze.Generation
             return (processedSeed, endPoint);
         }
 
+        /// <summary>
+        /// Validates a seed string to ensure it conforms to a specific format.  
+        /// </summary>
+        /// <param name="seed">The seed string to validate.</param>
+        /// <returns>True if the seed is valid, false otherwise.</returns>
+        public static bool Validate(string seed)
+        {
+            if (string.IsNullOrEmpty(seed))
+                return false;
+
+            string[] seedParts = seed.Split(";");
+            if (seedParts.Length != 2)
+                return false;
+
+            string[] mazeParts = seedParts[0].Split("-");
+            if (mazeParts.Length != 6)
+                return false;
+
+            if (!int.TryParse(seedParts[1], out _))
+                return false;
+
+            if (seed.Length > 241 || seed.Length < 85)
+                return false;
+
+            return true;
+        }
+
         private static void GenerateDecryptionTable()
         {
             foreach (KeyValuePair<string, string> pair in _encryptionPremutationTable)
