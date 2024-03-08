@@ -25,9 +25,13 @@ namespace UntitledCube.Maze.Generation
             MazeGenerator.OnGenerated -= DisplaySeed;
         }
 
-        private void Start() => GenerateMaze();
+        public void GenerateMaze(string newSeed)
+        {
+            _seed = newSeed;
+            GenerateMaze();
+        }
 
-        private void GenerateMaze()
+        public void GenerateMaze()
         {
             if (_initialized)
                 Advertising.Instance.ShowAd();
