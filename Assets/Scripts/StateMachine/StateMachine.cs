@@ -90,9 +90,6 @@ namespace MarkUlrich.StateMachine
         /// <summary>
         /// Returns the reference of a state based on the monoscript param in the StateMachine. Will create new instance if not yet available.
         /// </summary>
-        public State GetState(string stateName)
-        {
-            return States.FirstOrDefault(s => s.ToString().Contains(stateName));
-        }
+        public State GetState(string stateName) => States.FirstOrDefault(s => s.ToString().Contains(stateName));
     }
 }
