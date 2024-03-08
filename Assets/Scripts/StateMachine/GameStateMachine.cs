@@ -1,6 +1,7 @@
 using UnityEngine;
 using MarkUlrich.StateMachine.States;
 using MarkUlrich.Utils;
+using System;
 
 namespace MarkUlrich.StateMachine
 {
@@ -54,5 +55,10 @@ namespace MarkUlrich.StateMachine
         /// Moves the state machine to the next state in the static flow.
         /// </summary>
         public void MoveToNextState() => StateMachine.MoveToNextState();
+
+        internal void SetState(Type stateType)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
