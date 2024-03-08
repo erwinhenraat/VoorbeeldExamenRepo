@@ -31,9 +31,8 @@ namespace UntitledCube.UI.SeedInput
 
         private void EnterSeed()
         {
-            if (string.IsNullOrEmpty(_wantedSeed))
+            if (string.IsNullOrEmpty(_wantedSeed) || !SeedCodec.Validate(_wantedSeed))
             {
-                Debug.LogError("Yes");
                 //make error appear
                 return;
             }
@@ -42,7 +41,6 @@ namespace UntitledCube.UI.SeedInput
 
         private void UnloadMainMenu()
         {
-            print("here");
             FindObjectOfType<GenerationMediator>().GenerateMaze(_wantedSeed);
             SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         }

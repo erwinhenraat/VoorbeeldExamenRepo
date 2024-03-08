@@ -2,7 +2,7 @@ using UnityEngine.SceneManagement;
 
 namespace MarkUlrich.StateMachine.States
 {
-    public class SeedInputState : State
+    public class MainMenuState : State
     {
         private const string SCENE_NAME = "TestShareSeed";
 
