@@ -93,10 +93,8 @@ namespace MarkUlrich.StateMachine
         /// </summary>
         public State GetState(MonoScript monoScript)
         {
-            return States.FirstOrDefault
-            (
-                s => monoScript.GetClass().ToString().Contains(s.ToString())
-            ) ?? (State)monoScript.GetClass().GetConstructor(new System.Type[] { }).Invoke(new object[] { });
+            return States.FirstOrDefault(s => monoScript.GetClass().ToString().Contains(s.ToString())) 
+                ?? (State)monoScript.GetClass().GetConstructor(new System.Type[] { }).Invoke(new object[] { });
         }
     }
 }
