@@ -49,6 +49,13 @@ namespace MarkUlrich.StateMachine
             => SetState(GetState<TState>());
 
         /// <summary>
+        /// Sets the state of the state machine based on the provided MonoScript.
+        /// </summary>
+        /// <param name="monoScript">The MonoScript representing the state.</param>
+        internal void SetState(string stateName)
+            => SetState(GetState(stateName));
+
+        /// <summary>
         /// Moves the current state to the next state set in the state.
         /// </summary>
         internal void MoveToNextState() => CurrentState.MoveToNextState();
@@ -79,5 +86,10 @@ namespace MarkUlrich.StateMachine
             State parameterState = new TState();
             return States.FirstOrDefault(state => state.ToString() == parameterState.ToString()) ?? parameterState;
         }
+
+        /// <summary>
+        /// Returns the reference of a state based on the monoscript param in the StateMachine. Will create new instance if not yet available.
+        /// </summary>
+        public State GetState(string stateName) => States.FirstOrDefault(s => s.ToString().Contains(stateName));
     }
 }
