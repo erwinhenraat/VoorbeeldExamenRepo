@@ -916,6 +916,7 @@ GameObject:
   - component: {fileID: 446762695}
   - component: {fileID: 446762694}
   - component: {fileID: 446762693}
+  - component: {fileID: 446762696}
   m_Layer: 5
   m_Name: Pauze button
   m_TagString: Untagged
@@ -1025,50 +1026,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 446762691}
   m_CullTransparentMesh: 1
---- !u!1 &499492102
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 499492104}
-  - component: {fileID: 499492103}
-  m_Layer: 0
-  m_Name: temp
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &499492103
+--- !u!114 &446762696
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 499492102}
+  m_GameObject: {fileID: 446762691}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6cc0c286f15360e488e4d7bb2fbd392b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &499492104
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 499492102}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.07968253, y: -0.1832531, z: -0.03871335}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  monoScript: PausedState
 --- !u!1 &504458494
 GameObject:
   m_ObjectHideFlags: 0
@@ -4175,4 +4145,3 @@ SceneRoots:
   - {fileID: 358506160}
   - {fileID: 855380379}
   - {fileID: 1070576793}
-  - {fileID: 499492104}

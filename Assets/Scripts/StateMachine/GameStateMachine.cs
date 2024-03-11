@@ -36,6 +36,7 @@ namespace MarkUlrich.StateMachine
             StateMachine.GetState<PausedState>();
             StateMachine.GetState<ScoreboardState>();
             StateMachine.GetState<ShareState>();
+            StateMachine.GetState<SeedState>();
         }
 
         /// <summary>

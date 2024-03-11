@@ -1,3 +1,5 @@
+using MarkUlrich.StateMachine;
+using MarkUlrich.StateMachine.States;
 using System.Collections.Generic;
 using UnityEngine;
 using UntitledCube.Timer;
@@ -55,7 +57,11 @@ namespace UntitledCube.Maze.Cell
                 _walls.Add(_directions[i], _wallObjects[i]);
         }
 
-        private void OnTriggerEnter(Collider other) => Stopwatch.Instance.Stop();
+        private void OnTriggerEnter(Collider other) 
+        {
+            GameStateMachine.Instance.SetState<LevelEndState>();
+            Stopwatch.Instance.Stop();
+        }
 
         /// <summary>
         /// Deactivates a specific wall object.

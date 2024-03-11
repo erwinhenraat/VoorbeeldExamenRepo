@@ -2,9 +2,9 @@ using UnityEngine.SceneManagement;
 
 namespace MarkUlrich.StateMachine.States
 {
-    public class MainMenuState : State
+    public class SeedState : State
     {
-        private const string SCENE_NAME = "MainMenu";
+        private const string SCENE_NAME = "Seed";
 
         public override void EnterState()
         {
