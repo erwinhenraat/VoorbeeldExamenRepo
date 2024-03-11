@@ -33,13 +33,14 @@ namespace UntitledCube.UI.Buttons
 
         private void ResetLevel()
         {
-            if (GameStateMachine.Instance.CurrentState is PausedState) return;
-
-             _rotator.ResetRotation();
-            _spawnPoint.SpawnPlayer("");
-            _gravityManager.ResetGravity("");
-            _stopwatch.StartStopWatch();
-            _advertising.ShowAd();
+            if (GameStateMachine.Instance.CurrentState is GameState)
+            {
+                _rotator.ResetRotation();
+                _spawnPoint.SpawnPlayer("");
+                _gravityManager.ResetGravity("");
+                _stopwatch.StartStopWatch();
+                _advertising.ShowAd();
+            }
         }
     }
 }
