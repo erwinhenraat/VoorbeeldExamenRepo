@@ -4,12 +4,13 @@ namespace MarkUlrich.StateMachine.States
 {
     public class GameState : State
     {
+        private bool _isSceneLoaded = false;
         private const string SCENE_NAME = "Game";
 
         public override void EnterState()
         {
             base.EnterState();
-            LoadSceneAsync(SCENE_NAME, LoadSceneMode.Single);
+            LoadScene(SCENE_NAME, LoadSceneMode.Single);
             SetNextState<LevelEndState>();
         }
 
