@@ -9,12 +9,12 @@ public class ScoreCounter : MonoBehaviour
     public int currentScore = 0;
     public TMP_Text scoreText;
 
-    void Awake()
+    private void Awake()
     {
         instance = this;
     }
 
-    void Start()
+    private void Start()
     {
         scoreText.text = "SCORE: " + currentScore.ToString();
     }
