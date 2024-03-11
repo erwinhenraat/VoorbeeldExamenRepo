@@ -6,11 +6,11 @@ namespace UntitledCube.Player.Coins
     {
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Coin"))
-            {
-                CoinPurse.Add();
-                GameObject.Destroy(other.gameObject);
-            }
+            if (!other.CompareTag("Coin"))
+                return;
+
+            CoinPurse.Add();
+            Destroy(other.gameObject);
         }
     }
 }

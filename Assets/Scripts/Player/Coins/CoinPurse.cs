@@ -34,7 +34,7 @@ namespace UntitledCube.Player.Coins
         /// </summary>
         public static void RushChance()
         {
-            int random = UnityEngine.Random.RandomRange(0, GOLD_RUSH_CHANCE);
+            int random = UnityEngine.Random.Range(0, GOLD_RUSH_CHANCE);
             _goldRush = random == 0;
         }
     }
