@@ -6,16 +6,14 @@ using UnityEngine.UIElements;
 
 public class ScoreCalc : MonoBehaviour
 {
-    public GameObject car;
+    [SerializeField] private GameObject car;
     private Vector3 startPos;
     private Vector3 currentPos;
     private Vector3 endPos;
-    private bool notDead = true;
     
     void Start()
     {
         startPos = car.transform.position;
-        Debug.Log(startPos);
     }
 
     void Update()
@@ -25,7 +23,6 @@ public class ScoreCalc : MonoBehaviour
         if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
         {
             Die();
-            notDead = false;
         }
     }
 

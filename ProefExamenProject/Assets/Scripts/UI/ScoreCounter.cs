@@ -6,8 +6,8 @@ using TMPro;
 public class ScoreCounter : MonoBehaviour
 {
     public static ScoreCounter instance;
-    public int currentScore = 0;
-    public TMP_Text scoreText;
+    private int currentScore = 0;
+    private TMP_Text scoreText;
 
     private void Awake()
     {

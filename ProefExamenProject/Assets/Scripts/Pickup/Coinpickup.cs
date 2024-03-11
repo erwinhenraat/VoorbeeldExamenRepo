@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Coinpickup : MonoBehaviour
 {
-    public int coinWorth = 2;
+    private int coinWorth = 1;
         
     void OnCollisionEnter(Collision col)
     {
