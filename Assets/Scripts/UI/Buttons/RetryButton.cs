@@ -1,3 +1,5 @@
+using MarkUlrich.StateMachine.States;
+using MarkUlrich.StateMachine;
 using UnityEngine;
 using UnityEngine.UI;
 using UntitledCube.Advertisements;
@@ -31,7 +33,9 @@ namespace UntitledCube.UI.Buttons
 
         private void ResetLevel()
         {
-            _rotator.ResetRotation();
+            if (GameStateMachine.Instance.CurrentState is PausedState) return;
+
+             _rotator.ResetRotation();
             _spawnPoint.SpawnPlayer("");
             _gravityManager.ResetGravity("");
             _stopwatch.StartStopWatch();
