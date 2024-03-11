@@ -40,6 +40,8 @@ namespace UntitledCube.Maze.Generation
             MazeGenerator.Generate(new(6, 6), _seed);
 
             Stopwatch.Instance.StartStopWatch();
+
+            _seed = default;
         }
 
         private void DisplaySeed(string seed) => _seedDisplay.text = seed;

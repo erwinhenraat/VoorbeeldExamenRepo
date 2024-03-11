@@ -28,7 +28,7 @@ namespace MarkUlrich.StateMachine.States
         protected void SetNextState<TState>() where TState: State, new() 
             => _nextState = OwningStateMachine.GetState<TState>();
 
-        protected async void LoadScene(string sceneName, LoadSceneMode loadSceneMode, bool forceReload = false)
+        protected void LoadScene(string sceneName, LoadSceneMode loadSceneMode, bool forceReload = false)
         {
             if (forceReload)
             {
@@ -50,7 +50,7 @@ namespace MarkUlrich.StateMachine.States
             OwningStateMachine.StartCoroutine(WaitForSceneLoaded(sceneName));
         }
 
-        protected async void LoadSceneAsync(string sceneName, LoadSceneMode loadSceneMode, bool forceReload = false)
+        protected void LoadSceneAsync(string sceneName, LoadSceneMode loadSceneMode, bool forceReload = false)
         {
             if (forceReload)
             {
