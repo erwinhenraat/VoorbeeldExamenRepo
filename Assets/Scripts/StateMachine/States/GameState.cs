@@ -21,7 +21,6 @@ namespace MarkUlrich.StateMachine.States
         public override void ExitState()
         {
             base.ExitState();
-            UnloadScene(SCENE_NAME);
         }
     }
 }
