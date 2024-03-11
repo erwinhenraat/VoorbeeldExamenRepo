@@ -12,6 +12,7 @@ namespace UntitledCube.Spawning
 
         private void OnDisable() => MazeGenerator.OnGenerated -= SpawnPlayer;
 
-        private void SpawnPlayer(string _) => _player.transform.position = _spawnPoint.position;
+        private void SpawnPlayer(string _) 
+            => _player.transform.SetPositionAndRotation(_spawnPoint.position, Quaternion.identity);
     }
 }

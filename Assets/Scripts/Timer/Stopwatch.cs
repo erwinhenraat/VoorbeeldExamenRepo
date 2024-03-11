@@ -48,6 +48,16 @@ namespace UntitledCube.Timer
             OnTimerStopped?.Invoke(FormatTime(_elapsedTime));
         }
 
+        /// <summary>
+        /// Reset and stops the stopwatch.
+        /// </summary>
+        public void ResetStopWatch()
+        {
+            _timerRunning = false;
+            _elapsedTime = 0;
+            _timerText.text = FormatTime(_elapsedTime);
+        }
+
         private string FormatTime(float time)
         {
             TimeSpan timeSpan = TimeSpan.FromSeconds(time);
