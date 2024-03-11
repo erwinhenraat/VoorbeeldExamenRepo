@@ -15,22 +15,23 @@ namespace UntitledCube.AudioManagement
                 _audios.Add(audio.Name, audio);
         }
 
-        public void Play(AudioClip clip, AudioSource source)
+        public void Play(AudioClip clip, AudioSource source, float volume = 1)
         {
+            source.volume = volume;
             source.clip = clip;
             source.Play();
         }
 
-        public void Play(string clip, AudioSource source)
+        public void Play(string clip, AudioSource source, float volume = 1)
         {
             AudioClip audioClip = _audios[clip].Clip;
-            Play(audioClip, source);
+            Play(audioClip, source, volume);
         }
 
-        public void Play(AudioClip[] clips, AudioSource source)
+        public void Play(AudioClip[] clips, AudioSource source, float volume = 1)
         {
             int random = Random.Range(0, clips.Length);
-            Play(clips[random], source);
+            Play(clips[random], source, volume);
         }
     }
 }
