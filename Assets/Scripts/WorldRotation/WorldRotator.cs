@@ -66,7 +66,10 @@ namespace UntitledCube.WorldRotation
             OnFinishRotate?.Invoke();
         }
 
-        private void ResetRotation()
+        /// <summary>
+        /// Returns the cube to default rotation.
+        /// </summary>
+        public void ResetRotation()
         {
             transform.parent = null;
 
