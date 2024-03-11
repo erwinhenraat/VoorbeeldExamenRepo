@@ -248,9 +248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioFiles:
   - _name: CoinPickup
-    _clip: {fileID: 0}
-  - _name: PlayerHit
-    _clip: {fileID: 0}
+    _clip: {fileID: 8300000, guid: 9c51ba3c0550c574e96ae2df911db26f, type: 3}
   - _name: UIClick
     _clip: {fileID: 0}
 --- !u!4 &802294634

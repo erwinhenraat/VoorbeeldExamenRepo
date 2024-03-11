@@ -247,6 +247,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24f7f75ce1caa1e409feff811bb7f9c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collisionSounds:
+  - {fileID: 8300000, guid: b221882cae43ff44ead5d34a77e52f2b, type: 3}
+  - {fileID: 8300000, guid: 0ad80a7bda9e1d64ebb939a7c8b63cef, type: 3}
+  - {fileID: 8300000, guid: e1eedea3b122df549892d99e08e61340, type: 3}
+  - {fileID: 8300000, guid: 8e79ae1534c6f8d44ada2565fb6d067c, type: 3}
 --- !u!114 &4075646109299191528
 MonoBehaviour:
   m_ObjectHideFlags: 0

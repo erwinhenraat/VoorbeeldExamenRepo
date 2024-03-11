@@ -26,5 +26,11 @@ namespace UntitledCube.AudioManagement
             AudioClip audioClip = _audios[clip].Clip;
             Play(audioClip, source);
         }
+
+        public void Play(AudioClip[] clips, AudioSource source)
+        {
+            int random = Random.Range(0, clips.Length);
+            Play(clips[random], source);
+        }
     }
 }
