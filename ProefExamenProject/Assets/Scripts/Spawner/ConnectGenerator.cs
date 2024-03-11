@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Spawner
 {
@@ -26,10 +27,10 @@ namespace Spawner
 
         public int getChunks;
         private bool _afterFirstGeneration;
-        private bool _generateOnce;
+        [SerializeField] private bool generateOnce;
 
         // ReSharper disable once CollectionNeverQueried.Local
-        private List<GameObject> _spawnedChunks;
+        [SerializeField] private List<GameObject> _spawnedChunks;
         private RoadTiling _currentRoadType = RoadTiling.SmallRoadTile;
         private const RoadTiling PreviousRoadType = RoadTiling.SmallRoadTile;
 
@@ -41,12 +42,17 @@ namespace Spawner
 
         private void Update()
         {
-            if (getChunks > 16 && !_generateOnce)
+            if (getChunks >= 16 && !generateOnce)
             {
-                _generateOnce = true;
+                generateOnce = true;
                 _afterFirstGeneration = true;
-                for (var i = 0; i < 7; i++)
-                    Destroy(_spawnedChunks[i]);
+                var chunksToRemove = new List<GameObject>(_spawnedChunks.Take(7));
+                foreach (var chunk in chunksToRemove)
+                {
+                    _spawnedChunks.Remove(chunk);
+                    Destroy(chunk);
+                }
+                
                 var getLast = _spawnedChunks.Last();
                 loadInTransform = getLast.transform;
                 getChunks = 0;
@@ -60,6 +66,7 @@ namespace Spawner
 
             if (!_afterFirstGeneration)
             {
+                generateOnce = false;
                 for (var i = 0; i < maxChunks; i++)
                 {
                     // Get the next road prefab based on current road type and restrictions
@@ -81,11 +88,11 @@ namespace Spawner
 
                     // Update Z position for next chunk
                     currentZPosition += chunkSpacing + meshRenderer.bounds.extents.z; // Adjust based on your pivot offset
-                    _generateOnce = false;
                 }
             }
             else
             {
+                generateOnce = false;
                 for (var i = 0; i < 15; i++)
                 {
                     // Get the next road prefab based on current road type and restrictions
@@ -96,6 +103,7 @@ namespace Spawner
 
                     // Adjust for pivot point offset (assuming offset is on Z-axis)
                     var meshRenderer = chunkPrefab.GetComponentInChildren<MeshRenderer>();
+                    
                     if (meshRenderer != null)
                         spawnPosition.z += meshRenderer.bounds.extents.z / 2f; // Adjust based on your pivot offset
                     else
@@ -107,7 +115,6 @@ namespace Spawner
 
                     // Update Z position for next chunk
                     currentZPosition += chunkSpacing + meshRenderer.bounds.extents.z; // Adjust based on your pivot offset
-                    _generateOnce = false;
                 }
             }
         }
