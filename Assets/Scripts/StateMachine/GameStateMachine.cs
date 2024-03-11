@@ -75,9 +75,10 @@ namespace MarkUlrich.StateMachine
         /// </summary>
         public void MoveToNextState() => StateMachine.MoveToNextState();
 
-        public void StartCoroutine(Coroutine routine)
-        {
-            StartCoroutine(routine);
-        }
+        /// <summary>
+        /// Starts the given Coroutine
+        /// </summary>
+        public void StartCoroutine(Coroutine routine) => StartCoroutine(routine);
+        
     }
 }

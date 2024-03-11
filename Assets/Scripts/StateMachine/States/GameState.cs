@@ -13,7 +13,10 @@ namespace MarkUlrich.StateMachine.States
         {
             base.EnterState();
 
-            LoadSceneMode loadSceneMode = SceneManager.GetActiveScene() == null ? LoadSceneMode.Single : LoadSceneMode.Additive;
+            LoadSceneMode loadSceneMode = SceneManager.GetActiveScene() == null 
+                ? LoadSceneMode.Single 
+                : LoadSceneMode.Additive;
+
             LoadScene(SCENE_NAME, loadSceneMode);
             SetNextState<LevelEndState>();
         }

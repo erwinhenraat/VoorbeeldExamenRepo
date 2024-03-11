@@ -25,13 +25,17 @@ namespace UntitledCube.Maze.Generation
             MazeGenerator.OnGenerated -= DisplaySeed;
         }
 
+        /// <summary>
+        /// Generates maze based on given seed
+        /// </summary>
+        /// <param name="newSeed">The string that contains the seed you want to generate</param>
         public void GenerateMaze(string newSeed)
         {
             _seed = newSeed;
             GenerateMaze();
         }
 
-        public void GenerateMaze()
+        private void GenerateMaze()
         {
             if (_initialized)
                 Advertising.Instance.ShowAd();
