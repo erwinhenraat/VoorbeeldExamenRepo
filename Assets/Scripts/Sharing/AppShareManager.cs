@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UntitledCube.Maze.Generation;
+using UntitledCube.Player.Coins;
 using UntitledCube.Timer;
 
 namespace UntitledCube.Sharing
@@ -14,14 +15,14 @@ namespace UntitledCube.Sharing
         private string _scoreTimer;
 
         private Stopwatch _stopwatch;
-        private readonly List<string> challengeTexts = new List<string>()
+        private readonly List<string> challengeTexts = new()
         {
-            "I challenge you to beat my time of $ in this IMPOSSIBLE seed: \n # \n",
-            "Think you can beat my time? I clocked $ in this seed. Let's see what you've got! \n # \n",
-            "# \n Seed is mine – beaten in $ . But I dare you to try and top it 😉 \n",
-            "Okay, hotshot. I just blazed through this seed in $ . Your turn!  \n # \n",
-            "My fingers were FLYING. I nailed a $ run in this seed. Show me your skills! \n # \n",
-            "$ seconds in this seed! It's your time to shine... or get crushed 😏 \n # \n"
+            "I challenge you to beat my time of $  with * coins in this IMPOSSIBLE seed: \n # \n",
+            "Think you can beat my time? I clocked $ in this seed with * coins. Let's see what you've got! \n # \n",
+            "# \n Seed is mine – beaten in $ with * coins. But I dare you to try and top it 😉 \n",
+            "Okay, hotshot. I just blazed through this seed in $  with * coins. Your turn!  \n # \n",
+            "My fingers were FLYING. I nailed a $ run in this seed with * coins. Show me your skills! \n # \n",
+            "$ seconds in this seed with * coins! It's your time to shine... or get crushed 😏 \n # \n"
         };
 
         private void Start()
@@ -75,7 +76,7 @@ namespace UntitledCube.Sharing
             string message = challengeTexts[UnityEngine.Random.Range(0, challengeTexts.Count)];
             string seedNumber = MazeGenerator.Seed;
 
-            return message.Replace("$", _scoreTimer).Replace("#", seedNumber);
+            return message.Replace("$", _scoreTimer).Replace("#", seedNumber).Replace("*", $"{CoinPurse.Coins}");
         }
 
         private void CaptureScreenShot(out string screenshotName)
