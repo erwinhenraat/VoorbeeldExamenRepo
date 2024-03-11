@@ -8,11 +8,18 @@ namespace UntitledCube.Spawning
         [SerializeField] private GameObject _player;
         [SerializeField] private Transform _spawnPoint;
 
+        private Rigidbody _playerRigidbody;
+
         private void OnEnable() => MazeGenerator.OnGenerated += SpawnPlayer;
 
         private void OnDisable() => MazeGenerator.OnGenerated -= SpawnPlayer;
 
-        private void SpawnPlayer(string _) 
-            => _player.transform.SetPositionAndRotation(_spawnPoint.position, Quaternion.identity);
+        private void SpawnPlayer(string _)
+        {
+            _player.transform.SetPositionAndRotation(_spawnPoint.position, Quaternion.identity);
+            if (_playerRigidbody == null)
+                _playerRigidbody = _player.GetComponent<Rigidbody>();
+            _playerRigidbody.velocity = Vector3.zero;
+        }   
     }
 }
