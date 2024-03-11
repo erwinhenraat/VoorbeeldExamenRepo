@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 public class ScoreCounter : MonoBehaviour
 {
     public static ScoreCounter instance;
@@ -11,17 +8,21 @@ public class ScoreCounter : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
-    }
+        public static ScoreCounter Instance;
+        public int currentScore = 0;
+        public TMP_Text scoreText;
 
     private void Start()
     {
         scoreText.text = "SCORE: " + currentScore.ToString();
     }
 
-    public void IncreaseScore(int v)
-    {
-        currentScore += v;
-        scoreText.text = "SCORE: " + currentScore.ToString();
+        private void Start() => scoreText.text = "SCORE: " + currentScore;
+
+        public void IncreaseScore(int v)
+        {
+            currentScore += v;
+            scoreText.text = "SCORE: " + currentScore;
+        }
     }
 }

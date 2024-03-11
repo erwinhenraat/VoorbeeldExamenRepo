@@ -10,6 +10,7 @@ namespace Car
         [SerializeField] private float smoothSpeed;
         [SerializeField] private float distanceFromPlayer;
 
+        // Offset of current Pos
         private Vector3 _offset;
 
         private void Start() => _offset = transform.position - playerTransform.position;
