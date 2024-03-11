@@ -31,6 +31,9 @@ namespace UntitledCube.Gravity
             OnGravityChanged?.Invoke(direction);
         }
 
-        private void ResetGravity(string _) => SetGravityDirection(Vector3.down);
+        /// <summary>
+        /// Returns gravity to its original state.
+        /// </summary>
+        public void ResetGravity(string _) => SetGravityDirection(Vector3.down);
     }
 }
