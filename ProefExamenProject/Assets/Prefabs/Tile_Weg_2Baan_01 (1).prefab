@@ -11,10 +11,12 @@ GameObject:
   - component: {fileID: 2094625939681543055}
   - component: {fileID: 1206222086483555469}
   - component: {fileID: 6362731462589223920}
-  - component: {fileID: 6743683413662126237}
+  - component: {fileID: 927193704974124658}
+  - component: {fileID: 4764894592019938934}
+  - component: {fileID: 158443770179157150}
   m_Layer: 3
   m_Name: Line_for_Guard_Rail001
-  m_TagString: Untagged
+  m_TagString: StreetTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -85,8 +87,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6743683413662126237
-MeshCollider:
+--- !u!65 &927193704974124658
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -103,10 +105,51 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 2456990003057522315, guid: a93ea94be1cc729418223c13fca8ed69, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.486032, y: 15.000008, z: 2.8618865}
+  m_Center: {x: -3.7568328, y: 0.0000014305115, z: 1.4309434}
+--- !u!65 &4764894592019938934
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745439205148447513}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5145197, y: 15.000008, z: 2.8636878}
+  m_Center: {x: 3.74289, y: 0.0000014305115, z: 1.431844}
+--- !u!65 &158443770179157150
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745439205148447513}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 7.9999986, y: 15.000008, z: 0.95317173}
+  m_Center: {x: 0.00015044212, y: 0.0000014305118, z: 0.47658575}
 --- !u!1 &3348088147134588017
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,7 +373,7 @@ GameObject:
   - component: {fileID: 2627218151635668674}
   m_Layer: 0
   m_Name: Tile_Weg_2Baan_01 (1)
-  m_TagString: Untagged
+  m_TagString: StreetTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

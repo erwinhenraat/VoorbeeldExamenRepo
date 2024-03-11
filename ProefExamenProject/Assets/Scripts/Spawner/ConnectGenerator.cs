@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Spawner
@@ -21,11 +22,16 @@ namespace Spawner
         [SerializeField] private Transform loadInTransform;
 
         [SerializeField] private int maxChunks;
-        [SerializeField] private float chunkSpacing; // Minimum distance between chunks
+        [SerializeField] private float chunkSpacing;
 
+        public int getChunks;
+        private bool _afterFirstGeneration;
+        private bool _generateOnce;
+
+        // ReSharper disable once CollectionNeverQueried.Local
         private List<GameObject> _spawnedChunks;
         private RoadTiling _currentRoadType = RoadTiling.SmallRoadTile;
-        private const RoadTiling _previousRoadType = RoadTiling.SmallRoadTile;
+        private const RoadTiling PreviousRoadType = RoadTiling.SmallRoadTile;
 
         private void Start()
         {
@@ -33,31 +39,76 @@ namespace Spawner
             GenerateChunks();
         }
 
+        private void Update()
+        {
+            if (getChunks > 16 && !_generateOnce)
+            {
+                _generateOnce = true;
+                _afterFirstGeneration = true;
+                for (var i = 0; i < 7; i++)
+                    Destroy(_spawnedChunks[i]);
+                var getLast = _spawnedChunks.Last();
+                loadInTransform = getLast.transform;
+                getChunks = 0;
+                GenerateChunks();
+            }
+        }
+
         private void GenerateChunks()
         {
             var currentZPosition = loadInTransform.position.z; // Starting Z position (adjust if needed)
 
-            for (var i = 0; i < maxChunks; i++)
+            if (!_afterFirstGeneration)
             {
-                // Get the next road prefab based on current road type and restrictions
-                var chunkPrefab = GetNextRoadPrefab();
+                for (var i = 0; i < maxChunks; i++)
+                {
+                    // Get the next road prefab based on current road type and restrictions
+                    var chunkPrefab = GetNextRoadPrefab();
 
-                // Calculate spawn position with spacing along Z-axis
-                var spawnPosition = new Vector3(loadInTransform.position.x, 0f, currentZPosition);
+                    // Calculate spawn position with spacing along Z-axis
+                    var spawnPosition = new Vector3(loadInTransform.position.x, 0f, currentZPosition);
 
-                // Adjust for pivot point offset (assuming offset is on Z-axis)
-                var meshRenderer = chunkPrefab.GetComponentInChildren<MeshRenderer>();
-                if (meshRenderer != null)
-                    spawnPosition.z += meshRenderer.bounds.extents.z / 2f; // Adjust based on your pivot offset
-                else
-                    Debug.LogWarning("Chunk prefab has no MeshRenderer. Consider using a collider for bounds check.");
+                    // Adjust for pivot point offset (assuming offset is on Z-axis)
+                    var meshRenderer = chunkPrefab.GetComponentInChildren<MeshRenderer>();
+                    if (meshRenderer != null)
+                        spawnPosition.z += meshRenderer.bounds.extents.z / 2f; // Adjust based on your pivot offset
+                    else
+                        Debug.LogWarning("Chunk prefab has no MeshRenderer. Consider using a collider for bounds check.");
 
-                // Spawn the chunk
-                var spawnedChunk = Instantiate(chunkPrefab, spawnPosition, loadInTransform.rotation, transform);
-                _spawnedChunks.Add(spawnedChunk);
+                    // Spawn the chunk
+                    var spawnedChunk = Instantiate(chunkPrefab, spawnPosition, loadInTransform.rotation, transform);
+                    _spawnedChunks.Add(spawnedChunk);
 
-                // Update Z position for next chunk
-                currentZPosition += chunkSpacing + meshRenderer.bounds.extents.z; // Adjust based on your pivot offset
+                    // Update Z position for next chunk
+                    currentZPosition += chunkSpacing + meshRenderer.bounds.extents.z; // Adjust based on your pivot offset
+                    _generateOnce = false;
+                }
+            }
+            else
+            {
+                for (var i = 0; i < 15; i++)
+                {
+                    // Get the next road prefab based on current road type and restrictions
+                    var chunkPrefab = GetNextRoadPrefab();
+
+                    // Calculate spawn position with spacing along Z-axis
+                    var spawnPosition = new Vector3(loadInTransform.position.x, 0f, currentZPosition);
+
+                    // Adjust for pivot point offset (assuming offset is on Z-axis)
+                    var meshRenderer = chunkPrefab.GetComponentInChildren<MeshRenderer>();
+                    if (meshRenderer != null)
+                        spawnPosition.z += meshRenderer.bounds.extents.z / 2f; // Adjust based on your pivot offset
+                    else
+                        Debug.LogWarning("Chunk prefab has no MeshRenderer. Consider using a collider for bounds check.");
+
+                    // Spawn the chunk
+                    var spawnedChunk = Instantiate(chunkPrefab, spawnPosition, loadInTransform.rotation, transform);
+                    _spawnedChunks.Add(spawnedChunk);
+
+                    // Update Z position for next chunk
+                    currentZPosition += chunkSpacing + meshRenderer.bounds.extents.z; // Adjust based on your pivot offset
+                    _generateOnce = false;
+                }
             }
         }
 
@@ -69,42 +120,42 @@ namespace Spawner
             switch (_currentRoadType)
             {
                 case RoadTiling.SmallRoadTile:
-                    if (randomValue < 70) // 70% chance to stay small road
+                    if (randomValue < 70) 
                         return roadPrefabs[(int)_currentRoadType];
                     else
                     {
                         // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-                        if (canTransitionAgain && _previousRoadType != RoadTiling.SmallBecomesBig) // Allow transition only once and not after BigBecomesSmall
+                        if (canTransitionAgain && PreviousRoadType != RoadTiling.SmallBecomesBig)
                         {
                             canTransitionAgain = false;
                             _currentRoadType = RoadTiling.SmallBecomesBig;
                             return roadPrefabs[(int)_currentRoadType];
                         }
-                        return roadPrefabs[(int)_currentRoadType]; // Stay small road if last was transition
+                        return roadPrefabs[(int)_currentRoadType]; 
                     }
                 case RoadTiling.BigRoadTile:
-                    if (randomValue < 30) // 30% chance to become small road
+                    if (randomValue < 30) 
                     {
-                        // Transition to SmallRoadTile (if allowed)
-                        if (canTransitionAgain && _previousRoadType != RoadTiling.BigBecomesSmall)
+                        // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+                        if (canTransitionAgain && PreviousRoadType != RoadTiling.BigBecomesSmall)
                         {
                             canTransitionAgain = false;
-                            _currentRoadType = RoadTiling.SmallBecomesBig; // This will be handled in the SmallBecomesBig case
-                            return roadPrefabs[(int)RoadTiling.SmallRoadTile]; // Return the small road prefab
+                            _currentRoadType = RoadTiling.SmallBecomesBig; 
+                            return roadPrefabs[(int)RoadTiling.SmallRoadTile]; 
                         }
-                        return roadPrefabs[(int)_currentRoadType]; // Stay big road if last was transition
+                        return roadPrefabs[(int)_currentRoadType]; 
                     }
                     else
-                        return roadPrefabs[(int)_currentRoadType]; // Use big road prefab
-                case RoadTiling.SmallBecomesBig:  // Handle SmallBecomesBig case
-                    if (_previousRoadType != RoadTiling.SmallBecomesBig) // Check for repetitive sequence
+                        return roadPrefabs[(int)_currentRoadType]; 
+                case RoadTiling.SmallBecomesBig:  
+                    if (PreviousRoadType != RoadTiling.SmallBecomesBig) 
                     {
                         _currentRoadType = RoadTiling.SmallRoadTile;
                         canTransitionAgain = true;
                         return roadPrefabs[(int)RoadTiling.BigBecomesSmall];
                     }
                 case RoadTiling.BigBecomesSmall:  // Handle BigBecomesSmall case
-                    if (_previousRoadType != RoadTiling.BigBecomesSmall) // Check for repetitive sequence
+                    if (PreviousRoadType != RoadTiling.BigBecomesSmall) // Check for repetitive sequence
                     {
                         _currentRoadType = RoadTiling.BigRoadTile;
                         canTransitionAgain = true;

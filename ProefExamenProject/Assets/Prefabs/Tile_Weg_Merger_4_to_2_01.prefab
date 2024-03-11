@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 3133840314991030577}
   - component: {fileID: 3491440155307295628}
   - component: {fileID: 7314646492546704002}
+  - component: {fileID: 1713723593989467463}
+  - component: {fileID: 4167219597946595308}
   m_Layer: 0
   m_Name: Base_Guird_rail_B
-  m_TagString: Untagged
+  m_TagString: StreetTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0, y: -3.4423419e-22, z: 0.000001550293}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1.2624}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4531159541688240853}
@@ -85,6 +87,49 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1713723593989467463
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4491615352658146500}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 14.836289, y: 15.000006, z: 0.9531709}
+  m_Center: {x: 0.0818553, y: -0.0000009536743, z: 0.47658524}
+--- !u!64 &4167219597946595308
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4491615352658146500}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1380548635555817068, guid: c176f843b103c9b4d92cb9ca74e21179, type: 3}
 --- !u!1 &5827405222903328540
 GameObject:
   m_ObjectHideFlags: 0
@@ -96,7 +141,7 @@ GameObject:
   - component: {fileID: 4531159541688240853}
   m_Layer: 0
   m_Name: Tile_Weg_Merger_4_to_2_01
-  m_TagString: Untagged
+  m_TagString: StreetTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

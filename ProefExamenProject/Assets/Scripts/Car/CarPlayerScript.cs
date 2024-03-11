@@ -1,4 +1,6 @@
+using System;
 using Input.Script;
+using Spawner;
 using UnityEngine;
 
 namespace Car
@@ -9,6 +11,7 @@ namespace Car
         [Header("Car Controller: ")] 
         [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private InputHandler handler;
+        [SerializeField] private ConnectGenerator despawnAfterTime;
         private CharacterController _characterController;
         
         private bool _isGoingLeft;
@@ -78,6 +81,12 @@ namespace Car
 
             // Apply the new rotation to the car
             transform.localEulerAngles = new Vector3(0, newAngle, 0);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("StreetTile"))
+                despawnAfterTime.getChunks += 1;
         }
     }
 }
