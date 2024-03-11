@@ -11,6 +11,7 @@ namespace UntitledCube.UI.SeedInput
     public class SeedInputManager : MonoBehaviour
     {
         [SerializeField] private TMP_InputField _inputField;
+        [SerializeField] private GameObject _warningText;
         [SerializeField] private Button _generateButton;
         [SerializeField] private Button _pasteButton;
 
@@ -18,6 +19,8 @@ namespace UntitledCube.UI.SeedInput
 
         private void Start()
         {
+            _warningText.SetActive(false);
+
             _inputField.onEndEdit.AddListener(GetSeed);
             _generateButton.onClick.AddListener(EnterSeed);
             _pasteButton.onClick.AddListener(PasteCode);
@@ -33,9 +36,10 @@ namespace UntitledCube.UI.SeedInput
         {
             if (string.IsNullOrEmpty(_wantedSeed) || !SeedCodec.Validate(_wantedSeed))
             {
-                //make error appear
+                _warningText.SetActive(true);
                 return;
             }
+            _warningText.SetActive(false);
             GameStateMachine.Instance.SetState<GameState>();
         }
 
