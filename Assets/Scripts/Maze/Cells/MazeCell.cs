@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UntitledCube.Maze.Generation;
+using UntitledCube.Player.Coins;
 using UntitledCube.Timer;
 
 namespace UntitledCube.Maze.Cell
@@ -11,8 +13,6 @@ namespace UntitledCube.Maze.Cell
         [SerializeField] private MeshRenderer _floorRenderer;
 
         [Header("Coin")]
-        [Range(0,100)]
-        [SerializeField] private int _coinSpawnchance;
         [SerializeField] private Transform _coinSpawnpoint;
         [SerializeField] private GameObject _coinPrefab;
 
@@ -28,6 +28,7 @@ namespace UntitledCube.Maze.Cell
 
         private bool _isStart;
         private bool _isEnd;
+        private GameObject _coin;
 
         public CellState State { get; set; }
 
@@ -62,19 +63,24 @@ namespace UntitledCube.Maze.Cell
         {
             for (int i = 0; i < _wallObjects.Length; i++)
                 _walls.Add(_directions[i], _wallObjects[i]);
-
-            SpawnCoin();
         }
+
+        private void OnEnable() => MazeGenerator.OnGenerated += SpawnCoin;
+
+        private void OnDisable() => MazeGenerator.OnGenerated -= SpawnCoin;
 
         private void OnTriggerEnter(Collider other) => Stopwatch.Instance.Stop();
 
-        private void SpawnCoin()
+        private void SpawnCoin(string _)
         {
-            int chance = Mathf.Clamp(_coinSpawnchance, 0, 100);
+            if (_coin != null)
+                Destroy(_coin);
+
+            int chance = Mathf.Clamp(CoinPurse.SpawnChance, 0, 100);
             float randomValue = Random.Range(0.0f, 100.0f);
 
             if (randomValue <= chance)
-                Instantiate(_coinPrefab, _coinSpawnpoint);
+                _coin = Instantiate(_coinPrefab, _coinSpawnpoint);
         }
 
         /// <summary>
