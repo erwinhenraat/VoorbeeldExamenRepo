@@ -23,6 +23,8 @@ namespace UntitledCube.Spawning
             float originalDrag = _playerRigidbody.drag;
             _playerRigidbody.drag = 0;
             _playerRigidbody.drag = originalDrag;
+            _playerRigidbody.freezeRotation = true;
+            _playerRigidbody.freezeRotation = false;
         }   
     }
 }
