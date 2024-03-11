@@ -17,12 +17,11 @@ namespace UntitledCube.Spawning
         private void SpawnPlayer(string _)
         {
             _player.transform.SetPositionAndRotation(_spawnPoint.position, Quaternion.identity);
+
             if (_playerRigidbody == null)
                 _playerRigidbody = _player.GetComponent<Rigidbody>();
+
             _playerRigidbody.velocity = Vector3.zero;
-            float originalDrag = _playerRigidbody.drag;
-            _playerRigidbody.drag = 0;
-            _playerRigidbody.drag = originalDrag;
             _playerRigidbody.freezeRotation = true;
             _playerRigidbody.freezeRotation = false;
         }   
