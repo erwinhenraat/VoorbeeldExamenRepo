@@ -18,17 +18,20 @@ namespace UntitledCube.Player.Coins
 
         public static Action<int> OnCoinAdded;
 
-        static CoinPurse()
-        {
-            MazeGenerator.OnGenerate += RushChance;
-        }
+        static CoinPurse() =>  MazeGenerator.OnGenerate += RushChance;
 
+        /// <summary>
+        /// Adds a coin to the player's purse and triggers any registered OnCoinAdded events.
+        /// </summary>
         public static void Add()
         {
             _coins++;
             OnCoinAdded?.Invoke(_coins);
         }
 
+        /// <summary>
+        /// Determines if a "gold rush" event should occur, increasing coin spawn rates.
+        /// </summary>
         public static void RushChance()
         {
             int random = UnityEngine.Random.RandomRange(0, GOLD_RUSH_CHANCE);
