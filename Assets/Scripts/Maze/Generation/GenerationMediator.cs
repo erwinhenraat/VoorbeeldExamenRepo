@@ -24,7 +24,6 @@ namespace UntitledCube.Maze.Generation
 
         private void OnDisable()
         {
-            _button.onClick.RemoveAllListeners();
             MazeGenerator.OnGenerated -= DisplaySeed;
         }
 
@@ -42,7 +41,7 @@ namespace UntitledCube.Maze.Generation
                 Advertising.Instance.ShowAd();
 
             _initialized = true;
-            MazeGenerator.Generate(new(6, 6), _seed);
+            MazeGenerator.Generate(new(6, 6), newSeed);
 
             _seed = default;
 
