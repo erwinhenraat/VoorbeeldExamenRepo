@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UntitledCube.Gravity;
+using UntitledCube.Maze.Generation;
 
 namespace UntitledCube.Input
 {
@@ -13,7 +14,17 @@ namespace UntitledCube.Input
         private Vector2 _swipePosition;
         private Vector2 _swipeDirection;
 
-        private void OnEnable() => InputSystem.SubscribeToAction("Swipe", Swipe, out _swipeAction);
+        private void OnEnable()
+        {
+            InputSystem.SubscribeToAction("Swipe", Swipe, out _swipeAction);
+            MazeGenerator.OnGenerate += ResetSwipe;
+        }
+
+        private void OnDisable()
+        {
+            InputSystem.UnsubscribeToAction(_swipeAction, Swipe);
+            MazeGenerator.OnGenerate -= ResetSwipe;
+        }
 
         private void Start() => Application.targetFrameRate = 120;
         
@@ -43,9 +54,8 @@ namespace UntitledCube.Input
                 return _swipePosition.y > 0 ? Vector2.up : Vector2.down;
             
             return Vector2.zero;
-        }
+        }        
 
-        private void OnDisable() => InputSystem.UnsubscribeToAction(_swipeAction, Swipe);
-        
+        private void ResetSwipe() => _swipeDirection = Vector2.zero;
     }
 }

@@ -10,6 +10,8 @@ namespace UntitledCube.Gravity
         [SerializeField] private float _gravityMultiplier = 1f;
         
         [SerializeField] private float _gravityAmount = 9.81f;
+        
+        public Action<Vector3> OnGravityChanged;
 
         protected override void OnEnable()
         {
@@ -19,8 +21,6 @@ namespace UntitledCube.Gravity
 
         private void OnDisable() => MazeGenerator.OnGenerated -= ResetGravity;
         
-        public Action<Vector3> OnGravityChanged;
-
         /// <summary>
         /// Sets the gravity direction to the specified direction.
         /// </summary>
@@ -31,9 +31,6 @@ namespace UntitledCube.Gravity
             OnGravityChanged?.Invoke(direction);
         }
 
-        /// <summary>
-        /// Returns gravity to its original state.
-        /// </summary>
-        public void ResetGravity(string _) => SetGravityDirection(Vector3.down);
+        private void ResetGravity(string _) => SetGravityDirection(Vector3.zero);
     }
 }
