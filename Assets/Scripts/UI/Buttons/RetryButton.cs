@@ -2,11 +2,7 @@ using MarkUlrich.StateMachine.States;
 using MarkUlrich.StateMachine;
 using UnityEngine;
 using UnityEngine.UI;
-using UntitledCube.Advertisements;
-using UntitledCube.Gravity;
-using UntitledCube.Spawning;
-using UntitledCube.Timer;
-using UntitledCube.WorldRotation;
+using UntitledCube.Maze.Generation;
 
 namespace UntitledCube.UI.Buttons
 {
@@ -14,19 +10,11 @@ namespace UntitledCube.UI.Buttons
     {
         [SerializeField] private Button _retryButton;
 
-        private WorldRotator _rotator;
-        private PlayerSpawnPoint _spawnPoint;
-        private GravityManager _gravityManager;
-        private Stopwatch _stopwatch;
-        private Advertising _advertising;
+        private GenerationMediator _generationMediator;
 
         private void Start()
         {
-            _rotator = FindAnyObjectByType<WorldRotator>();
-            _spawnPoint = FindAnyObjectByType<PlayerSpawnPoint>();
-            _gravityManager = GravityManager.Instance;
-            _stopwatch = Stopwatch.Instance;
-            _advertising = Advertising.Instance;
+            _generationMediator = FindAnyObjectByType<GenerationMediator>();
 
             _retryButton.onClick.AddListener(ResetLevel);
         }
@@ -34,13 +22,8 @@ namespace UntitledCube.UI.Buttons
         private void ResetLevel()
         {
             if (GameStateMachine.Instance.CurrentState is GameState)
-            {
-                _rotator.ResetRotation();
-                _spawnPoint.SpawnPlayer("");
-                _gravityManager.ResetGravity("");
-                _stopwatch.StartStopWatch();
-                _advertising.ShowAd();
-            }
+                _generationMediator.GenerateMaze(MazeGenerator.Seed);
+            
         }
     }
 }
