@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine.SceneManagement;
 
 namespace MarkUlrich.StateMachine.States
@@ -10,13 +11,18 @@ namespace MarkUlrich.StateMachine.States
         public override void EnterState()
         {
             base.EnterState();
-            LoadScene(SCENE_NAME, LoadSceneMode.Single);
+            LoadSceneMode loadSceneMode = LoadSceneMode.Single;
+
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+            {
+                if (SceneManager.GetSceneAt(i) == SceneManager.GetSceneByName("InputSeed"))
+                    loadSceneMode = LoadSceneMode.Additive;
+            }
+            
+            LoadScene(SCENE_NAME, loadSceneMode);
             SetNextState<LevelEndState>();
         }
 
-        public override void ExitState()
-        {
-            base.ExitState();
-        }
+        public override void ExitState() => base.ExitState();
     }
 }

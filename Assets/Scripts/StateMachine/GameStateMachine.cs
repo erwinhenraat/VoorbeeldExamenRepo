@@ -2,6 +2,7 @@ using UnityEngine;
 using MarkUlrich.StateMachine.States;
 using MarkUlrich.Utils;
 using System;
+using System.Collections;
 
 namespace MarkUlrich.StateMachine
 {
@@ -80,5 +81,10 @@ namespace MarkUlrich.StateMachine
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Starts the given Coroutine
+        /// </summary>
+        public void StartCoroutine(Coroutine routine) => StartCoroutine(routine);
     }
 }

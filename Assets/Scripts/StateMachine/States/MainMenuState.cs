@@ -11,6 +11,7 @@ namespace MarkUlrich.StateMachine.States
             base.EnterState();
             LoadSceneAsync(SCENE_NAME, LoadSceneMode.Single);
             SetNextState<GameState>();
+            MoveToNextState();
         }
 
         public override void ExitState()
