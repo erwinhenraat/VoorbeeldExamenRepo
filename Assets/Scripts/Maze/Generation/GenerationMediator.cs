@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Android;
 using UnityEngine.UI;
 using UntitledCube.Advertisements;
 using UntitledCube.Gravity;
