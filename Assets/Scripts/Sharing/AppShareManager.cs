@@ -11,6 +11,9 @@ namespace UntitledCube.Sharing
 {
     public class AppShareManager : MonoBehaviour
     {
+        [SerializeField] private Camera _camera;
+        [SerializeField] private RenderTexture _photoCanvasTexture;
+
         private bool _isProcessing;
         private string _scoreTimer;
 
@@ -81,9 +84,22 @@ namespace UntitledCube.Sharing
 
         private void CaptureScreenShot(out string screenshotName)
         {
+            _camera.targetTexture = _photoCanvasTexture;
+            _camera.Render();
+
+            Texture2D screenshotTexture = new Texture2D(_photoCanvasTexture.width, _photoCanvasTexture.height);
+            RenderTexture.active = _photoCanvasTexture;
+
+            screenshotTexture.ReadPixels(new Rect(0, 0, _photoCanvasTexture.width, _photoCanvasTexture.height), 0, 0);
+            screenshotTexture.Apply();
+
+            byte[] screenshotBytes = screenshotTexture.EncodeToPNG();
             screenshotName = $"HighScore_{DateTime.UtcNow.ToOADate()}.jpg";
 
-            ScreenCapture.CaptureScreenshot(screenshotName, 1);
+            File.WriteAllBytes(Application.persistentDataPath + screenshotName, screenshotBytes);
+
+            RenderTexture.active = null;
+            _camera.targetTexture = null;
         }
 
         private void SetSharePopUp(string screenShotPath, string message)
