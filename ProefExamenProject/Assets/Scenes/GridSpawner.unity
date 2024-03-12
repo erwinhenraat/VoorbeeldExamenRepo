@@ -710,8 +710,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6266739743894044926}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.304637, y: 0, z: -0.5577202}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.304637, y: 0, z: -0.5577183}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -719,7 +719,6 @@ Transform:
   - {fileID: 8351451840021848104}
   - {fileID: 7151838900161618887}
   - {fileID: 9202073252696274690}
-  - {fileID: 9154067261497113293}
   - {fileID: 1527373818}
   - {fileID: 825170699}
   m_Father: {fileID: 0}
@@ -5944,11 +5943,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roadPrefabs:
   - {fileID: 6084912978971261999, guid: a7faecd463d18244cb82745c5d8538d1, type: 3}
-  - {fileID: 2086907852256381458, guid: aa7c8594b023e094dbc31db31cd56989, type: 3}
-  - {fileID: 5827405222903328540, guid: 0b4f368d6166826488cc1cc9ca65ff51, type: 3}
-  - {fileID: 4257598209977009811, guid: 30a3fc04d0d965b46af02da534f11e12, type: 3}
+  - {fileID: 6084912978971261999, guid: a7faecd463d18244cb82745c5d8538d1, type: 3}
+  - {fileID: 6084912978971261999, guid: a7faecd463d18244cb82745c5d8538d1, type: 3}
+  - {fileID: 6084912978971261999, guid: a7faecd463d18244cb82745c5d8538d1, type: 3}
   loadInTransform: {fileID: 9154067261497113293}
-  maxChunks: 25
+  maxChunks: 29
   chunkSpacing: 7.5
   getChunks: 0
   generateOnce: 0
@@ -6290,12 +6289,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6831984257842776922}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 7.5}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.304637, y: 0, z: 6.942281}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2806827202076586515}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &9202073252696274690
 Transform:
@@ -6317,6 +6316,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1509181981}
-  - {fileID: 2806827202076586515}
   - {fileID: 3289403562935809735}
   - {fileID: 8390355147791262162}
+  - {fileID: 9154067261497113293}
+  - {fileID: 2806827202076586515}

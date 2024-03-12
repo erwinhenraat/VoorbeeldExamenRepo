@@ -42,11 +42,11 @@ namespace Spawner
 
         private void Update()
         {
-            if (getChunks >= 16 && !generateOnce)
+            if (getChunks >= 6 && !generateOnce)
             {
                 generateOnce = true;
                 _afterFirstGeneration = true;
-                var chunksToRemove = new List<GameObject>(_spawnedChunks.Take(6));
+                var chunksToRemove = new List<GameObject>(_spawnedChunks.Take(2));
                 foreach (var chunk in chunksToRemove)
                 {
                     _spawnedChunks.Remove(chunk);
@@ -93,7 +93,7 @@ namespace Spawner
             else
             {
                 generateOnce = false;
-                for (var i = 0; i < 6; i++)
+                for (var i = 0; i < 2; i++)
                 {
                     // Get the next road prefab based on current road type and restrictions
                     var chunkPrefab = GetNextRoadPrefab();
