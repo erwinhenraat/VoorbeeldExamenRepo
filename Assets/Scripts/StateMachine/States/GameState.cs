@@ -13,8 +13,10 @@ namespace MarkUlrich.StateMachine.States
             LoadSceneMode loadSceneMode = LoadSceneMode.Single;
 
             for (int i = 0; i < SceneManager.sceneCount; i++)
+            {
                 if (SceneManager.GetSceneAt(i) == SceneManager.GetSceneByName("InputSeed"))
                     loadSceneMode = LoadSceneMode.Additive;
+            }
             
             LoadScene(SCENE_NAME, loadSceneMode);
             SetNextState<LevelEndState>();

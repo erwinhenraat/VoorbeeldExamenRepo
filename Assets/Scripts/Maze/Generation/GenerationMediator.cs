@@ -19,29 +19,23 @@ namespace UntitledCube.Maze.Generation
 
         private void OnEnable()
         {
-            _button.onClick.AddListener(GenerateMaze);
+            _button.onClick.AddListener(() => GenerateMaze());
             MazeGenerator.OnGenerated += DisplaySeed;
         }
 
         private void OnDisable()
         {
-            _button.onClick.RemoveListener(GenerateMaze);
+            _button.onClick.RemoveAllListeners();
             MazeGenerator.OnGenerated -= DisplaySeed;
         }
 
         private void Start() => GenerateMaze(); //todo: Add this functionality to the play button when input gets to be working in develop
 
         /// <summary>
-        /// Generates maze based on given seed
+        /// Generates maze based on given seed, if seed isn't given it will randomise randomly
         /// </summary>
         /// <param name="newSeed">The string that contains the seed you want to generate</param>
-        public void GenerateMaze(string newSeed)
-        {
-            _seed = newSeed;
-            GenerateMaze();
-        }
-
-        private void GenerateMaze()
+        public void GenerateMaze(string newSeed = "")
         {
             Stopwatch.Instance.ResetStopWatch();
 
