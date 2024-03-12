@@ -10,14 +10,10 @@ namespace UntitledCube.UI.Buttons
     {
         [SerializeField] private Button _retryButton;
 
-        private GenerationMediator _generationMediator;
+        [SerializeField ]private GenerationMediator _generationMediator;
 
-        private void Start()
-        {
-            _generationMediator = FindAnyObjectByType<GenerationMediator>();
+        private void Start() => _retryButton.onClick.AddListener(ResetLevel);
 
-            _retryButton.onClick.AddListener(ResetLevel);
-        }
 
         private void ResetLevel()
         {

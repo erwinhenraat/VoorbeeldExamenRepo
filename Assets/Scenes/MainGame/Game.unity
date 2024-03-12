@@ -413,6 +413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _retryButton: {fileID: 81325695}
+  _generationMediator: {fileID: 1370537478}
 --- !u!114 &81325695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2555,7 +2556,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8103b0f252b739e43825db3af038027a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _seed: 
   _button: {fileID: 207105410}
   _seedDisplay: {fileID: 1619825550}
 --- !u!114 &1370537479
