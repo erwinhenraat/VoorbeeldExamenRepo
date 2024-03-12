@@ -9,13 +9,10 @@ namespace UntitledCube.Maze.Generation
     {
         [SerializeField] private int _preloadAmount;
         [SerializeField] private MazeCell _cellPrefab;
-        [SerializeField] private GameObject[] _mazeSpawnPoints;
 
         private readonly List<MazeCell> _preLoadedCells = new();
 
         public List<MazeCell> PreLoadedCells => _preLoadedCells;
-
-        public GameObject[] SpawnPoints => _mazeSpawnPoints;
 
         private void Awake() => PreLoad();
 
