@@ -42,7 +42,7 @@ namespace Spawner
 
         private void Update()
         {
-            if (getChunks >= 6 && !generateOnce)
+            if (getChunks >= 5 && !generateOnce)
             {
                 generateOnce = true;
                 _afterFirstGeneration = true;
@@ -54,7 +54,8 @@ namespace Spawner
                 }
                 
                 var getLast = _spawnedChunks.Last();
-                loadInTransform = getLast.transform;
+                loadInTransform = getLast.transform.GetChild(0);
+                
                 getChunks = 0;
                 GenerateChunks();
             }

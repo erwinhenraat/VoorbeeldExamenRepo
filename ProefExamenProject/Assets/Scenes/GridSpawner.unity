@@ -486,9 +486,10 @@ GameObject:
   - component: {fileID: 1313720809344944220}
   - component: {fileID: 6542300930007330593}
   - component: {fileID: 6850110069604363340}
+  - component: {fileID: 6850110069604363341}
   m_Layer: 3
   m_Name: Line_for_Guard_Rail001
-  m_TagString: Untagged
+  m_TagString: StreetTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -721,6 +722,7 @@ Transform:
   - {fileID: 9202073252696274690}
   - {fileID: 1527373818}
   - {fileID: 825170699}
+  - {fileID: 9154067261497113293}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &3142894969094192037
@@ -5947,8 +5949,8 @@ MonoBehaviour:
   - {fileID: 6084912978971261999, guid: a7faecd463d18244cb82745c5d8538d1, type: 3}
   - {fileID: 6084912978971261999, guid: a7faecd463d18244cb82745c5d8538d1, type: 3}
   loadInTransform: {fileID: 9154067261497113293}
-  maxChunks: 29
-  chunkSpacing: 7.5
+  maxChunks: 28
+  chunkSpacing: 7
   getChunks: 0
   generateOnce: 0
   _spawnedChunks: []
@@ -6050,6 +6052,27 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2456990003057522315, guid: a93ea94be1cc729418223c13fca8ed69, type: 3}
+--- !u!65 &6850110069604363341
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927278066648199112}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 7.9999986, y: 15.000008, z: 0.95317173}
+  m_Center: {x: 0.00015044212, y: 0.0000014305118, z: 0.47658575}
 --- !u!1 &6963863981751784291
 GameObject:
   m_ObjectHideFlags: 0
@@ -6290,11 +6313,11 @@ Transform:
   m_GameObject: {fileID: 6831984257842776922}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.304637, y: 0, z: 6.942281}
+  m_LocalPosition: {x: 0, y: 0, z: 11.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2806827202076586515}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &9202073252696274690
 Transform:
@@ -6318,5 +6341,4 @@ SceneRoots:
   - {fileID: 1509181981}
   - {fileID: 3289403562935809735}
   - {fileID: 8390355147791262162}
-  - {fileID: 9154067261497113293}
   - {fileID: 2806827202076586515}
