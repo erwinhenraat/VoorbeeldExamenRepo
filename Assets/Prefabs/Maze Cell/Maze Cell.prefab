@@ -105,6 +105,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &3741343666808185761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5446426923661079134}
+  m_Layer: 0
+  m_Name: Coin Spawnpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5446426923661079134
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3741343666808185761}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.55}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5439831235878572998}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5213277244936050510
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,7 +164,7 @@ Transform:
   m_GameObject: {fileID: 5213277244936050510}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.7}
+  m_LocalPosition: {x: 0, y: 0, z: 0.69}
   m_LocalScale: {x: 1, y: 1, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -456,6 +487,7 @@ Transform:
   - {fileID: 6652468920035013756}
   - {fileID: 748014078918846204}
   - {fileID: 6527049353767278110}
+  - {fileID: 5446426923661079134}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7725199780438407336
@@ -476,6 +508,9 @@ MonoBehaviour:
   - {fileID: 7512450101517205509}
   - {fileID: 6772889110671547046}
   _floorRenderer: {fileID: 7004766417973463791}
+  _coinSpawnchance: 10
+  _coinSpawnpoint: {fileID: 5446426923661079134}
+  _coinPrefab: {fileID: 8527467389145331294, guid: 01cc24b8dae91f243936bcc522118ed3, type: 3}
   _startMaterial: {fileID: 2100000, guid: 5beb53982dab98244853759be0cfa4fb, type: 2}
   _endMaterial: {fileID: 2100000, guid: ece5b6aa0daca9f48adfccaec7a3e437, type: 2}
   _boxCollider: {fileID: 8741982592458396334}
