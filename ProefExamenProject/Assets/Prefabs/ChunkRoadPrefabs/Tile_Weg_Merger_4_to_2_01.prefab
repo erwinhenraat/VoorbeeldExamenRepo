@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0, y: -3.4423419e-22, z: 0.000001550293}
-  m_LocalScale: {x: 1, y: 1, z: 1.7859174}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4531159541688240853}
@@ -209,6 +209,8 @@ GameObject:
   - component: {fileID: 3978433642362261895}
   - component: {fileID: 1563237266254442672}
   - component: {fileID: 7272693284131263089}
+  - component: {fileID: 6548883125171845685}
+  - component: {fileID: 2226645571401250746}
   m_Layer: 0
   m_Name: Road_part_006
   m_TagString: Untagged
@@ -281,6 +283,48 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6548883125171845685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7321723725945401331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44f6421d46b8dc948bd5520c900e98c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomObjects:
+  - {fileID: 933926259477956512, guid: c88b476238dd20a41b2158de313bc51d, type: 3}
+  - {fileID: 3303006014623924943, guid: bbdfaaaf27573434ea4bd1976ca5d0f3, type: 3}
+  - {fileID: 2245788758206908067, guid: 54523ee1b348efe478318ba077628c01, type: 3}
+  - {fileID: 8181502462557158176, guid: a1b896e9f7fc21c4f933c87993a7dd29, type: 3}
+  boundsObject: {fileID: 7321723725945401331}
+  maxSpawnedIn: 4
+  gridRows: 5
+  gridCols: 5
+--- !u!65 &2226645571401250746
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7321723725945401331}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 7.0000005, y: 15.000005, z: 0.10000012}
+  m_Center: {x: 3.5000002, y: 0, z: 0}
 --- !u!1 &7623083440009623110
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,6 +419,8 @@ GameObject:
   - component: {fileID: 1948771814723213540}
   - component: {fileID: 7703193978832129919}
   - component: {fileID: 581410405927777713}
+  - component: {fileID: 3801427274694958198}
+  - component: {fileID: 8297409287327551812}
   m_Layer: 0
   m_Name: Road_part_007
   m_TagString: Untagged
@@ -447,6 +493,48 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3801427274694958198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7736831475038930545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44f6421d46b8dc948bd5520c900e98c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomObjects:
+  - {fileID: 933926259477956512, guid: c88b476238dd20a41b2158de313bc51d, type: 3}
+  - {fileID: 3303006014623924943, guid: bbdfaaaf27573434ea4bd1976ca5d0f3, type: 3}
+  - {fileID: 2245788758206908067, guid: 54523ee1b348efe478318ba077628c01, type: 3}
+  - {fileID: 8181502462557158176, guid: a1b896e9f7fc21c4f933c87993a7dd29, type: 3}
+  boundsObject: {fileID: 7736831475038930545}
+  maxSpawnedIn: 4
+  gridRows: 5
+  gridCols: 5
+--- !u!65 &8297409287327551812
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7736831475038930545}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 7.0000005, y: 15.000005, z: 0.10000012}
+  m_Center: {x: -3.5000002, y: 0, z: 0}
 --- !u!1 &8849145689057194285
 GameObject:
   m_ObjectHideFlags: 0

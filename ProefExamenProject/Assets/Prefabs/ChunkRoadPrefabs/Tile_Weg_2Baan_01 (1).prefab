@@ -268,6 +268,8 @@ GameObject:
   - component: {fileID: 5582981910691584732}
   - component: {fileID: 2962195203049834356}
   - component: {fileID: 4947206795750720593}
+  - component: {fileID: 8431178546249496318}
+  - component: {fileID: 6220383452697193164}
   m_Layer: 3
   m_Name: Road_part_009
   m_TagString: Untagged
@@ -362,6 +364,47 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2200229730303423847, guid: a93ea94be1cc729418223c13fca8ed69, type: 3}
+--- !u!114 &8431178546249496318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5464567973695064830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44f6421d46b8dc948bd5520c900e98c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomObjects:
+  - {fileID: 933926259477956512, guid: c88b476238dd20a41b2158de313bc51d, type: 3}
+  - {fileID: 3303006014623924943, guid: bbdfaaaf27573434ea4bd1976ca5d0f3, type: 3}
+  - {fileID: 2245788758206908067, guid: 54523ee1b348efe478318ba077628c01, type: 3}
+  boundsObject: {fileID: 5464567973695064830}
+  maxSpawnedIn: 4
+  gridRows: 5
+  gridCols: 5
+--- !u!65 &6220383452697193164
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5464567973695064830}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.5, y: 15.000005, z: 0.10000012}
+  m_Center: {x: -1.75, y: 0, z: 0}
 --- !u!1 &6084912978971261999
 GameObject:
   m_ObjectHideFlags: 0
@@ -473,6 +516,8 @@ GameObject:
   - component: {fileID: 3969569305564294150}
   - component: {fileID: 2542459931373623366}
   - component: {fileID: 576071595928564938}
+  - component: {fileID: 2924656998571467315}
+  - component: {fileID: 4758960801589659480}
   m_Layer: 3
   m_Name: Road_part_008
   m_TagString: Untagged
@@ -567,3 +612,44 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5377837068126182476, guid: a93ea94be1cc729418223c13fca8ed69, type: 3}
+--- !u!114 &2924656998571467315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7232048584116404356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44f6421d46b8dc948bd5520c900e98c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomObjects:
+  - {fileID: 933926259477956512, guid: c88b476238dd20a41b2158de313bc51d, type: 3}
+  - {fileID: 3303006014623924943, guid: bbdfaaaf27573434ea4bd1976ca5d0f3, type: 3}
+  - {fileID: 2245788758206908067, guid: 54523ee1b348efe478318ba077628c01, type: 3}
+  boundsObject: {fileID: 7232048584116404356}
+  maxSpawnedIn: 4
+  gridRows: 5
+  gridCols: 5
+--- !u!65 &4758960801589659480
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7232048584116404356}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.5, y: 15.000005, z: 0.10000012}
+  m_Center: {x: 1.75, y: 0, z: 0}

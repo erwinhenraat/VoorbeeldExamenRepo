@@ -10,11 +10,7 @@ namespace Spawner
         [Header("Spawner Settings: ")] 
         [SerializeField] private GameObject[] randomObjects;
         [SerializeField] private GameObject boundsObject;
-        [SerializeField] private int maxSpawnedIn = 10;
-        
-        [Header("Time Spawn Settings: ")]
-        [SerializeField] private float minSpawnTime = 0.5f;
-        [SerializeField] private float maxSpawnTime = 2.5f;
+        [SerializeField] [Range(0, 10)] private int maxSpawnedIn;
 
         [Header("Grid Settings: ")] 
         [SerializeField] [Range(0, 500)] private int gridRows;
@@ -28,8 +24,10 @@ namespace Spawner
         {
             _spawnedObjects = new Queue<GameObject>();
             _occupiedPositions = new HashSet<Vector3>();
-            
-            InvokeRepeating(nameof(SpawnIn), Random.Range(minSpawnTime, maxSpawnTime),maxSpawnTime);
+
+            var randomChance = Random.Range(0, 100);
+            if (randomChance < 25)
+                SpawnIn();
         } 
 
         private void SpawnIn()
@@ -40,19 +38,15 @@ namespace Spawner
                 return;
             }
 
-            // Choose a random object to spawn
-            var objectToSpawn = randomObjects[Random.Range(0, randomObjects.Length)];
-            var bounds = boundsObject.GetComponent<Renderer>().bounds;
-            var spawnPos = FindValidSpawnPosition(bounds);
-            
-            var newObject = Instantiate(objectToSpawn, spawnPos, Quaternion.identity);
-            _spawnedObjects.Enqueue(newObject);
-            
-            // ReSharper disable once InvertIf
-            if (_spawnedObjects is { } queue && queue.Count > maxSpawnedIn)
+            for (var i = 0; i < Random.Range(1,maxSpawnedIn); i++)
             {
-                var oldestObject = _spawnedObjects.Dequeue();
-                Destroy(oldestObject);
+                // Choose a random object to spawn
+                var objectToSpawn = randomObjects[Random.Range(0, randomObjects.Length)];
+                var bounds = boundsObject.GetComponent<Renderer>().bounds;
+                var spawnPos = FindValidSpawnPosition(bounds);
+            
+                var newObject = Instantiate(objectToSpawn, spawnPos, Quaternion.identity, transform);
+                _spawnedObjects.Enqueue(newObject);
             }
         }
         

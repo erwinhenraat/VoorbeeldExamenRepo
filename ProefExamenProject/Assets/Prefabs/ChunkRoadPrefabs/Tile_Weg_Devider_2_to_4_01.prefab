@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 2778841146307296957}
   - component: {fileID: 6982262246818556222}
   - component: {fileID: 3702623789311593279}
+  - component: {fileID: 2239490476640290549}
+  - component: {fileID: 6388111813227812871}
   m_Layer: 0
   m_Name: Road_part_010
   m_TagString: Untagged
@@ -83,6 +85,48 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2239490476640290549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115590718250303830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44f6421d46b8dc948bd5520c900e98c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomObjects:
+  - {fileID: 933926259477956512, guid: c88b476238dd20a41b2158de313bc51d, type: 3}
+  - {fileID: 3303006014623924943, guid: bbdfaaaf27573434ea4bd1976ca5d0f3, type: 3}
+  - {fileID: 2245788758206908067, guid: 54523ee1b348efe478318ba077628c01, type: 3}
+  - {fileID: 8181502462557158176, guid: a1b896e9f7fc21c4f933c87993a7dd29, type: 3}
+  boundsObject: {fileID: 115590718250303830}
+  maxSpawnedIn: 4
+  gridRows: 5
+  gridCols: 5
+--- !u!65 &6388111813227812871
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115590718250303830}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 7.000004, y: 15.000005, z: 0.1000037}
+  m_Center: {x: -3.500002, y: -4.9737995e-14, z: -3.6475634e-14}
 --- !u!1 &2309731705776083035
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,6 +320,8 @@ GameObject:
   - component: {fileID: 505461991003700524}
   - component: {fileID: 4597377812545385238}
   - component: {fileID: 3316176777151275012}
+  - component: {fileID: 3545256332187718051}
+  - component: {fileID: 4900387376640990633}
   m_Layer: 0
   m_Name: Road_part_011
   m_TagString: Untagged
@@ -348,6 +394,48 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3545256332187718051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6749464494824869088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44f6421d46b8dc948bd5520c900e98c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomObjects:
+  - {fileID: 933926259477956512, guid: c88b476238dd20a41b2158de313bc51d, type: 3}
+  - {fileID: 3303006014623924943, guid: bbdfaaaf27573434ea4bd1976ca5d0f3, type: 3}
+  - {fileID: 2245788758206908067, guid: 54523ee1b348efe478318ba077628c01, type: 3}
+  - {fileID: 8181502462557158176, guid: a1b896e9f7fc21c4f933c87993a7dd29, type: 3}
+  boundsObject: {fileID: 6749464494824869088}
+  maxSpawnedIn: 4
+  gridRows: 5
+  gridCols: 5
+--- !u!65 &4900387376640990633
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6749464494824869088}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 7.000004, y: 15.000005, z: 0.1000037}
+  m_Center: {x: 3.500002, y: 4.9737995e-14, z: 3.6475634e-14}
 --- !u!1 &7949007804078030716
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,7 +466,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000030908623, y: 0.7071068, z: 0.7071068, w: 0.000000030908623}
   m_LocalPosition: {x: -1.1858955e-13, y: 0, z: 0.0000042633055}
-  m_LocalScale: {x: 1, y: 1, z: 1.4007}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6992419259539628489}
