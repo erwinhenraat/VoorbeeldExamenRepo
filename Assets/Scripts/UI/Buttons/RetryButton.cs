@@ -36,8 +36,8 @@ namespace UntitledCube.UI.Buttons
             if (GameStateMachine.Instance.CurrentState is GameState)
             {
                 _rotator.ResetRotation();
-                _spawnPoint.SpawnPlayer("");
-                _gravityManager.ResetGravity("");
+                //_spawnPoint.SpawnPlayer("");
+                //_gravityManager.ResetGravity("");
                 _stopwatch.StartStopWatch();
                 _advertising.ShowAd();
             }
