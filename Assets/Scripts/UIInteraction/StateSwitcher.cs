@@ -1,8 +1,4 @@
 using MarkUlrich.StateMachine;
-using MarkUlrich.StateMachine.States;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 

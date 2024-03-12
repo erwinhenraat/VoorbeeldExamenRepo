@@ -1,22 +1,22 @@
 using MarkUlrich.StateMachine.States;
 using MarkUlrich.StateMachine;
-using UnityEngine;
-using UnityEngine.UI;
-using UntitledCube.Maze.Generation;
-using UntitledCube.Advertisements;
-using UntitledCube.Timer;
-using UntitledCube.Gravity;
 using System.Collections;
+using UnityEngine;
+using UntitledCube.Advertisements;
+using UntitledCube.Gravity;
+using UntitledCube.Maze.Generation;
+using UnityEngine.UI;
+using UntitledCube.Timer;
 
 namespace UntitledCube.UI.Buttons
 {
-    public class RetryButton : MonoBehaviour
+    public class NewLevelButton : MonoBehaviour
     {
-        [SerializeField] private Button _retryButton;
+        [SerializeField] private Button _newLevelButton;
 
         private bool _gravityChanged;
 
-        private void Start() => _retryButton.onClick.AddListener(ResetLevel);
+        private void Start() => _newLevelButton.onClick.AddListener(ResetLevel);
 
         private void ResetLevel()
         {
@@ -25,7 +25,7 @@ namespace UntitledCube.UI.Buttons
 
             Stopwatch.Instance.ResetStopWatch();
             Advertising.Instance.ShowAd();
-            MazeGenerator.Generate(new(6, 6), MazeGenerator.Seed);
+            MazeGenerator.Generate(new(6, 6), "");
 
             StartCoroutine(StartStopWatch());
         }
