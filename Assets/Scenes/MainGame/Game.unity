@@ -2573,9 +2573,9 @@ MonoBehaviour:
   _triggerOffset: 1
   _offsetDirections:
   - _side: 0
-    _offset: {x: 0, y: -0.2, z: 0}
+    _offset: {x: 0, y: -0.2, z: -0.4}
   - _side: 1
-    _offset: {x: 0, y: 0.2, z: 0}
+    _offset: {x: 0, y: 0.2, z: -0.4}
   - _side: 2
     _offset: {x: -0.8, y: 0, z: 0.2}
   - _side: 3
