@@ -699,13 +699,14 @@ GameObject:
   - component: {fileID: 456382825}
   - component: {fileID: 456382824}
   - component: {fileID: 456382823}
+  - component: {fileID: 456382826}
   m_Layer: 5
   m_Name: Share button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &456382822
 RectTransform:
   m_ObjectHideFlags: 0
@@ -808,6 +809,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 456382821}
   m_CullTransparentMesh: 1
+--- !u!114 &456382826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 456382821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cc0c286f15360e488e4d7bb2fbd392b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monoScript: ShareState
 --- !u!1 &475348316
 GameObject:
   m_ObjectHideFlags: 0
