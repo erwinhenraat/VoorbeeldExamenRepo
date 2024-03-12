@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UntitledCube.Maze.Generation;
 
 namespace UntitledCube.WorldRotation
 {
@@ -9,6 +10,8 @@ namespace UntitledCube.WorldRotation
     {
         [SerializeField] private GameObject _gyroscope;
         [SerializeField] private float _rotationDuration;
+
+        private Coroutine _rotateRoutine;
 
         private readonly Dictionary<WorldRotations, Quaternion> _directions = new()
         {
@@ -23,6 +26,10 @@ namespace UntitledCube.WorldRotation
 
         private void Awake() => transform.parent = _gyroscope.transform;
 
+        private void OnEnable() => MazeGenerator.OnGenerate += ResetRotation;
+
+        private void OnDisable() => MazeGenerator.OnGenerate -= ResetRotation;
+
         /// <summary>
         /// Starts the rotation of the world object to one of the neighbouring faces.
         /// </summary>
@@ -34,7 +41,7 @@ namespace UntitledCube.WorldRotation
             Quaternion startRotation = _gyroscope.transform.rotation;
             Quaternion endRotation = startRotation * _directions[direction];
 
-            StartCoroutine(LerpRotation(startRotation, endRotation));
+            _rotateRoutine = StartCoroutine(LerpRotation(startRotation, endRotation));
         }
 
         private IEnumerator LerpRotation(Quaternion startRotation, Quaternion endRotation)
@@ -58,7 +65,28 @@ namespace UntitledCube.WorldRotation
             transform.parent = null;
             _gyroscope.transform.rotation = Quaternion.identity;
             transform.parent = _gyroscope.transform;
+            _rotateRoutine = null;
             OnFinishRotate?.Invoke();
+        }
+
+        /// <summary>
+        /// Returns the cube to default rotation.
+        /// </summary>
+        public void ResetRotation()
+        {
+            if(_rotateRoutine != null)
+            {
+                StopCoroutine(_rotateRoutine);
+                FinishRotate();
+            }
+
+            _rotateRoutine = null;
+            transform.parent = null;
+
+            transform.rotation = Quaternion.identity;
+            _gyroscope.transform.rotation = Quaternion.identity;
+
+            transform.parent = _gyroscope.transform;
         }
     }
 }

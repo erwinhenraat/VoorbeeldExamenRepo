@@ -1,23 +1,21 @@
+using UnityEngine.SceneManagement;
+
 namespace MarkUlrich.StateMachine.States
 {
     public class GameState : State
     {
-        private const string LOAD_SCENE_NAME = "StatemachineTest";
+        private const string SCENE_NAME = "Game";
 
-        /// <summary>
-        /// Executes code related to entering the Game state.
-        /// </summary>
         public override void EnterState()
         {
             base.EnterState();
-            SetNextState<BootState>();
-
-            LoadScene(LOAD_SCENE_NAME);
+            LoadSceneAsync(SCENE_NAME, LoadSceneMode.Single);
+            SetNextState<LevelEndState>();
         }
 
-        /// <summary>
-        /// Executes code related to leaving the Game state.
-        /// </summary>
-        public override void ExitState() => base.ExitState();
+        public override void ExitState()
+        {
+            base.ExitState();
+        }
     }
 }
