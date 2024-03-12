@@ -10,7 +10,7 @@ namespace UntitledCube.UI.Buttons
     {
         [SerializeField] private Button _retryButton;
 
-        [SerializeField ]private GenerationMediator _generationMediator;
+        [SerializeField] private GenerationMediator _generationMediator;
 
         private void Start() => _retryButton.onClick.AddListener(ResetLevel);
 
@@ -19,8 +19,6 @@ namespace UntitledCube.UI.Buttons
         {
             if (GameStateMachine.Instance.CurrentState is GameState)
                 _generationMediator.GenerateMaze(MazeGenerator.Seed);
-            
         }
     }
 }
- 
