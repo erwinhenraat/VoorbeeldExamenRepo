@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using UnityEngine;
+using System.Linq;
 using UnityEngine.SceneManagement;
 
 namespace MarkUlrich.StateMachine.States
@@ -12,18 +10,16 @@ namespace MarkUlrich.StateMachine.States
         public override void EnterState()
         {
             base.EnterState();
+            LoadSceneMode loadSceneMode = LoadSceneMode.Single;
 
-            LoadSceneMode loadSceneMode = SceneManager.GetActiveScene() == null 
-                ? LoadSceneMode.Single 
-                : LoadSceneMode.Additive;
-
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+                if (SceneManager.GetSceneAt(i) == SceneManager.GetSceneByName("InputSeed"))
+                    loadSceneMode = LoadSceneMode.Additive;
+            
             LoadScene(SCENE_NAME, loadSceneMode);
             SetNextState<LevelEndState>();
         }
 
-        public override void ExitState()
-        {
-            base.ExitState();
-        }
+        public override void ExitState() => base.ExitState();
     }
 }

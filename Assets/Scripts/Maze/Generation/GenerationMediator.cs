@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Android;
 using UnityEngine.UI;
 using UntitledCube.Advertisements;
 using UntitledCube.Timer;
@@ -24,6 +25,8 @@ namespace UntitledCube.Maze.Generation
             _button.onClick.RemoveListener(GenerateMaze);
             MazeGenerator.OnGenerated -= DisplaySeed;
         }
+
+        private void Start() => GenerateMaze(); //todo: Add this functionality to the play button when input gets to be working in develop
 
         /// <summary>
         /// Generates maze based on given seed
