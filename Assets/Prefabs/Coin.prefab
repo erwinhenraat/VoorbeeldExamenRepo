@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3496822631940001220}
   - component: {fileID: 5298467027272835149}
   - component: {fileID: 9108549861287462695}
-  - component: {fileID: 2524664479497297734}
+  - component: {fileID: 7309053274178540326}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Coin
@@ -27,14 +27,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8527467389145331294}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.05, z: 0.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: -0.00000002187524, y: 0.7071069, z: -0.70710677, w: -0.000000014901159}
+  m_LocalPosition: {x: -0.000000059604645, y: 0, z: 2.9459582e-14}
+  m_LocalScale: {x: 0.3, y: 0.030000001, z: 0.3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7510560549143670910}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: -180}
 --- !u!33 &5298467027272835149
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -85,8 +85,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &2524664479497297734
-CapsuleCollider:
+--- !u!65 &7309053274178540326
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -103,10 +103,8 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
+  serializedVersion: 3
+  m_Size: {x: 2.5, y: 2, z: 2.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &8048045215354197909
 PrefabInstance:
