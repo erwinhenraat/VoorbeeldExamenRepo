@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UntitledCube.Maze.Cell;
 using UnityEngine;
+using MarkUlrich.StateMachine.States;
+using MarkUlrich.StateMachine;
 
 namespace UntitledCube.Maze.Generation
 {
@@ -12,6 +14,9 @@ namespace UntitledCube.Maze.Generation
         private static readonly List<MazeCell> _usedCells = new();
 
         public static Dictionary<GameObject, MazeCell[,]> Grids => _gridHolders;
+
+        static GridGenerator() => GameStateMachine.Instance.GetState<GameState>().OnStateExit += ExitGame;
+
 
         /// <summary>
         /// Generates a grid of MazeCell objects, organized into "Maze Holder" GameObjects. 
@@ -62,7 +67,7 @@ namespace UntitledCube.Maze.Generation
 
         private static void ShapeMazes(Dictionary<GameObject, MazeCell[,]> mazes)
         {
-            GameObject[] spawnPoints = PreLoader.Instance.SpawnPoints;
+            Transform[] spawnPoints = MazeShapeInstance.Instance.Spawnpoints;
 
             int index = 0;
             foreach(GameObject maze in mazes.Keys)
@@ -92,6 +97,19 @@ namespace UntitledCube.Maze.Generation
                 GameObject.Destroy(maze);
 
             _gridHolders.Clear();
+        }
+
+        private static void ExitGame()
+        {
+            foreach (GameObject gridHolder in _gridHolders.Keys)
+            {
+                while (gridHolder.transform.childCount > 0)
+                {
+                    Transform child = gridHolder.transform.GetChild(0);
+                    child.gameObject.SetActive(false);
+                    child.parent = PreLoader.Instance.transform;
+                }
+            }
         }
     }
 }
