@@ -9,6 +9,8 @@ namespace Car
     {
 
         [Header("Car Controller: ")] 
+        [SerializeField] private float baseSpeed = 7.5f;
+        [SerializeField] private float accelerateSpeed = 1f;
         [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private InputHandler handler;
         [SerializeField] private ConnectGenerator despawnAfterTime;
@@ -16,13 +18,13 @@ namespace Car
         
         private bool _isGoingLeft;
         private bool _isGoingRight;
-        private const float RotSpeed = 10f;
+        private const float _rotSpeed = 10f;
         private float _currentRotationSpeed;
 
         // Start is called before the first frame update
         private void Start() => _characterController = GetComponent<CharacterController>();
 
-        private void Update()
+               private void Update()
         {
             // Player automatically goes forward
             var transform1 = transform;
@@ -39,26 +41,24 @@ namespace Car
                 _characterController.Move(transform.forward * (moveSpeed * Time.deltaTime));
                 RotateCar(1);
             }
-            
-            // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
-            switch (handler.phoneInput)
+            if (handler.phoneInput == InputHandler.InputState.None)
             {
-                case InputHandler.InputState.None:
-                {
-                    RotateCar(0);
-                    if (moveSpeed < 7.5f)
-                        ReturnSpeed();
-                    break;
-                }
-                case InputHandler.InputState.Both:
-                    Brake();
-                    break;
+                RotateCar(0);
+                if (moveSpeed < baseSpeed)
+                    ReturnSpeed();
+            }
+            else if (handler.phoneInput == InputHandler.InputState.Both)
+                Brake();
+
+            if (moveSpeed <= 0f)
+            {
+                moveSpeed = 0;
             }
         }
 
         private void Brake()
         {
-            moveSpeed = Mathf.Lerp(moveSpeed, 0, Time.deltaTime * 2f);
+            moveSpeed = Mathf.Lerp(moveSpeed, 0, Time.deltaTime * accelerateSpeed);
 
             if (moveSpeed < 0.01f)
                 moveSpeed = 0;
@@ -66,17 +66,17 @@ namespace Car
 
         private void ReturnSpeed()
         {
-            moveSpeed = Mathf.Lerp(moveSpeed, 7.5f, Time.deltaTime * 2f);
+            moveSpeed = Mathf.Lerp(moveSpeed, baseSpeed, Time.deltaTime * accelerateSpeed);
 
-            if (moveSpeed > 7.4f)
-                moveSpeed = 7.5f;
+            if (moveSpeed > baseSpeed - 0.1f)
+                moveSpeed = baseSpeed;
         }
         
         private void RotateCar(int dir)
         {
             var targetAngle = dir > 0 ? 115f : dir < 0 ? 65f : 90f;
             var currentAngle = transform.localEulerAngles.y;
-            _currentRotationSpeed = Mathf.Lerp(_currentRotationSpeed, RotSpeed, Time.deltaTime);
+            _currentRotationSpeed = Mathf.Lerp(_currentRotationSpeed, _rotSpeed, Time.deltaTime);
             var newAngle = Mathf.LerpAngle(currentAngle, targetAngle, _currentRotationSpeed * Time.deltaTime);
 
             // Apply the new rotation to the car
@@ -87,6 +87,11 @@ namespace Car
         {
             if (other.CompareTag("StreetTile"))
                 despawnAfterTime.getChunks += 1;
+        }
+
+        public void LoseSpeed(float speedLoss)
+        {
+            moveSpeed -= speedLoss;
         }
     }
 }

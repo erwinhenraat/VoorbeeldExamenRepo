@@ -1,4 +1,4 @@
-using UI;
+using UnityEngine.UI;
 using UnityEngine;
 
 namespace Pickup
@@ -12,7 +12,7 @@ namespace Pickup
             if (col.gameObject.CompareTag("Car")) 
             {
                 Destroy(gameObject);
-                ScoreCounter.Instance.IncreaseScore(coinWorth);
+                ScoreCounter.instance.IncreaseScore(coinWorth);
             }
         }
     }

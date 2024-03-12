@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Car;
 using UnityEngine;
 
 public class CollisionHandler : MonoBehaviour
@@ -12,10 +13,6 @@ public class CollisionHandler : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             gameOverScreen.MenuOpen();
-        }
-        else if (collision.gameObject.CompareTag("Obstacle"))
-        {
-            return;
         }
     }
 }
