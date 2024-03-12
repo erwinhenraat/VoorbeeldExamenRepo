@@ -1,6 +1,7 @@
 using UnityEngine;
 using MarkUlrich.StateMachine.States;
 using MarkUlrich.Utils;
+using System.Collections;
 
 namespace MarkUlrich.StateMachine
 {
@@ -73,5 +74,11 @@ namespace MarkUlrich.StateMachine
         /// Moves the state machine to the next state in the static flow.
         /// </summary>
         public void MoveToNextState() => StateMachine.MoveToNextState();
+
+        /// <summary>
+        /// Starts the given Coroutine
+        /// </summary>
+        public void StartCoroutine(Coroutine routine) => StartCoroutine(routine);
+        
     }
 }
