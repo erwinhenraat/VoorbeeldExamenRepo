@@ -1,6 +1,8 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UntitledCube.Advertisements;
+using UntitledCube.Gravity;
 using UntitledCube.Timer;
 
 namespace UntitledCube.Maze.Generation
@@ -12,6 +14,7 @@ namespace UntitledCube.Maze.Generation
         [SerializeField] private Text _seedDisplay;
 
         private bool _initialized = false;
+        private bool _gravityChanged;
 
         private void OnEnable()
         {
@@ -29,15 +32,28 @@ namespace UntitledCube.Maze.Generation
 
         private void GenerateMaze()
         {
+            Stopwatch.Instance.ResetStopWatch();
+
             if (_initialized)
                 Advertising.Instance.ShowAd();
 
             _initialized = true;
             MazeGenerator.Generate(new(6, 6), _seed);
 
-            Stopwatch.Instance.StartStopWatch();
+            StartCoroutine(StartStopWatch());
         }
 
+        private IEnumerator StartStopWatch()
+        {
+            _gravityChanged = false;
+            GravityManager.Instance.OnGravityChanged += OnGravityChangedHandler;
+            yield return new WaitUntil(() => _gravityChanged);
+            Stopwatch.Instance.StartStopWatch();
+            GravityManager.Instance.OnGravityChanged -= OnGravityChangedHandler;
+        }
+
+        private void OnGravityChangedHandler(Vector3 newGravity) => _gravityChanged = true;
+        
         private void DisplaySeed(string seed) => _seedDisplay.text = seed;
     }
 }

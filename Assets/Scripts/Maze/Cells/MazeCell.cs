@@ -2,18 +2,27 @@ using MarkUlrich.StateMachine;
 using MarkUlrich.StateMachine.States;
 using System.Collections.Generic;
 using UnityEngine;
+using UntitledCube.Maze.Generation;
+using UntitledCube.Player.Coins;
 using UntitledCube.Timer;
 
 namespace UntitledCube.Maze.Cell
 {
     public class MazeCell : MonoBehaviour
     {
+        [Header("Structure")]
         [SerializeField] private GameObject[] _wallObjects;
         [SerializeField] private MeshRenderer _floorRenderer;
 
+        [Header("Coin")]
+        [SerializeField] private Transform _coinSpawnpoint;
+        [SerializeField] private GameObject _coinPrefab;
+
+        [Header("Materials")]
         [SerializeField] private Material _startMaterial;
         [SerializeField] private Material _endMaterial;
 
+        [Header("Collider")]
         [SerializeField] private BoxCollider _boxCollider;
 
         private readonly Dictionary<Vector2, GameObject> _walls = new();
@@ -21,6 +30,7 @@ namespace UntitledCube.Maze.Cell
 
         private bool _isStart;
         private bool _isEnd;
+        private GameObject _coin;
 
         public CellState State { get; set; }
 
@@ -62,13 +72,28 @@ namespace UntitledCube.Maze.Cell
             GameStateMachine.Instance.SetState<LevelEndState>();
             Stopwatch.Instance.Stop();
         }
+        
+        private void OnEnable() => MazeGenerator.OnGenerated += SpawnCoin;
+
+        private void OnDisable() => MazeGenerator.OnGenerated -= SpawnCoin;
+
+        private void SpawnCoin(string _)
+        {
+            if (_coin != null)
+                Destroy(_coin);
+
+            int chance = Mathf.Clamp(CoinPurse.SpawnChance, 0, 100);
+            float randomValue = Random.Range(0.0f, 100.0f);
+
+            if (randomValue <= chance)
+                _coin = Instantiate(_coinPrefab, _coinSpawnpoint);
+        }
 
         /// <summary>
         /// Deactivates a specific wall object.
         /// </summary>
         /// <param name="wallToRemove">The Vector2 representing the wall's coordinates or identifier.</param>
         public void RemoveWall(Vector2 wallToRemove) => _walls[wallToRemove].SetActive(false);
-
 
         /// <summary>
         /// Sets the active state of all wall objects in the game.
@@ -79,7 +104,6 @@ namespace UntitledCube.Maze.Cell
             for (int i = 0; i < _wallObjects.Length; i++)
                 _wallObjects[i].SetActive(active);
         }
-
 
         /// <summary>
         /// Resets the game state, reactivating walls and hiding the floor.
