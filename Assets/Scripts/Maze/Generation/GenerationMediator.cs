@@ -9,7 +9,6 @@ namespace UntitledCube.Maze.Generation
 {
     public class GenerationMediator : MonoBehaviour
     {
-        [SerializeField] private string _seed;
         [SerializeField] private Button _button;
         [SerializeField] private Text _seedDisplay;
 
@@ -42,8 +41,6 @@ namespace UntitledCube.Maze.Generation
 
             _initialized = true;
             MazeGenerator.Generate(new(6, 6), newSeed);
-
-            _seed = default;
 
             StartCoroutine(StartStopWatch());
         }
