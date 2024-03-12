@@ -11,8 +11,7 @@ namespace MarkUlrich.StateMachine.States
             base.EnterState();
             LoadSceneAsync(SCENE_NAME, LoadSceneMode.Single);
             SetNextState<GameState>();
-
-            MoveToNextState(); // Added so that the game will start, remove when added UI
+            MoveToNextState();
         }
 
         public override void ExitState()
