@@ -5,6 +5,7 @@ namespace MarkUlrich.StateMachine.States
 {
     public class GameState : State
     {
+        private bool _isSceneLoaded = false;
         private const string SCENE_NAME = "Game";
 
         public override void EnterState()
