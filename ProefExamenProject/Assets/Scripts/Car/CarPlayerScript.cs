@@ -24,7 +24,7 @@ namespace Car
         // Start is called before the first frame update
         private void Start() => _characterController = GetComponent<CharacterController>();
 
-               private void Update()
+        private void Update()
         {
             // Player automatically goes forward
             var transform1 = transform;

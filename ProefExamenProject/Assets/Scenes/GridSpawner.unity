@@ -368,8 +368,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 8390355147791262162}
-  smoothSpeed: 2
-  distanceFromPlayer: 2
+  smoothSpeed: 5
+  distanceFromPlayer: -0.5
 --- !u!224 &1017253845460549624
 RectTransform:
   m_ObjectHideFlags: 0
@@ -795,7 +795,7 @@ Transform:
   m_GameObject: {fileID: 8073459338030850463}
   serializedVersion: 2
   m_LocalRotation: {x: 0.2008386, y: -0, z: -0, w: 0.9796244}
-  m_LocalPosition: {x: 1.23, y: 2.82, z: -9.45}
+  m_LocalPosition: {x: 1.23, y: 2.82, z: -8.07}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -878,7 +878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 798e50480fabdd84f83cfab2bcde0f34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseSpeed: 7.5
+  baseSpeed: 9
   accelerateSpeed: 1
   moveSpeed: 7.5
   handler: {fileID: 4999278325778703087}
@@ -5952,8 +5952,6 @@ MonoBehaviour:
   maxChunks: 28
   chunkSpacing: 7
   getChunks: 0
-  generateOnce: 0
-  _spawnedChunks: []
 --- !u!114 &6266739743894044928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6262,7 +6260,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 118.63
   field of view: 60
   orthographic: 0
   orthographic size: 5

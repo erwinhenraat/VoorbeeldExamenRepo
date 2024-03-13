@@ -22,15 +22,17 @@ namespace Spawner
         [SerializeField] private GameObject[] roadPrefabs;
         [SerializeField] private Transform loadInTransform;
 
+        [Header("Chunk Settings: ")]
         [SerializeField] private int maxChunks;
         [SerializeField] private float chunkSpacing;
 
         public int getChunks;
         private bool _afterFirstGeneration;
-        [SerializeField] private bool generateOnce;
+        private bool _generateMore;
+        private bool _generateOnce;
 
         // ReSharper disable once CollectionNeverQueried.Local
-        [SerializeField] private List<GameObject> _spawnedChunks;
+        private List<GameObject> _spawnedChunks;
         private RoadTiling _currentRoadType = RoadTiling.SmallRoadTile;
         private const RoadTiling PreviousRoadType = RoadTiling.SmallRoadTile;
 
@@ -42,15 +44,27 @@ namespace Spawner
 
         private void Update()
         {
-            if (getChunks >= 5 && !generateOnce)
+            if (getChunks >= 6 && !_generateOnce)
             {
-                generateOnce = true;
+                _generateOnce = true;
                 _afterFirstGeneration = true;
-                var chunksToRemove = new List<GameObject>(_spawnedChunks.Take(2));
-                foreach (var chunk in chunksToRemove)
+                if (!_generateMore)
                 {
-                    _spawnedChunks.Remove(chunk);
-                    Destroy(chunk);
+                    var chunksToRemove = new List<GameObject>(_spawnedChunks.Take(2));
+                    foreach (var chunk in chunksToRemove)
+                    {
+                        _spawnedChunks.Remove(chunk);
+                        Destroy(chunk);
+                    }
+                }
+                else
+                {
+                    var chunksToRemove = new List<GameObject>(_spawnedChunks.Take(3));
+                    foreach (var chunk in chunksToRemove)
+                    {
+                        _spawnedChunks.Remove(chunk);
+                        Destroy(chunk);
+                    }
                 }
                 
                 var getLast = _spawnedChunks.Last();
@@ -67,7 +81,7 @@ namespace Spawner
 
             if (!_afterFirstGeneration)
             {
-                generateOnce = false;
+                _generateOnce = false;
                 for (var i = 0; i < maxChunks; i++)
                 {
                     // Get the next road prefab based on current road type and restrictions
@@ -93,8 +107,10 @@ namespace Spawner
             }
             else
             {
-                generateOnce = false;
-                for (var i = 0; i < 2; i++)
+                _generateOnce = false;
+                var value = !_generateMore ? 2 : 3;
+                
+                for (var i = 0; i < value; i++)
                 {
                     // Get the next road prefab based on current road type and restrictions
                     var chunkPrefab = GetNextRoadPrefab();
@@ -116,6 +132,7 @@ namespace Spawner
 
                     // Update Z position for next chunk
                     currentZPosition += chunkSpacing + meshRenderer.bounds.extents.z; // Adjust based on your pivot offset
+                    _generateMore = true;
                 }
             }
         }
