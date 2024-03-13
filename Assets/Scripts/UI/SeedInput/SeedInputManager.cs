@@ -24,6 +24,8 @@ namespace UntitledCube.UI.SeedInput
             _inputField.onEndEdit.AddListener(GetSeed);
             _generateButton.onClick.AddListener(EnterSeed);
             _pasteButton.onClick.AddListener(PasteCode);
+
+            DontDestroyOnLoad(gameObject);
         }
 
         private void OnEnable() => GameStateMachine.Instance.GetState<GameState>().OnSceneLoaded += UnloadMainMenu;
