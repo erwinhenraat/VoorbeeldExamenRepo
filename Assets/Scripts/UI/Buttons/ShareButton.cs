@@ -8,6 +8,12 @@ using UntitledCube.UI.Buttons;
 public class ShareButton : MonoBehaviour
 {
     [SerializeField] private Button _shareButton;
+    [SerializeField] private Canvas _photoCanvas;
 
-    private void Start() => _shareButton.onClick.AddListener(AppShareManager.Instance.CallSharePopUp);
+    private void Start() 
+    {
+        _shareButton.onClick.AddListener(AppShareManager.Instance.CallSharePopUp);
+        AppShareManager.Instance.SetCanvas(_photoCanvas);
+    }
+
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 using UntitledCube.Maze.Generation;
 using UntitledCube.Player.Coins;
@@ -12,12 +13,10 @@ namespace UntitledCube.Sharing
 {
     public class AppShareManager : SingletonInstance<AppShareManager>
     {
-        [SerializeField] private Camera _camera;
-        [SerializeField] private RenderTexture _photoCanvasTexture;
-
         private bool _isProcessing;
         private string _scoreTimer;
 
+        private Canvas _photoCanvas;
         private Stopwatch _stopwatch;
         private readonly List<string> challengeTexts = new()
         {
@@ -35,6 +34,8 @@ namespace UntitledCube.Sharing
             _stopwatch = Stopwatch.Instance;
             _stopwatch.OnTimerStopped += SetScoreTimer;
         }
+
+        public void SetCanvas(Canvas shareCanvas) => _photoCanvas = shareCanvas; 
 
         /// <summary>
         /// Checks if sharing isn't in procces, clears the temp folder and calls share screenshot.
@@ -60,6 +61,7 @@ namespace UntitledCube.Sharing
 
         private IEnumerator ShareScreenshotInAnroid()
         {
+            _photoCanvas.gameObject.SetActive(false);
             _isProcessing = true;
             yield return new WaitForEndOfFrame();
 
@@ -86,26 +88,16 @@ namespace UntitledCube.Sharing
 
         private void CaptureScreenShot(out string screenshotName)
         {
-            /*            _camera.targetTexture = _photoCanvasTexture;
-                        _camera.Render();
+            Texture2D screenshotTexture = new((int)_photoCanvas.pixelRect.width, (int)_photoCanvas.pixelRect.height, TextureFormat.RGB24, false);
 
-                        Texture2D screenshotTexture = new Texture2D(_photoCanvasTexture.width, _photoCanvasTexture.height);
-                        RenderTexture.active = _photoCanvasTexture;
+            screenshotTexture.ReadPixels(new Rect(0, 0, _photoCanvas.pixelRect.width, _photoCanvas.pixelRect.height), 0, 0);
+            screenshotTexture.Apply();
 
-                        screenshotTexture.ReadPixels(new Rect(0, 0, _photoCanvasTexture.width, _photoCanvasTexture.height), 0, 0);
-                        screenshotTexture.Apply();
-
-                        byte[] screenshotBytes = screenshotTexture.EncodeToPNG();
-                        screenshotName = $"HighScore_{DateTime.UtcNow.ToOADate()}.jpg";
-
-                        File.WriteAllBytes(Application.persistentDataPath + screenshotName, screenshotBytes);
-
-                        RenderTexture.active = null;
-                        _camera.targetTexture = null;*/
-
+            byte[] bytes = screenshotTexture.EncodeToJPG();
             screenshotName = $"HighScore_{DateTime.UtcNow.ToOADate()}.jpg";
 
-            ScreenCapture.CaptureScreenshot(screenshotName, 1);
+            File.WriteAllBytes(Path.Combine(Application.persistentDataPath, screenshotName), bytes);
+            _photoCanvas.gameObject.SetActive(true);
         }
 
         private void SetSharePopUp(string screenShotPath, string message)
