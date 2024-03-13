@@ -35,7 +35,6 @@ namespace UntitledCube.Sharing
             DontDestroyOnLoad(transform.gameObject);
             _stopwatch = Stopwatch.Instance;
             _stopwatch.OnTimerStopped += SetScoreTimer;
-            GameStateMachine.Instance.GetState<GameState>().OnStateExit += CaptureCubePhoto;
         }
 
         /// <summary>
@@ -66,7 +65,10 @@ namespace UntitledCube.Sharing
             StartCoroutine(ShareScreenshotInAnroid());
         }
 
-        private void CaptureCubePhoto()
+        /// <summary>
+        /// Takes a picture of the maze
+        /// </summary>
+        public void CaptureCubePhoto()
         {
             StartCoroutine(CaptureScreenshotTexture());
         }
@@ -76,6 +78,10 @@ namespace UntitledCube.Sharing
             yield return new WaitForEndOfFrame();
 
             _cubePhotoTexture = ScreenCapture.CaptureScreenshotAsTexture();
+
+            yield return new WaitForEndOfFrame();
+
+            GameStateMachine.Instance.SetState<LevelEndState>();
         }
 
         private void SetScoreTimer(string timer) =>  _scoreTimer = timer;
