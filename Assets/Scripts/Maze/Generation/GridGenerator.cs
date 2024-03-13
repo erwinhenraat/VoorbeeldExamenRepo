@@ -15,7 +15,7 @@ namespace UntitledCube.Maze.Generation
 
         public static Dictionary<GameObject, MazeCell[,]> Grids => _gridHolders;
 
-        static GridGenerator() => GameStateMachine.Instance.GetState<GameState>().OnStateExit += ExitGame;
+        static GridGenerator() => GameStateMachine.Instance.GetState<MainMenuState>().OnStateEnter += ExitGame;
 
 
         /// <summary>
@@ -101,6 +101,9 @@ namespace UntitledCube.Maze.Generation
 
         private static void ExitGame()
         {
+            if (GameStateMachine.Instance.CurrentState == GameStateMachine.Instance.GetState<PausedState>())
+                return;
+
             foreach (GameObject gridHolder in _gridHolders.Keys)
             {
                 while (gridHolder.transform.childCount > 0)
