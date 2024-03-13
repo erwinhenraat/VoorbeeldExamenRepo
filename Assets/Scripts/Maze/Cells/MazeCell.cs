@@ -71,6 +71,7 @@ namespace UntitledCube.Maze.Cell
         {
             GameStateMachine.Instance.SetState<LevelEndState>();
             Stopwatch.Instance.Stop();
+            Debug.Log("here");
         }
         
         private void OnEnable() => MazeGenerator.OnGenerated += SpawnCoin;

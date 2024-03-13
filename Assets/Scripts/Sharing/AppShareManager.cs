@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MarkUlrich.Utils;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +10,7 @@ using UntitledCube.Timer;
 
 namespace UntitledCube.Sharing
 {
-    public class AppShareManager : MonoBehaviour
+    public class AppShareManager : SingletonInstance<AppShareManager>
     {
         [SerializeField] private Camera _camera;
         [SerializeField] private RenderTexture _photoCanvasTexture;
@@ -30,6 +31,7 @@ namespace UntitledCube.Sharing
 
         private void Start()
         {
+            DontDestroyOnLoad(transform.gameObject);
             _stopwatch = Stopwatch.Instance;
             _stopwatch.OnTimerStopped += SetScoreTimer;
         }
@@ -46,7 +48,7 @@ namespace UntitledCube.Sharing
             StartCoroutine(ShareScreenshotInAnroid());
         }
 
-        private void SetScoreTimer(string timer) => _scoreTimer = timer;
+        private void SetScoreTimer(string timer) =>  _scoreTimer = timer;
 
         private void RemoveAllTempFiles()
         {
@@ -84,22 +86,26 @@ namespace UntitledCube.Sharing
 
         private void CaptureScreenShot(out string screenshotName)
         {
-            _camera.targetTexture = _photoCanvasTexture;
-            _camera.Render();
+            /*            _camera.targetTexture = _photoCanvasTexture;
+                        _camera.Render();
 
-            Texture2D screenshotTexture = new Texture2D(_photoCanvasTexture.width, _photoCanvasTexture.height);
-            RenderTexture.active = _photoCanvasTexture;
+                        Texture2D screenshotTexture = new Texture2D(_photoCanvasTexture.width, _photoCanvasTexture.height);
+                        RenderTexture.active = _photoCanvasTexture;
 
-            screenshotTexture.ReadPixels(new Rect(0, 0, _photoCanvasTexture.width, _photoCanvasTexture.height), 0, 0);
-            screenshotTexture.Apply();
+                        screenshotTexture.ReadPixels(new Rect(0, 0, _photoCanvasTexture.width, _photoCanvasTexture.height), 0, 0);
+                        screenshotTexture.Apply();
 
-            byte[] screenshotBytes = screenshotTexture.EncodeToPNG();
+                        byte[] screenshotBytes = screenshotTexture.EncodeToPNG();
+                        screenshotName = $"HighScore_{DateTime.UtcNow.ToOADate()}.jpg";
+
+                        File.WriteAllBytes(Application.persistentDataPath + screenshotName, screenshotBytes);
+
+                        RenderTexture.active = null;
+                        _camera.targetTexture = null;*/
+
             screenshotName = $"HighScore_{DateTime.UtcNow.ToOADate()}.jpg";
 
-            File.WriteAllBytes(Application.persistentDataPath + screenshotName, screenshotBytes);
-
-            RenderTexture.active = null;
-            _camera.targetTexture = null;
+            ScreenCapture.CaptureScreenshot(screenshotName, 1);
         }
 
         private void SetSharePopUp(string screenShotPath, string message)

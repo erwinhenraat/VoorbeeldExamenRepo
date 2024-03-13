@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 91286712}
   - component: {fileID: 91286711}
   - component: {fileID: 91286710}
+  - component: {fileID: 91286713}
   m_Layer: 5
   m_Name: Share button
   m_TagString: Untagged
@@ -205,7 +206,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 91286711}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UntitledCube.Sharing.AppShareManager, Assembly-CSharp
+        m_MethodName: CallSharePopUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &91286711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,6 +257,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 91286708}
   m_CullTransparentMesh: 1
+--- !u!114 &91286713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91286708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f1ee13e0fe2c3e4495a7ab75081dd77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shareButton: {fileID: 91286710}
 --- !u!1 &188096171
 GameObject:
   m_ObjectHideFlags: 0
@@ -1234,7 +1260,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 377, y: 322}
+  m_AnchoredPosition: {x: 377, y: 444}
   m_SizeDelta: {x: 759, y: 760}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1679787559
@@ -1312,7 +1338,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -275, y: -587}
+  m_AnchoredPosition: {x: -275, y: -674}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1998480302
