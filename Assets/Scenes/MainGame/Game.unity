@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -304,19 +304,19 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1626259971}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1602923893342164077, guid: 0b03140cf20d4f6449b24c6f0102c641, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.1568985
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1602923893342164077, guid: 0b03140cf20d4f6449b24c6f0102c641, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.45155
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1602923893342164077, guid: 0b03140cf20d4f6449b24c6f0102c641, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.6424495
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1602923893342164077, guid: 0b03140cf20d4f6449b24c6f0102c641, type: 3}
       propertyPath: m_LocalRotation.w
@@ -355,11 +355,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b03140cf20d4f6449b24c6f0102c641, type: 3}
---- !u!4 &53109383 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1602923893342164077, guid: 0b03140cf20d4f6449b24c6f0102c641, type: 3}
-  m_PrefabInstance: {fileID: 53109382}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &150805578
 GameObject:
   m_ObjectHideFlags: 0
@@ -2658,7 +2653,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 53109383}
   - {fileID: 1528533478}
   - {fileID: 520498150}
   - {fileID: 1858440798}
@@ -3568,6 +3562,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 838617625}
   - {fileID: 1863809385}
+  - {fileID: 53109382}
   - {fileID: 1626259971}
   - {fileID: 1370537477}
   - {fileID: 1669793965}
