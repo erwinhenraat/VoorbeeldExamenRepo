@@ -1,9 +1,11 @@
 using MarkUlrich.Utils;
 using System;
+using System.Collections;
 using System.Diagnostics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.UI;
+using UntitledCube.Gravity;
 
 namespace UntitledCube.Timer
 {
@@ -14,6 +16,9 @@ namespace UntitledCube.Timer
         private float _startTime;
         private bool _timerRunning = false;
         private float _elapsedTime;
+        private Coroutine _interactionRoutine;
+
+        private bool _gravityChanged;
 
         public Action<string> OnTimerStopped;
 
@@ -36,6 +41,7 @@ namespace UntitledCube.Timer
         /// </summary>
         public void StartStopWatch()
         {
+            print("STARTING!!!");
             _elapsedTime = 0;
             _startTime = Time.time;
             _timerRunning = true;
@@ -67,5 +73,30 @@ namespace UntitledCube.Timer
             string formatString = timeSpan.TotalMinutes >= 1 ? @"m\:ss\.ff" : @"s\.ff";
             return timeSpan.ToString(formatString);
         }
+
+        /// <summary>
+        /// Starts the stopwatch after a gravity change interaction.
+        /// </summary>
+        public void StartWithInteractionSync()
+        {
+            if (_interactionRoutine != null)
+            {
+                StopCoroutine(StartWithInteraction());
+                GravityManager.Instance.OnGravityChanged -= OnGravityChangedHandler;
+            }
+            _interactionRoutine = StartCoroutine(StartWithInteraction());
+        }
+
+        private IEnumerator StartWithInteraction()
+        {
+            _gravityChanged = false;
+            GravityManager.Instance.OnGravityChanged += OnGravityChangedHandler;
+            print(_gravityChanged);
+            yield return new WaitUntil(() => _gravityChanged);
+            Stopwatch.Instance.StartStopWatch();
+            GravityManager.Instance.OnGravityChanged -= OnGravityChangedHandler;
+        }
+
+        private void OnGravityChangedHandler(Vector3 newGravity) => _gravityChanged = true;
     }
 }

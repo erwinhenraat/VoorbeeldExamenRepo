@@ -14,8 +14,6 @@ namespace UntitledCube.UI.Buttons
     {
         [SerializeField] private Button _retryButton;
 
-        private bool _gravityChanged;
-
         private void Start() => _retryButton.onClick.AddListener(ResetLevel);
 
         private void ResetLevel()
@@ -27,18 +25,7 @@ namespace UntitledCube.UI.Buttons
             Advertising.Instance.ShowAd();
             MazeGenerator.Generate(new(6, 6), MazeGenerator.Seed);
 
-            StartCoroutine(StartStopWatch());
+            Stopwatch.Instance.StartWithInteractionSync();
         }
-
-        private IEnumerator StartStopWatch()
-        {
-            _gravityChanged = false;
-            GravityManager.Instance.OnGravityChanged += OnGravityChangedHandler;
-            yield return new WaitUntil(() => _gravityChanged);
-            Stopwatch.Instance.StartStopWatch();
-            GravityManager.Instance.OnGravityChanged -= OnGravityChangedHandler;
-        }
-
-        private void OnGravityChangedHandler(Vector3 newGravity) => _gravityChanged = true;
     }
 }
