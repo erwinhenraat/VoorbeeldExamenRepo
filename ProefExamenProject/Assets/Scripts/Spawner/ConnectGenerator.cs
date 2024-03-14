@@ -44,7 +44,7 @@ namespace Spawner
 
         private void Update()
         {
-            if (getChunks >= 6 && !_generateOnce)
+            if (getChunks >= 8 && !_generateOnce)
             {
                 _generateOnce = true;
                 _afterFirstGeneration = true;
