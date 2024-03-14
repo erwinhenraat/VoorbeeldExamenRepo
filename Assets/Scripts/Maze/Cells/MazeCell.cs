@@ -21,7 +21,7 @@ namespace UntitledCube.Maze.Cell
 
         [Header("Materials")]
         [SerializeField] private Material _startMaterial;
-        [SerializeField] private Material _endMaterial;
+        [SerializeField] private Material[] _endMaterial;
 
         [Header("Collider")]
         [SerializeField] private BoxCollider _boxCollider;
@@ -56,7 +56,6 @@ namespace UntitledCube.Maze.Cell
                 _isEnd = value;
                 SetWallsActive(false);
                 _floorRenderer.gameObject.SetActive(value);
-                _floorRenderer.material = _endMaterial;
                 _boxCollider.enabled = value;
             }
             get => _isEnd;
@@ -119,6 +118,12 @@ namespace UntitledCube.Maze.Cell
             IsStart = false;
             SetWallsActive(true);
             _floorRenderer.gameObject.SetActive(false);
+        }
+
+        public void SetEnd(int index)
+        {
+            _floorRenderer.material = _endMaterial[index];
+            IsEnd = true;
         }
     }
 }

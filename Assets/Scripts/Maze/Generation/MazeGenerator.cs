@@ -239,10 +239,10 @@ namespace UntitledCube.Maze.Generation
             if (endCount != _mazeCount)
                 return;
 
-            cells[2, 2].IsEnd = true;
-            cells[2, 3].IsEnd = true;
-            cells[3, 2].IsEnd = true;
-            cells[3, 3].IsEnd = true;
+            cells[3, 2].SetEnd(0);
+            cells[3, 3].SetEnd(1);
+            cells[2, 2].SetEnd(2);
+            cells[2, 3].SetEnd(3);
         }
 
         private static bool IsOutOfBounds(Vector2 potentialPosition)
