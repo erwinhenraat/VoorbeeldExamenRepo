@@ -68,10 +68,7 @@ namespace UntitledCube.Sharing
         /// <summary>
         /// Takes a picture of the maze
         /// </summary>
-        public void CaptureCubePhoto()
-        {
-            StartCoroutine(CaptureScreenshotTexture());
-        }
+        public void CaptureCubePhoto()  => StartCoroutine(CaptureScreenshotTexture());
 
         private IEnumerator CaptureScreenshotTexture()
         {
