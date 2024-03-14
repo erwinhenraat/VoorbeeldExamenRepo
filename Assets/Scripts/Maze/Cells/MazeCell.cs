@@ -70,8 +70,12 @@ namespace UntitledCube.Maze.Cell
 
         private void OnTriggerEnter(Collider other) 
         {
-            AppShareManager.Instance.CaptureCubePhoto();
-            Stopwatch.Instance.Stop();
+            if (GameStateMachine.Instance.CurrentState is GameState)
+            {
+                AppShareManager.Instance.CaptureCubePhoto();
+                GameStateMachine.Instance.SetState<LevelEndState>();
+                Stopwatch.Instance.Stop();
+            }
         }
         
         private void OnEnable() => MazeGenerator.OnGenerated += SpawnCoin;

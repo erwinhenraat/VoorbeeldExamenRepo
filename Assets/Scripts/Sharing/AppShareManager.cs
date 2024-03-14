@@ -78,10 +78,6 @@ namespace UntitledCube.Sharing
             yield return new WaitForEndOfFrame();
 
             _cubePhotoTexture = ScreenCapture.CaptureScreenshotAsTexture();
-
-            yield return new WaitForEndOfFrame();
-
-            GameStateMachine.Instance.SetState<LevelEndState>();
         }
 
         private void SetScoreTimer(string timer) =>  _scoreTimer = timer;
