@@ -511,11 +511,14 @@ MonoBehaviour:
   - {fileID: 7512450101517205509}
   - {fileID: 6772889110671547046}
   _floorRenderer: {fileID: 7004766417973463791}
-  _coinSpawnchance: 10
   _coinSpawnpoint: {fileID: 5446426923661079134}
   _coinPrefab: {fileID: 8527467389145331294, guid: 01cc24b8dae91f243936bcc522118ed3, type: 3}
   _startMaterial: {fileID: 2100000, guid: 5beb53982dab98244853759be0cfa4fb, type: 2}
-  _endMaterial: {fileID: 2100000, guid: ece5b6aa0daca9f48adfccaec7a3e437, type: 2}
+  _endMaterial:
+  - {fileID: 2100000, guid: ca43aecf25160304da41e43d5567dfac, type: 2}
+  - {fileID: 2100000, guid: d7e95ecc08417b74eb453b3873683631, type: 2}
+  - {fileID: 2100000, guid: 01b8c4c94c391f24392d801eae524935, type: 2}
+  - {fileID: 2100000, guid: 8cc87d67c65cfe74f82cdbce5b55d60a, type: 2}
   _boxCollider: {fileID: 8741982592458396334}
 --- !u!65 &8741982592458396334
 BoxCollider:
