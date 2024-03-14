@@ -15,11 +15,7 @@ namespace UntitledCube.Maze.Generation
         private bool _initialized = false;
         private bool _gravityChanged;
 
-        private void OnEnable()
-        {
-            _button.onClick.AddListener(() => GenerateMaze());
-            MazeGenerator.OnGenerated += DisplaySeed;
-        }
+        private void OnEnable() => MazeGenerator.OnGenerated += DisplaySeed;
 
         private void OnDisable()
         {
