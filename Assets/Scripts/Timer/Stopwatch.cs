@@ -1,5 +1,7 @@
 using MarkUlrich.Utils;
 using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +9,7 @@ namespace UntitledCube.Timer
 {
     public class Stopwatch : SingletonInstance<Stopwatch>
     {
-        [SerializeField] private Text _timerText; // TODO: convert to TMP
+        [SerializeField] private Text _timerText;
 
         private float _startTime;
         private bool _timerRunning = false;

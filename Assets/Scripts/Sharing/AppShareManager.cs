@@ -1,4 +1,7 @@
-﻿using System;
+﻿using MarkUlrich.StateMachine;
+using MarkUlrich.StateMachine.States;
+using MarkUlrich.Utils;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -9,11 +12,13 @@ using UntitledCube.Timer;
 
 namespace UntitledCube.Sharing
 {
-    public class AppShareManager : MonoBehaviour
+    public class AppShareManager : SingletonInstance<AppShareManager>
     {
         private bool _isProcessing;
         private string _scoreTimer;
 
+        private Texture2D _cubePhotoTexture;
+        private Canvas _photoCanvas;
         private Stopwatch _stopwatch;
         private readonly List<string> challengeTexts = new()
         {
@@ -27,9 +32,26 @@ namespace UntitledCube.Sharing
 
         private void Start()
         {
+            DontDestroyOnLoad(transform.gameObject);
             _stopwatch = Stopwatch.Instance;
             _stopwatch.OnTimerStopped += SetScoreTimer;
         }
+
+        /// <summary>
+        /// Gets the texture of the photo of the cube
+        /// </summary>
+        public Texture2D GetTexture() => _cubePhotoTexture;
+
+        /// <summary>
+        /// Gets the timer used for the message
+        /// </summary>
+        public string GetTimer() => _scoreTimer;
+
+        /// <summary>
+        /// Sets needed canvas to the given Canvas 
+        /// </summary>
+        /// <param name = "shareCanvas"> The Canvas you want to be set</param>
+        public void SetCanvas(Canvas shareCanvas) => _photoCanvas = shareCanvas; 
 
         /// <summary>
         /// Checks if sharing isn't in procces, clears the temp folder and calls share screenshot.
@@ -43,7 +65,19 @@ namespace UntitledCube.Sharing
             StartCoroutine(ShareScreenshotInAnroid());
         }
 
-        private void SetScoreTimer(string timer) => _scoreTimer = timer;
+        /// <summary>
+        /// Takes a picture of the maze
+        /// </summary>
+        public void CaptureCubePhoto()  => StartCoroutine(CaptureScreenshotTexture());
+
+        private IEnumerator CaptureScreenshotTexture()
+        {
+            yield return new WaitForEndOfFrame();
+
+            _cubePhotoTexture = ScreenCapture.CaptureScreenshotAsTexture();
+        }
+
+        private void SetScoreTimer(string timer) =>  _scoreTimer = timer;
 
         private void RemoveAllTempFiles()
         {
@@ -55,10 +89,11 @@ namespace UntitledCube.Sharing
 
         private IEnumerator ShareScreenshotInAnroid()
         {
+            _photoCanvas.gameObject.SetActive(false);
             _isProcessing = true;
             yield return new WaitForEndOfFrame();
 
-            CaptureScreenShot(out string screenshotName); 
+            CaptureScorePhoto(out string screenshotName); 
 
             string screenShotPath = Path.Combine(Application.persistentDataPath, screenshotName);
             string shareText = RandomiseShareText();
@@ -79,11 +114,18 @@ namespace UntitledCube.Sharing
             return message.Replace("$", _scoreTimer).Replace("#", seedNumber).Replace("*", $"{CoinPurse.Coins}");
         }
 
-        private void CaptureScreenShot(out string screenshotName)
+        private void CaptureScorePhoto(out string screenshotName)
         {
+            Texture2D screenshotTexture = new((int)_photoCanvas.pixelRect.width, (int)_photoCanvas.pixelRect.height, TextureFormat.RGB24, false);
+
+            screenshotTexture.ReadPixels(new Rect(0, 0, _photoCanvas.pixelRect.width, _photoCanvas.pixelRect.height), 0, 0);
+            screenshotTexture.Apply();
+
+            byte[] bytes = screenshotTexture.EncodeToJPG();
             screenshotName = $"HighScore_{DateTime.UtcNow.ToOADate()}.jpg";
 
-            ScreenCapture.CaptureScreenshot(screenshotName, 1);
+            File.WriteAllBytes(Path.Combine(Application.persistentDataPath, screenshotName), bytes);
+            _photoCanvas.gameObject.SetActive(true);
         }
 
         private void SetSharePopUp(string screenShotPath, string message)

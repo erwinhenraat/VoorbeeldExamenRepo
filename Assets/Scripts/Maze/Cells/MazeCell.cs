@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UntitledCube.Maze.Generation;
 using UntitledCube.Player.Coins;
+using UntitledCube.Sharing;
 using UntitledCube.Timer;
 
 namespace UntitledCube.Maze.Cell
@@ -69,8 +70,12 @@ namespace UntitledCube.Maze.Cell
 
         private void OnTriggerEnter(Collider other) 
         {
-            GameStateMachine.Instance.SetState<LevelEndState>();
-            Stopwatch.Instance.Stop();
+            if (GameStateMachine.Instance.CurrentState is GameState)
+            {
+                AppShareManager.Instance.CaptureCubePhoto();
+                GameStateMachine.Instance.SetState<LevelEndState>();
+                Stopwatch.Instance.Stop();
+            }
         }
         
         private void OnEnable() => MazeGenerator.OnGenerated += SpawnCoin;
