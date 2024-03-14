@@ -1,7 +1,10 @@
+using MarkUlrich.StateMachine;
+using MarkUlrich.StateMachine.States;
 using System.Collections.Generic;
 using UnityEngine;
 using UntitledCube.Maze.Generation;
 using UntitledCube.Player.Coins;
+using UntitledCube.Sharing;
 using UntitledCube.Timer;
 
 namespace UntitledCube.Maze.Cell
@@ -65,11 +68,19 @@ namespace UntitledCube.Maze.Cell
                 _walls.Add(_directions[i], _wallObjects[i]);
         }
 
+        private void OnTriggerEnter(Collider other) 
+        {
+            if (GameStateMachine.Instance.CurrentState is GameState)
+            {
+                AppShareManager.Instance.CaptureCubePhoto();
+                GameStateMachine.Instance.SetState<LevelEndState>();
+                Stopwatch.Instance.Stop();
+            }
+        }
+        
         private void OnEnable() => MazeGenerator.OnGenerated += SpawnCoin;
 
         private void OnDisable() => MazeGenerator.OnGenerated -= SpawnCoin;
-
-        private void OnTriggerEnter(Collider other) => Stopwatch.Instance.Stop();
 
         private void SpawnCoin(string _)
         {

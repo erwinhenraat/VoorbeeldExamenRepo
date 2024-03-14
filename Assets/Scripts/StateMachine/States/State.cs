@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,6 +18,7 @@ namespace MarkUlrich.StateMachine.States
 
         public Action OnStateEnter;
         public Action OnStateExit;
+        public Action OnSceneLoaded;
 
         protected State() => InitState();
 
@@ -43,6 +45,8 @@ namespace MarkUlrich.StateMachine.States
 
             if (OwningStateMachine.IsDebugging)
                 Debug.Log($"Loaded Scene ({sceneName})");
+
+            OwningStateMachine.StartCoroutine(WaitForSceneLoaded(sceneName));
         }
 
         protected void LoadSceneAsync(string sceneName, LoadSceneMode loadSceneMode, bool forceReload = false)
@@ -63,6 +67,8 @@ namespace MarkUlrich.StateMachine.States
 
             if (OwningStateMachine.IsDebugging)
                 Debug.Log($"Loaded Scene ({sceneName}) Async");
+
+            OwningStateMachine.StartCoroutine(WaitForSceneLoaded(sceneName));
         }
 
         protected void UnloadScene(string sceneName)
@@ -75,6 +81,14 @@ namespace MarkUlrich.StateMachine.States
                     Debug.Log($"Unloaded Scene ({sceneName})");
             }
         }
+
+        private IEnumerator WaitForSceneLoaded(string sceneName)
+        {
+            yield return new WaitUntil(() => SceneManager.GetSceneByName(sceneName).isLoaded);
+
+            OnSceneLoaded?.Invoke();
+        }
+
 
         /// <summary>
         /// Executes code related to entering the state.

@@ -1,6 +1,8 @@
 using UnityEngine;
 using MarkUlrich.StateMachine.States;
 using MarkUlrich.Utils;
+using System;
+using System.Collections;
 
 namespace MarkUlrich.StateMachine
 {
@@ -35,6 +37,7 @@ namespace MarkUlrich.StateMachine
             StateMachine.GetState<PausedState>();
             StateMachine.GetState<ScoreboardState>();
             StateMachine.GetState<ShareState>();
+            StateMachine.GetState<SeedState>();
         }
 
         /// <summary>
@@ -73,5 +76,15 @@ namespace MarkUlrich.StateMachine
         /// Moves the state machine to the next state in the static flow.
         /// </summary>
         public void MoveToNextState() => StateMachine.MoveToNextState();
+
+        internal void SetState(Type stateType)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Starts the given Coroutine
+        /// </summary>
+        public void StartCoroutine(Coroutine routine) => StartCoroutine(routine);
     }
 }
