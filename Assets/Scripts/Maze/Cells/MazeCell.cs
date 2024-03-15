@@ -20,7 +20,6 @@ namespace UntitledCube.Maze.Cell
         [SerializeField] private GameObject _coinPrefab;
 
         [Header("Materials")]
-        [SerializeField] private Material _startMaterial;
         [SerializeField] private Material[] _endMaterial;
 
         [Header("Collider")]
@@ -43,8 +42,6 @@ namespace UntitledCube.Maze.Cell
             {
                 _isStart = value;
                 SetWallsActive(false);
-                _floorRenderer.gameObject.SetActive(value);
-                _floorRenderer.material = _startMaterial;
             }
             get => _isStart; 
         }
